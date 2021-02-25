@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>下载</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div (click)="downloadApp()">
+    <!-- <img src="assets/guide.jpg" alt=""> -->
+    <img [src]="imgUrl" alt="">
+
+  </div>
+  <div *ngIf="isShowMask" class="mask" (click)="closeMask()">
+    <img src="assets/downloadtips.png" alt="分享" />
+  </div>
+</ion-content>

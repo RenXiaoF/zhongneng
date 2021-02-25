@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{my_title}}</ion-title>
+    
+  </ion-toolbar>
+  <!-- 区域订单 分类 -->
+  <ion-grid style="background-color: rgb(253,58,59);">
+    <ion-row class="ion-text-center ion-align-items-center ion-justify-content-center" style="color: white">
+      <ion-col class="font-size-default" *ngFor="let classType of classTypes" 
+               [ngStyle]="{'border-bottom': classType.checked? '3px solid white':'0','color': classType.checked?'white':''}"
+               (click)="changeClassType(classType.type)">
+               {{classType.name}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- 订单类型 -->
+  <ion-grid>
+    <ion-row class="ion-text-center ion-align-items-center ion-justify-content-center" style="color: black">
+      <ion-col class="font-size-default" *ngFor="let ordertype of ordertypes" [ngStyle]="{'border-bottom': ordertype.checked? '3px solid rgb(253,58,59)':'0','color': ordertype.checked?'rgb(253,58,59)':''}"
+               (click)="changeordertype(ordertype.type)">{{ordertype.name}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- 搜索订单  -->
+  <div class="search">
+    <ion-searchbar [(ngModel)]="search_key" placeholder="商品名称/订单编号"></ion-searchbar>
+    <ion-button fill="outline" color="medium" (click)="onInput()">搜索</ion-button>
+  </div>
+
+</ion-header>
+
+<ion-content no-padding  style="overscroll:scroll">
+
+  <ng-container *ngIf="storelist.length>0">
+    <ion-card *ngFor="let store of storelist;let storeIndex = index" no-lines no-margin class="bordertop">
+      <ion-list >
+        <ion-row>
+          <ion-col size="3"><span *ngIf="store.is_reserve == 1" style="color:#ff4142">预售订单</span></ion-col>
+          <ion-col size="9"><span *ngIf="store.is_reserve == 1 && store.reserve_param.end_time_back && store.reserve_param.is_pay && store.order_status == 0" style="color:#ff4142;font-weight: 600;">{{store.reserve_param.end_time_back}}后可支付尾款</span></ion-col>
+        </ion-row>
+        <ion-item lines="none">
+          <ion-col size="1" class="iconfont iconfont_big icon-shangjia list-item-ic"></ion-col>
+          <!-- 商店名称 / 订单编号 -->
+          <ion-col size="9">{{store.store_name}} <span class="selectable">({{store.order_sn}})</span></ion-col>
+          <!-- 状态： 未付款/待发货/待收货/已完成 -->
+          <ion-col size="2" [ngStyle]="{'color':store.order_status_code === 'WAITPAY' ? 'rgb(255, 122, 63)' : 'green' }" >
+            {{store.order_status_desc}}
+          </ion-col>
+        </ion-item>
+  
+        <ion-item *ngFor="let good of store.goods_list" lines="none">
+          <ion-grid no-padding class="ion-justify-content-center ion-align-items-center" (click)="goOrderDetail(storeIndex)">
+            <ion-row>
+              <!-- 图片 -->
+              <ion-col size="3">
+                <img [src]="good.original_img|urlImg" app-error-img="assets/default_goods_image_240.png">
+              </ion-col>
+              <!-- 商品名称 / 规格 -->
+              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="12">{{good.goods_name}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">{{good.spec_key_name}}</ion-col>
+                </ion-row>
+              </ion-col>
+              <!-- 商品价格 / 商品数量 -->
+              <ion-col size="3" item-end text-end>
+                <ion-row>
+                  <ion-col size="12">￥{{good.goods_price}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">*{{good.goods_num}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12"><ion-icon name="arrow-forward-outline"></ion-icon></ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <!-- 0元 区 的 运费 -->
+        <ion-item lines="none" >
+          <ion-col size="9" offset="3" item-end text-end>
+            <ion-row>
+              <ion-col size="6" *ngIf="store.order_type == 2">运费￥:{{store.shipping_price}}</ion-col>
+              <ion-col size="6" *ngIf="store.order_type == 3">使用福利券:{{store.a_coin}}</ion-col>
+              <ion-col size="6" *ngIf="store.order_type == 4">使用易货券:{{store.b_coin}}</ion-col>
+              <ion-col size="6">使用余额￥:{{store.user_money}}</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-item>
+        <!-- 获得的福利券 -->
+        <ion-item lines="none" *ngIf="store.order_type == 3">
+          <ion-col size="9" offset="3" item-end text-end>
+            <ion-row>
+              <ion-col size="12">获得福利券:{{store.given_a_coin}}</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-item>
+        <!-- 总价 / 实付价 -->
+        <ion-row>
+          <ion-col size="3.4"></ion-col>
+          <ion-col size="8.6">
+            <ion-row>
+              <ion-col size="6">总价格：￥{{store.total_amount}}</ion-col>
+              <!-- <ion-col size="6">实付价：￥{{store.order_amount}}</ion-col> -->
+              <ion-col size="6">{{ store.is_reserve == 1 && store.reserve_param.end_time_back && store.reserve_param.is_pay && store.order_status == 0 ? '待付价' : '实付价'}}：￥{{store.order_amount}}</ion-col>
+            </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-item lines="none">
+          <ion-grid class="ion-justify-content-center ion-align-items-center">
+            <ion-row>
+              <ion-col size="12"  style="display: flex;align-content: center;justify-content: flex-end">
+                <ng-container *ngIf="store.pay_status==0&&store.act_type==1">
+                  <ion-button  appNoDblClick shape="round" size="small" class="act-button" color="secondary" disabled=true>等待审核</ion-button>
+                </ng-container>
+                <!--                   未付款                          -->
+                <!-- chooseClassType == '4'  易货 -->
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='WAITPAY' && chooseClassType == '4'" shape="round" size="small" class="act-button" color="secondary"
+                 [disabled]='(store.reserve_param.is_pay == 1 && now_time < store.reserve_param.end_time) || (!store.reserve_param.is_pay && now_time  > store.reserve_param.end_time)' 
+                  (click)="gotofacbuy(store.total_amount,store.master_order_sn,store.order_id, $event)">
+                  立即付款
+                </ion-button>
+                <!-- chooseClassType !== '4'  普通 、 零元 、 福利  -->
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='WAITPAY' && chooseClassType !== '4'" shape="round" size="small" class="act-button" color="secondary" 
+                (click)="gotofacbuy(store.total_amount,store.master_order_sn,store.order_id, $event)">
+                  立即付款
+                </ion-button>
+  
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='WAITPAY' && store.is_reserve !== 1" shape="round" size="small" class="act-button" color="danger" (click)="cancelorder(store.order_id, $event)">取消订单</ion-button>
+                <!-- 待收货 -->
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='WAITRECEIVE' " shape="round" size="small" class="act-button" color="secondary" (click)="goLogistics(store.delivery_doc, $event)">物流信息</ion-button>
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='WAITRECEIVE' " shape="round" size="small" class="act-button" color="secondary" (click)="receivingorder(store.order_id, $event)">确认收货</ion-button>
+                <!-- 已取消 -->
+                <ion-button  appNoDblClick *ngIf="store.order_status_code=='CANCEL'" shape="round" size="small" class="act-button" color="danger" (click)="delete_order(store.order_sn,store.order_id, $event)">删除订单</ion-button>
+                <!--共有-->
+                <ion-button appNoDblClick shape="round" size="small" class="act-button" color="danger" (click)="contact_customer()">联系客服</ion-button>
+                <!--<ion-button appNoDblClick *ngIf="store.order_status_code == 'WAITSEND' || store.order_status_code == 'WAITCCOMMENT' || store.order_status_code == 'FINISH' " shape="round" size="small" class="act-button" color="danger" (click)="afterSale(store.order_sn, $event)">申请售后</ion-button>-->
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ng-container>
+    <!-- 上拉加载更多 -->
+    <ion-infinite-scroll threshold="100px" *ngIf="storelist.length > 0 && isShowLoadMore" (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载中...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  <ng-container *ngIf="storelist.length==0">
+    <img src="assets/zwsp.jpg">
+  </ng-container>
+</ion-content>

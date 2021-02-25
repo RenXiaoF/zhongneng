@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback(0)">
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>申请售后</ion-title>
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row class="ion-text-center ion-align-items-center ion-justify-content-center" style="color: black">
+      <ion-col class="font-size-xbig" *ngFor="let ordertype of ordertypes" [ngStyle]="{'border-bottom': ordertype.checked ? '3px solid rgb(255, 65, 66)' : '0'}"
+        (click)="changeordertype(ordertype.type)">{{ordertype.name}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<!--申请售后-->
+<ion-content no-padding *ngIf="type == 1">
+  <ng-container *ngIf="storelist.length>0">
+    <ion-list *ngFor="let store of storelist;let key=index" no-lines no-margin class="bordertop">
+      <ion-item lines="none">
+        <ion-col size="1" class="iconfont iconfont_big icon-shangjia list-item-ic"></ion-col>
+        <ion-col size="8">{{store.store_name}}({{store.order_sn}})</ion-col>
+        <ion-col size="3" class="status-desc">{{store.status_desc}}</ion-col>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+          <ion-row>
+            <ion-col size="3">
+              <img [src]="store.signal_goods.original_img|urlImg" app-error-img="assets/default_goods_image_240.png">
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-row>
+                <ion-col size="12">{{store.signal_goods.goods_name}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">{{store.spec_key_name}}</ion-col>
+              </ion-row>
+            </ion-col>
+
+
+            <ion-col size="3" item-end text-end>
+              <ion-row>
+                <ion-col size="12">￥{{store.goods_price}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">*{{store.goods_num}}</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-grid class="ion-justify-content-center ion-align-items-center">
+          <ion-row>
+            <ion-col size="7"></ion-col>
+            <ion-col size="5">
+              <ion-button shape="round" size="small" class="act-button" color="danger" (click)="afterSale(key)">申请售后</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="storelist.length==0">
+    <img src="assets/zwsp.jpg">
+  </ng-container>
+</ion-content>
+
+<!--进度查询-->
+<ion-content no-padding *ngIf="type == 2">
+  <ng-container *ngIf="storelist.length>0">
+    <ion-list *ngFor="let store of storelist;let key=index" no-lines no-margin class="bordertop">
+      <ion-item lines="none">
+        <ion-col size="1" class="iconfont iconfont_big icon-shangjia list-item-ic"></ion-col>
+        <ion-col size="8">{{store.store.store_name}}({{store.order_sn}})</ion-col>
+        <ion-col size="3" class="status-desc"></ion-col>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+          <ion-row>
+            <ion-col size="3">
+              <img [src]="store.goods.original_img|urlImg" app-error-img="assets/default_goods_image_240.png">
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-row>
+                <ion-col size="12">{{store.goods.goods_name}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">{{store.order_goods.spec_key_name}}</ion-col>
+              </ion-row>
+            </ion-col>
+
+
+            <ion-col size="3" item-end text-end>
+              <ion-row>
+                <ion-col size="12">￥{{store.refund}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">*{{store.goods_num}}</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-grid class="ion-justify-content-center ion-align-items-center">
+          <ion-row>
+            <ion-col size="7"></ion-col>
+            <ion-col size="5">
+              <ion-button shape="round" size="small" class="act-button" color="danger" (click)="getProgress(key)">进度查询</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="storelist.length==0">
+    <img src="assets/zwsp.jpg">
+  </ng-container>
+</ion-content>

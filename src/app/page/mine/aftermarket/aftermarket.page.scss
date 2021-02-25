@@ -1,0 +1,47 @@
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(255, 65, 66);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+.bordertop {
+    // border-bottom: 6px solid #ebebeb;
+    border-top: 8px solid #f6f6f6;
+}
+.orderborder {
+    border-bottom:3px solid red;
+}
+.act-button{
+    // font-size:$font-size;
+    height: 2rem;
+    padding: 0 .6rem;
+}
+
+ion-content{
+    ion-list{
+        background-color: #DEE1E6;
+        padding-top: 1rem;
+        ion-item{
+            ion-col{
+                // border-bottom:3px solid rgb(255, 122, 63);
+            }
+            .status-desc{
+                text-align:end;
+                color:red
+            }
+        }
+    }
+}

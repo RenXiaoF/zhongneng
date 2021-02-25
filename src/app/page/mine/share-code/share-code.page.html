@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>我的分享码</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="content">
+    <ion-card-content>
+      <img src="assets/my/share_code_new.png" width="100%" alt="背景图" />
+      <!-- <img class="qrCode" src="{{supplier_qr_img | formatImg}}" alt="二维码" />
+      <div class="user_info">
+        <ion-text *ngIf="user_name">姓名：{{user_name}}</ion-text>
+        <ion-text *ngIf="!user_name">姓名：{{user_nickName}}</ion-text>
+        <ion-text>ID:{{user_id}}</ion-text>
+      </div> -->
+      <div class="info">
+        <div class="info_left">
+          <!-- <ion-text *ngIf="user_name">用户：{{user_name}}</ion-text>
+          <ion-text *ngIf="!user_name">用户：{{user_nickName}}</ion-text> -->
+          <ion-text>ID：{{user_id}}</ion-text>
+          <ion-text>手机号：{{mobile}}</ion-text>
+        </div>
+        <img *ngIf="supplier_qr_img" class="info_right" src="{{supplier_qr_img}}" alt="二维码" />
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

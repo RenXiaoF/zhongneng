@@ -1,0 +1,112 @@
+<ion-header>
+  <div class="header">
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar placeholder="输入商品名" [(ngModel)]="searchname"></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button size="large" (click)="searchGoods()" style="width: 100%; color: #ffffff;font-size: 1.2rem !important;">
+        搜索
+      </ion-button>
+    </ion-buttons>
+  </div>
+
+  <!-- 导航栏 -->
+  <div class="fenlei">
+    <ul class="fl_header">
+      <li *ngFor="let item of segments;let myIndex = index"
+          [ngClass]="{'selected':item.isChecked}"
+          (click)="changeSegment(myIndex)">
+        {{item.name}}
+      </li>
+
+      <!-- 一行两个 互换  一行两个 图标 -->
+      <span>
+        <div (click)="changeLookType()" class="icon-button">
+          <ion-icon *ngIf="lookType == 'two'" name="grid-outline"></ion-icon>
+          <ion-icon *ngIf="lookType == 'one'" name="menu-outline"></ion-icon>
+        </div>
+      </span>
+
+    </ul>
+
+  </div>
+</ion-header>
+
+<ion-content>
+  <!--<div class="header">-->
+    <!--<ion-buttons slot="start" (click)="goback()">-->
+      <!--<ion-button>-->
+        <!--<ion-icon name="chevron-back-outline"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+    <!--<ion-searchbar animated placeholder="搜索"></ion-searchbar>-->
+    <!--<ion-buttons slot="start">-->
+      <!--<ion-button slot="start">-->
+        <!--<ion-icon name="ellipsis-horizontal"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+  <!--</div>-->
+
+
+
+  <!-- 下拉刷新 -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- 排序 -->
+  <!-- <ul *ngIf="segments.length>0">
+    <li *ngFor="let item of segments;let myIndex = index" (click)="changeSegment(myIndex)" [ngClass]="{'selected':item.isChecked}">{{item.text}}</li>
+  </ul>
+  <span>
+    <i class="iconfont iconliebiao" style="color:#2c2c2c;"></i>
+  </span> -->
+
+
+  <ng-container *ngIf="lookType == 'two'">
+    <ul class="products" *ngIf="products.length>0">
+      <li *ngFor="let item of products" (click)="godetail(item.goods_id, item.product_type, item.is_reserve)">
+        <ion-badge class="badge" color="danger">
+          {{item.product_type_str|defaultVal}}
+        </ion-badge>
+        <img src="{{item.original_img | defaultGoodsImg | formatImg}}" alt="{{item.goods_name | defaultVal}}" />
+        <p class="desc">{{item.goods_name | defaultVal}}</p>
+        <p class="product_info">
+          <span class="price">￥{{item.shop_price | defaultNum}}</span>
+          <!-- <span class="sell_num">已售 {{item.sales_sum | defaultNum}}</span> -->
+        </p>
+      </li>
+    </ul>
+  </ng-container>
+  <ng-container *ngIf="lookType == 'one'" no-padding>
+    <ul class="products_row" *ngIf="products.length>0">
+      <li *ngFor="let item of products" (click)="godetail(item.goods_id, item.product_type, item.is_reserve)">
+        <ion-badge class="badge" color="danger">
+          {{item.product_type_str|defaultVal}}
+        </ion-badge>
+        <div style="width: 45%;margin-top: 2vh;">
+          <img src="{{item.original_img | defaultGoodsImg | formatImg}}" alt="{{item.goods_name | defaultVal}}" />
+        </div>
+        <div style="width: 65%">
+          <p class="desc">{{item.goods_name | defaultVal}}</p>
+          <p class="product_info">
+            <span class="price">￥{{item.shop_price | defaultNum}}</span>
+            <span class="sell_num">已售 {{item.sales_sum | defaultNum}}</span>
+          </p>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+
+
+  <!-- 上拉加载更多 -->
+  <ion-infinite-scroll threshold="100px" *ngIf="data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

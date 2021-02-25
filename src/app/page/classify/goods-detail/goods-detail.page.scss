@@ -1,0 +1,230 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+
+// 实现px转rem
+@function px2rem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+
+.detailNavBar{
+  position: absolute;
+}
+
+.bflex[_ngcontent-c0] {
+  display: flex;
+  align-items: center;
+}
+.dflex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paddingbtn {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.bordertop {
+  border-top: 1px solid #f6f6f6;
+}
+
+.borderdown {
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.borderbottom {
+  // border-bottom: 6px solid #ebebeb;
+  border-bottom: 8px solid #f6f6f6;
+}
+.paddingright {
+  padding-right: 1rem;
+}
+.toolbar-background-md {
+  border: 0;
+  background: transparent;
+}
+super-tabs-toolbar
+  > ion-toolbar.toolbar
+  .tab-buttons-container
+  .tab-buttons
+  super-tab-button {
+  padding: 0;
+}
+.button-md-primary {
+  background-color: #d3472c;
+}
+.selected {
+  color: #d3472c;
+}
+.toolbar-ios .segment-ios {
+  position: relative;
+}
+//渐变导航栏
+.scroll-content {
+  // padding-top: 0;
+  //content 内容置顶
+  margin-top: 0px !important;
+}
+.toolbar-background-ios {
+  background: none;
+}
+.seachr-panel {
+  background: rgba(255, 255, 255, 0);
+  //color: #fff;
+}
+
+/*顶部navbar*/
+.back-button.show-back-button {
+  flex: 3;
+  opacity: 1;
+
+}
+.bar-buttons-ios[end] {
+  flex: 3;
+}
+.toolbar-content-ios {
+  flex: 6;
+}
+.button-inner {
+  // justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+}
+
+.endbtn .bar-button-ios {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  // justify-content: center;
+  // align-items: center
+}
+
+.back-button .button-inner {
+  // background: rgba(0, 0, 0, 0.3);
+  background: black;
+  color: white;
+  border-radius: 5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  // justify-content: center;
+  // align-items: center
+}
+
+.back-button .button-inner .back-button-icon {
+  display: flex;
+  justify-content: center;
+}
+
+/*顶部segment*/
+.segment-ios .segment-button:first-of-type {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.segment-ios .segment-button:last-of-type {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.segment-ios .segment-button.segment-activated {
+  color: rgba(211, 71, 44, 0);
+  background-color: transparent;
+
+  border-bottom-style: solid;
+  border-width: 2px;
+  border-color: rgba(211, 71, 44, 0);
+
+  font-weight: bold;
+}
+.segment-ios .segment-button {
+  border: 0;
+  // color: rgba(0,0,0,0);
+  color: rgba(136, 136, 136, 0);
+}
+ion-header .bar-button-ios {
+  color: rgba(255, 255, 255, 1);
+}
+
+//详情下的segment
+.detailinfo .segment-button.segment-activated {
+  color: rgb(211, 71, 44);
+  background-color: transparent;
+  border: 0;
+}
+.detailinfo .segment-button {
+  border: 0;
+  color: rgba(136, 136, 136, 1);
+}
+
+//详情
+.content-ios hr {
+  height: 1px;
+}
+
+.black {
+  color: black;
+}
+.font-size-small {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.segment-button-checked {
+  --background-checked: white;
+  // --color-checked: #3880ff;
+  --color-checked: #ff4142;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  img {
+    width: 20rem;
+    height: 14rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+// #goods_content p img{
+//     width: 100%;
+// }
+
+// 回到 顶部
+.gotoTop {
+  position: fixed;
+  right: 2vw;
+  bottom: 10vh;
+  width: 6vh;
+}
+
+.price_font{
+  font-size: px2rem(14);
+  .price_left{
+    font-size: px2rem(20) !important;
+  }
+  .span_color{
+    font-size: px2rem(12) !important;
+    color:#fdbed9
+  }
+}
+
+.paddingleft{
+  padding-left: 1rem;
+}
+
+.red_bg{
+  background-image: linear-gradient(to right, #ff2b27 , #f62d85);
+}
+
+.font_color{
+  color:#ffffff;
+  text-align: center;
+}

@@ -1,0 +1,388 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(255, 65, 66);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+
+// 主要内容区域
+ion-content{
+    --background:#f5f5f5;
+    // 普通趋势商品
+    .ordinary{
+        ion-card-content{
+            .o_header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                div{
+                    ion-text{
+                        color:#fc4e29;
+                        font-size: 2rem !important;
+                    }
+                    .oh_old_price{
+                        text-decoration:line-through;
+                        font-size: 1rem !important;
+                        color:#999;
+                        margin-left: 0.5rem;
+                    }
+                }
+                .paper{
+                    color:#999;
+                }
+            }
+            .o_center{
+                margin: 0.8em 0;
+                color:#333;
+                font-size: 1.2rem !important;
+            }
+            .o_bottom{
+                border-top: 1px dashed #929292;
+                padding:0.8rem 0 0.4rem 0; 
+                display: flex;
+                justify-content: space-between;
+                ion-text{
+                    color:#999;
+                    font-size: 1.1rem !important;
+                    span{
+                        color:#388ceb;
+                    }
+                }
+            }
+        }
+    }
+    // 活动商品详情
+    .activity{
+        ion-card-header{
+            background-color: #f9531a;
+            ion-card-subtitle{
+                --color:white;
+                display: flex;
+                justify-content: space-between;
+                span{
+                    font-size:1.1rem !important;
+                }
+                .start{
+                    span{
+                        font-size: 0.9rem !important;
+                        border-color: white;
+                        color: rgb(0, 0, 0);
+                        background: white;
+                        padding: 0.384rem;
+                        margin: 0 0.154rem 0 0.308rem;
+                        font-weight: 600;
+                        border-radius: 0.384rem;
+                    }
+                }
+            }
+        }
+        ion-card-content{
+            .product_info{
+                color:#333;
+                .price{
+                    color:#fc4e29;
+                    font-size: 2rem !important;
+                }
+                .desc{
+                    font-size: 1.154rem !important;
+                    margin-top: 0.769rem ;
+                    margin-bottom: 1.154rem ;
+                }
+            }
+            .price_box{
+                border-top: 1px dashed #929292;
+                padding: 0.769rem 0 0.385rem 0;
+                display: flex;
+                justify-content: space-between;
+                color:#999;
+                font-size: 14 !important;
+            }
+            .give_volume{
+                color:#f62626;
+                font-size: 1.1rem !important;
+            }
+            .agreement{
+                margin-top: 0.5rem;
+                display: flex;
+                align-items: center;
+                font-size: 1.1rem !important;
+                input{
+                    margin-right:0.3rem ;
+                }
+                .a_note{
+                    text-decoration: underline;
+                    color: #656565;
+                    font-weight: 300;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    // 批发商品详情
+    .wholesale{
+        ion-card-header{
+            background-color: #fed018;
+            ion-card-subtitle{
+                --color:black;
+                display: flex;
+                justify-content: space-between;
+                span{
+                    font-size:1.1rem !important;
+                }
+                .start{
+                    span{
+                        font-size: 0.9rem !important;
+                        border: 1px solid rgb(0, 0, 0);
+                        color: rgb(255, 255, 255);
+                        background: black;
+                        padding: 0.384rem;
+                        margin: 0 0.154rem 0 0.308rem;
+                        font-weight: 600;
+                        border-radius: 0.384rem;
+                    }
+                }
+            }
+        }
+        ion-card-content{
+            .product_info{
+                color:#333;
+                .price{
+                    color:#fc4e29;
+                    font-size: px2rem(18) !important;
+                    line-height: px2rem(50);
+                    .market_price{
+                        color: #999999;
+                        font-size: px2rem(12);
+                    }
+                }
+                .retail_price{
+                    font-size: 1.1rem !important;
+                }
+                .desc{
+                    font-size: 1.154rem !important;
+                    margin-top: 0.769rem ;
+                    margin-bottom: 1.154rem ;
+                }
+            }
+            .price_box{
+                border-top: 1px dashed #929292;
+                padding: 0.769rem 0 0.385rem 0;
+                display: flex;
+                justify-content: space-between;
+                color:#999;
+                font-size: 14 !important;
+            }
+        }
+    }
+    // 选择套餐
+    .specification{
+        ion-card-header{
+            ion-card-title{
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: #333;
+            }
+        }
+        ion-card-content{
+            .s_header{
+                p{
+                    display: flex;
+                    justify-content: space-between;
+                    ion-text{
+                        width: 30%;
+                        margin-left: 3%;
+                        text-align: center;
+                    }
+                }
+                .s_header_title{
+                    padding-bottom: 1rem;
+                    color:black;
+                }
+                .s_header_content{
+                    border: 1px solid #ccc;
+                    border-radius: 0.4rem;
+                    padding: 1rem 0;
+                    margin-bottom: 0.5rem;
+                    background-color: white;
+                }
+                .selected{
+                    background: rgba(84,208,23,.1);
+                    
+                    border: 1px solid #49d46e;
+
+                }
+            }
+            .s_content{
+                border-top: 1px solid #ccc;
+                padding-top: 0.5rem;
+                .s_buy_num{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0.8rem 0;
+                    .buy_label{
+                        width: 80%;
+                        .numText{
+                            font-size: 1.2rem !important;
+                            color:#333;
+                            margin-right: 0.5rem;
+                        }
+                        .note{
+                            color:#999;
+                            font-size: 0.9rem !important;
+                        }
+                    }
+                    .ctrNum{
+                        display: flex;
+                        width: 50%;
+                        ion-text{
+                            display: flex;
+                            width: 3rem;
+                            justify-content: center;
+                            align-items: center;
+                            color: #555;
+                            background: #eee;
+                            margin: 1rem 0;
+                        }
+                        ion-input{
+                            background-color: white;
+                        }
+                    }
+                }
+                .pay{
+                    display: flex;
+                    justify-content: space-between;
+                    line-height: 2rem;
+                    font-size: 1.1rem !important;
+                    color:#999;
+                    .money{
+                        font-size: 1.4rem !important;
+                        color: #f62626;
+                    }
+                    .surplus{
+                        color:black;
+                    }
+                }
+                .agreement{
+                    margin-top: 0.5rem;
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.1rem !important;
+                    input{
+                        margin-right:0.3rem ;
+                    }
+                    .a_note{
+                        text-decoration: underline;
+                        color: #656565;
+                        font-weight: 300;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    // 图文介绍
+    .pic_intr{
+        margin-top: 0.615rem;
+        margin-bottom: 3rem;
+        background-color: white;
+        text-align: center;
+        h4{
+            text-align: center;
+            height: 3rem;
+            color: #303133;
+            position: relative;
+            line-height: 3rem;
+            span{
+                padding: 0 0.615rem;
+                position: relative;
+                z-index: 2;
+                background-color: white;
+                font-size: 1.153rem !important;
+            }
+        }
+        h4::after{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            width: 150px;
+            height: 0;
+            content: '';
+            border-bottom: 1px solid #ccc;
+            z-index: 1;
+        }
+        img{
+            display: block;
+        }
+    }
+    // 底部按钮中科风格
+    .bottom_btn{
+        position: fixed;
+        left: 1.2rem;
+        bottom: 1.2rem;
+        z-index: 95;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 3.864rem;
+        background: rgba(255, 255, 255, 0.9);
+        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        .home{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 1rem;
+            font-size: 1.538rem !important;
+            color: #909399;
+        }
+        .buyNow{
+            width: 6.923rem;
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-radius: 7.692rem;
+            box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
+            background: linear-gradient(to right, #ffac30, #fa436a, #F56C6C);
+            font-size: 1.1rem !important;
+            color:white;
+        }
+    }
+    // 底部按钮盖世风风格
+    // .bottom_btn{
+
+    // }
+}
+
+.spaceFooter{
+    height: 4rem;
+    div{
+        height: 100%;
+    }
+}
+

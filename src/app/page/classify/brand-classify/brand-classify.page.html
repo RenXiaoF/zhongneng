@@ -1,0 +1,56 @@
+<ion-content>
+  <!-- 头部 -->
+  <!-- <div class="title">众能<span>&nbsp;产业互联社交电商平台</span> -->
+    <!-- <i class="iconfont icon-xinxi" style="float: right; font-size: 2rem;" (click)="goInfo()"></i> -->
+  <!-- </div> -->
+  <!-- 搜索 -->
+  <div class="header">
+    <ion-icon (click)="goBack()" name="chevron-back-outline"></ion-icon>
+    <img class="logo" src="assets/logo.png" alt="">
+    <!-- 搜索框 -->
+    <!-- <i class="iconfont iconsaoyisao"></i> -->
+   <ion-searchbar class="ion-no-padding search" animated placeholder="搜索"></ion-searchbar>
+  </div>
+  <!-- 内容 -->
+  <div class="content">
+    <!-- 1. 顶部 分类 导航栏 -->
+    <div class="fenlei">
+      <ul class="fl_header">
+        <li *ngFor="let item of categoryList;let myIndex = index"
+          [ngClass]="{'selected':is_checked_category == myIndex }" (click)="changeSegment(myIndex)">
+          {{item.sc_name}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <ion-card *ngFor="let item of storeList">
+      <ion-grid fixed  (click)="goStreet(item.store_id)">
+        <ion-row>
+          <ion-col size="12">
+            <img width="100%" src="{{item.app_store_img}}" alt="">
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col size="4">
+            <img src="assets/img/index/lunbo_26.png" alt="">
+            <div class="price_box">￥364 <s>￥498</s></div>
+          </ion-col>
+          <ion-col size="4">
+            <img src="assets/img/index/lunbo_27.png" alt="">
+            <div class="price_box">￥364 <s>￥498</s></div>
+          </ion-col>
+          <ion-col size="4">
+            <img src="assets/img/index/lunbo_28.png" alt="">
+            <div class="price_box">￥364 <s>￥498</s></div>
+          </ion-col>
+        </ion-row> -->
+      </ion-grid>
+    </ion-card>
+    <ion-card>
+      <img src="assets/pinpai.png" width="100%" alt="">
+    </ion-card>
+  </div>
+
+</ion-content>

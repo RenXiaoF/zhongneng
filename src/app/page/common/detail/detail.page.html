@@ -1,0 +1,284 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="start" style="margin-left: 1rem;">
+      <ion-back-button color="light"></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>商品详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 头部轮播 -->
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="slides.length>0">
+    <ion-slide *ngFor="let slide of slides;">
+      <img src="{{slide | formatImg}}" />
+    </ion-slide>
+  </ion-slides>
+  <!-- 普通区商品详情 -->
+  <!-- <ion-card class="ordinary" *ngIf="type == '0'">
+
+    <ion-card-content>
+      <div class="o_header">
+        <div>
+          <ion-text>￥{{ordinary.shop_price}}</ion-text>
+          <ion-text class="oh_old_price">￥{{ordinary.market_price}}</ion-text>
+        </div>
+        <ion-text class="paper">可用优惠券 5</ion-text>
+      </div>
+      <p class="o_center">{{ordinary.goods_remark}}</p>
+      <div class="o_bottom">
+        <ion-text *ngIf="ordinary.is_free_shipping == '0'">包邮</ion-text>
+        <ion-text>库存 {{ordinary.store_count}} 件</ion-text>
+      </div>
+    </ion-card-content>
+  </ion-card> -->
+  <!-- 活动区商品详情 -->
+  <!-- <ion-card class="activity" *ngIf="type == '1'">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <span>{{text}}</span>
+        <div class="start">
+          <span>{{showTime[0]}}</span>:<span>{{showTime[1]}}</span>:<span>{{showTime[2]}}</span>
+        </div>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="product_info">
+        <p class="price">￥{{activity.shop_price | defaultNum}}</p>
+        <p class="desc">{{activity.goods_remark | defaultVal}}</p>
+      </div>
+      <p class="price_box">
+        <ion-text *ngIf="activity.is_free_shipping == '0'">包邮</ion-text>
+        <span></span>
+        <ion-text>库存：{{activity.store_count | defaultNum}}件</ion-text>
+      </p>
+      <p class="give_volume">赠送{{activity.b_coin | defaultNum}}批发卷</p>
+      <div class="agreement">
+        <input type="checkbox" checked />
+        <ion-text class="a_note">我已阅读并同意《<span style="text-decoration:underline;color:red" (click)="goProductAgreement()">商品协议</span>》</ion-text>
+      </div>
+    </ion-card-content>
+  </ion-card> -->
+  <!-- 批发区商品详情 -->
+  <ion-card class="wholesale">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <span>{{text}}</span>
+        <div class="start">
+          <span>{{showTime[0]}}</span>:<span>{{showTime[1]}}</span>:<span>{{showTime[2]}}</span>
+        </div>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="product_info">
+        <!-- <p class="price" >￥{{wholesale.con_list[0].price | defaultNum}}</p>
+        <p class="retail_price">活动价： {{wholesale.shop_price | defaultNum}}</p>
+        <p class="desc">{{wholesale.goods_remark | defaultVal}}</p> -->
+        <!-- <p class="price" *ngIf="data">￥{{data.now_price}}</p> -->
+        <!-- <p class="retail_price">活动价： 20</p> -->
+        <!-- <p class="desc"></p> -->
+        <p class="price" *ngIf="data">
+          批发价：￥{{(data.now_price*trade_price).toFixed(2) | defaultVal}}
+          <span class="market_price">零售价：￥{{(data.now_price*retail_price).toFixed(2) | defaultVal}}</span>
+        </p>
+      </div>
+      <p class="price_box" *ngIf="data">
+        <ion-text>包邮</ion-text>
+        <!-- <span>总库存：{{data.now_stock | defaultNum}}</span> -->
+        <!-- <ion-text *ngIf="wholesale.con_list.length>0">库存：{{wholesale.con_list[0].store_count | defaultNum}}件</ion-text> -->
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <!-- 选择套餐 -->
+  <ion-card class="specification">
+    <!-- <ion-card-header>
+      <ion-card-title>
+        选择套餐
+      </ion-card-title>
+    </ion-card-header> -->
+
+    <!-- <ion-card-content *ngIf="wholesale.con_list.length>0">
+      <div class="s_header">
+        <p class="s_header_title">
+          <ion-text>价格</ion-text>
+          <ion-text>所需批发卷</ion-text>
+          <ion-text>剩余数量</ion-text>
+        </p>
+        <p class="s_header_content" *ngFor="let item of wholesale.con_list;let myIndex = index" (click)="selectedItem(myIndex)" [ngClass]="{'selected':con_list_style[myIndex]}">
+          <ion-text>{{item.price | defaultNum}}</ion-text>
+          <ion-text>{{item.bat_point | defaultNum}}张</ion-text>
+          <ion-text>{{(item.store_count - item.buy_count)}}</ion-text>
+        </p>
+      </div>
+      <div class="s_content">
+        <div class="s_buy_num">
+          <div>
+            <ion-text class="numText">购买数量</ion-text>
+            <ion-text class="note">(每人每次限购1件)</ion-text>
+          </div>
+          <div class="ctrNum">
+            <ion-text class="reduceNum" (click)="changenum(-1)">-</ion-text>
+            <ion-text class="num">{{goods_num}}</ion-text>
+            <ion-input  (ionChange)="keydown($event)" class="ion-text-center" type="number" [(ngModel)]="goods_num"></ion-input>
+            <ion-text class="addNum" (click)="changenum(1)">+</ion-text>
+          </div>
+        </div>
+        <p class="pay">
+          <ion-text>合计所需批发卷</ion-text>
+          <ion-text class="money">{{(wholesale.con_list[con_type].bat_point | defaultNum)*goods_num}}</ion-text>
+        </p>
+        <p class="pay">
+          <ion-text>剩余批发卷</ion-text>
+          <ion-text class="money surplus">{{b_coin | defaultVal}}</ion-text>
+        </p>
+        <p class="pay">
+          <ion-text>需要支付</ion-text>
+          <ion-text class="money">￥{{(wholesale.con_list[con_type].price | defaultNum)*goods_num}}</ion-text>
+        </p>
+        <div class="agreement">
+          <input type="checkbox" checked />
+          <ion-text class="a_note">我已阅读并同意《<span style="text-decoration:underline;color:red" (click)="goProductAgreement()">商品协议</span>》</ion-text>
+        </div>
+      </div>
+    </ion-card-content> -->
+
+
+    <!-- <ion-card-content>
+      <div class="s_header">
+        <p class="s_header_title">
+          <ion-text>套餐价格</ion-text>
+          <ion-text>剩余数量</ion-text>
+        </p>
+        <ng-container *ngIf="data && data.con_list">
+          <p class="s_header_content" *ngFor="let item of data.con_list">
+              <ion-text>{{item.price}}</ion-text>
+              <ion-text>{{item.store_count-item.buy_count}}</ion-text>
+          </p>
+        </ng-container>
+        <div>每个套餐包含一件零售商品和两件批发商品，零售商品可选择提货或兑换易货券；批发商品可选择提货或寄售。</div>
+        <div>
+          <ion-radio-group mode="md" [(ngModel)]="checkType">
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="3" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span>全部提货</span>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="1" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span>提货寄售</span>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="2" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span>易货寄售</span>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-radio-group>
+        </div>
+      </div>
+      <div class="s_content">
+        <div class="s_buy_num">
+          <div class="buy_label">
+            <ion-row>
+              <ion-col size="12">
+                <ion-text class="numText">购买套餐数量</ion-text>
+              </ion-col>
+              <ion-col size="12">
+                <ion-text class="note">(每人每次限购5件)</ion-text>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="ctrNum">
+            <ion-text class="reduceNum" (click)="changenum(-1)">-</ion-text>
+            <ion-input (ionChange)="keydown($event)" class="ion-text-center" type="number" [(ngModel)]="goods_num">
+            </ion-input>
+            <ion-text class="addNum" (click)="changenum(1)">+</ion-text>
+          </div>
+        </div>
+        
+        <div class="agreement">
+          <ion-checkbox [(ngModel)]="isChecked" ></ion-checkbox> &nbsp;
+          <ion-text class="a_note">我已阅读并同意《<span style="text-decoration:underline;color:red"
+              (click)="goProductAgreement()">商品协议</span>》</ion-text>
+        </div>
+      </div>
+    </ion-card-content> -->
+
+  </ion-card>
+  <!-- 图文区域 -->
+  <div class="pic_intr" *ngIf="slides.length>0">
+    <h4><span>图文详情</span></h4>
+
+    <div [innerHTML]="goodsdetail.goods_content"></div>
+  </div>
+</ion-content>
+
+<ion-footer class="spaceFooter">
+  <div class="ion-footer-div">
+    <ion-row text-center style="background: #fff;">
+      <ion-col size="4" class="ion-no-padding">
+        <ion-grid>
+          <ion-row class="ion-no-padding">
+            <ion-col size="6" class="ion-no-padding ion-text-center dflex black">
+              <i class="iconfont iconfont_small icon-kefu list-item-ic"></i>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-text-center dflex black">
+              <i class="iconfont iconfont_big  icon-dianpu list-item-ic"></i>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding black">
+            <ion-col size="6" class="ion-no-padding ion-text-center">
+              客服
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-text-center">
+              店铺
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+
+      <!-- <ion-col (click)="addtocart()" size="3" class="font-size-defalt dflex paddingbtn" style="background:#FE9402;color:white;display:flex;align-items:center;justify-content:center;">
+        加入购物车
+      </ion-col> -->
+      <ion-col *ngIf="!btn_status" size="8" class=" dflex paddingbtn" color="light"
+        style="height: 4rem; background:#D3472C;color:white;display:flex;align-items:center;justify-content:center;">
+        <ion-button style="width: 100%;" [disabled]="btn_status" color="light" (click)="buynow()" expand="block" fill="clear" shape="round">
+          <span>{{showTime[0]}}</span>:<span>{{showTime[1]}}</span>:<span>{{showTime[2]}}</span>立即购买
+        </ion-button> 
+      
+      </ion-col>
+      <ion-col *ngIf="btn_status" size="8" class=" dflex paddingbtn" color="light"
+        style="height: 4rem; background:#dadada;display:flex;align-items:center;justify-content:center;">
+        <ion-button style="width: 100%; background: #dadada;" [disabled]="btn_status" color="dark" expand="block" fill="clear" shape="round">
+          已结束！
+        </ion-button> 
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-footer>

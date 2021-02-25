@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon color="light" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      分享海报
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="content">
+    <ion-card-content *ngIf="img">
+      <img src="{{img}}" alt="背景图" />
+    </ion-card-content>
+  </ion-card>
+</ion-content>

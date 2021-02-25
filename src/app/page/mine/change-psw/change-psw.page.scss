@@ -1,0 +1,107 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(255, 65, 66);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+// 内容样式
+ion-content{
+    .head_img {
+        height: 25vh;
+        overflow: hidden;
+
+        .img {
+            width:60%;
+            margin: px2rem(50) auto; 
+            // height: 100px;
+            // background: #16c4af;
+            // border-radius: 50%;
+            // margin: 50px auto 0;
+        }
+    }
+    .pswList{
+        ion-item{
+            position: relative;
+            ion-input{
+                --placeholder-color:grey;
+                color:black;
+                font-size: 1.3rem !important;
+            }
+            ion-text{
+                font-size: 1.1rem !important;
+                position: absolute;
+                top: 1rem;
+                right:1rem;
+                z-index: 999;
+            }
+            .getPhoneCode{
+                // position: absolute;
+                // top:2.5rem;
+                // right:2rem;
+                border-radius: 3px;
+                text-align: center;
+                line-height: 2rem;
+                color: #656565;
+                --border-color:#656565;
+                z-index:999;
+                --background-activated:#656565;
+            }
+        }
+    }
+    .btn{
+        width: 90%;
+        height: 3rem;
+        margin: 0 auto;
+        --background:#fc4e29;
+        --background-activated:rgb(194, 62, 5);
+        margin-top: 2rem;
+        font-size: 1.4rem !important;
+    }
+}
+
+.user_pwd {
+    // margin: px2rem(20);
+    .showPwd{
+        margin-right: px2rem(10);
+    }
+    .see-pwd{
+        width: 3rem;
+        position: absolute;
+        right: 2rem;
+        padding-left: 1rem;
+        border-left: 1px solid #000000;
+        
+    }
+}
+
+
+.input-style{
+    border: 1px solid #ccc;
+    border-radius: 5rem;
+    background: #e4e5e7;
+    padding-left: 1rem;
+    width: 100%;
+    height: 3rem;
+    position: relative;
+}

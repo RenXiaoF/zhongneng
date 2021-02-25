@@ -1,0 +1,154 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="goback()" name="chevron-back-outline" style="margin-top: 10px;font-size: 2rem;"></ion-icon>
+    <ion-title>填写订单</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding class="borderbottom">
+    <ion-row justify-content-center align-items-center>
+      <ion-col size="1">
+        <!-- 地址图标 -->
+        <i class="iconfont iconlocation" style="color: #1296db; font-size: 1.2rem"></i>
+      </ion-col>
+      <ion-col size="10">
+        <ion-row>
+          <ion-col size="4">林生</ion-col>
+          <ion-col size="6">156****4561</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10">广东省广州市黄埔区</ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="1">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4">
+        <i class="iconfont icon_big icon-dianpu list-item-ic"></i>
+        日用雨伞专营店
+      </ion-col>
+      <ion-col size="8">德国Kobold遮阳伞太阳伞五折...</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4"><img src="assets/img/cart/1.jpg" width="80px" height="120px" alt=""></ion-col>
+      <ion-col size="4">
+        <ion-row>
+          <ion-col size="12">颜色：黑色</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">￥780</ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-button style="height: 2rem;width: 2rem;" class="font-size-small ion-no-margin"  color="light">-</ion-button>
+              </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-input style="height: 100%;" class="ion-no-margin ion-no-padding ion-text-center" [(ngModel)]="goods_num"  type="number"></ion-input>
+              </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-button style="height: 2rem;width: 2rem;" class="font-size-small ion-no-margin" color="light" >+</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ng-container *ngIf="storelist.length>0">
+    <ion-list *ngFor="let store of storelist" no-lines no-margin class="borderbottom" no-padding>
+      <ion-item lines="none">
+        <i class="iconfont icon_big icon-dianpu list-item-ic"></i>
+        {{store.store_name}}
+      </ion-item>
+      <ion-item *ngFor="let cart of store.cartList" lines="none">
+        <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+          <ion-row>
+            <ion-col size="3">
+              <img [src]="cart.original_img" app-error-img="assets/default.jpg">
+            </ion-col>
+            <ion-col size="4">{{cart.goods_name}}</ion-col>
+            <ion-col size="2">{{cart.spec_key_name}}</ion-col>
+            <ion-col size="3" item-end text-end>
+              ￥{{cart.goods_price}}
+              <ion-row>
+                <ion-col item-end text-end>*{{cart.goods_num}}</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-container> -->
+  <div class="grid_box">
+    <ion-grid class="ion-grid-width borderbottom" style="padding-bottom: 0;" padding>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>配送方式：</ion-text>
+        <ion-text>快递</ion-text>
+      </ion-row>
+      <ion-row size="12" align-items-center>
+        <ion-text>留言：</ion-text>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="ion-grid-width borderbottom" style="padding-bottom: 0;" padding>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>商品总额</ion-text>
+        <ion-text>￥780</ion-text>
+      </ion-row>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>运费</ion-text>
+        <ion-text>免运费</ion-text>
+      </ion-row>
+      <ion-row size="12" align-items-center class="ion-justify-content-end">
+        <ion-text>总计：￥780</ion-text>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="ion-grid-width borderbottom" style="padding-bottom: 0;" padding>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>微信支付</ion-text>
+        <ion-checkbox color="danger"></ion-checkbox>
+      </ion-row>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>支付宝</ion-text>
+        <ion-checkbox color="danger"></ion-checkbox>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="ion-grid-width borderbottom" style="padding-bottom: 0;" padding>
+      <ion-row size="12" align-items-center class="ion-justify-content-between">
+        <ion-text>发票</ion-text>
+        <ion-text>不开发票</ion-text>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+</ion-content>
+<ion-footer class="spaceFooter">
+  <div class="ion-footer-div">
+    <ion-row style="z-index:100;">
+      <ion-col size="8" text-right class="abutton">
+        总计：￥780
+      </ion-col>
+      <!-- <ion-col size="8" text-right class="abutton" *ngIf="isChecked[1]">
+          购物券兑换：{{total_price.exchange_integral}}
+        </ion-col> -->
+      <ion-col size="4" text-center>
+        <button style="background: #f53d3d;color: white;width: 100%;" class="abutton">支付</button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-footer>

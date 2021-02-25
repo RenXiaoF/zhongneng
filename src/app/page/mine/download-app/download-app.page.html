@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>App下载</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="download">
+    <img src="{{download.url_image | defaultDownloadQrcode}}" alt="扫码下载" />
+    <a href="{{download.url | defaultDownloadUrl}}">点击下载app</a>
+  </div>
+</ion-content>

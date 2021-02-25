@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon style="color: #ffffff;" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>预售专区</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- 下拉刷新 -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid fixed  *ngIf="products.length > 0">
+    <ng-container *ngFor="let item of products">
+      <ion-row (click)="godetail(item.goods_id)">
+        <ion-col size="4">
+          <img class="goods_img" src="{{item.original_img | defaultGoodsImg | formatImg}}" alt="{{item.goods_name | defaultVal}}">
+        </ion-col>
+        <ion-col size="8">
+          <ion-row>
+            <ion-col size="12"  > <div class="goods_name">{{item.goods_name | defaultVal}}</div> </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12"> </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" class="end_time">结束时间：{{item.reserve_param.end_time ? item.reserve_param.end_time : '' }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" class="old_price">市场价：￥<s>{{item.market_price | defaultNum}}</s></ion-col>
+          </ion-row>
+          <ion-row>
+            <!-- <ion-col size="12"><div class="new_price"><div class="price_num line_box">{{item.b_coin | defaultNum}}</div>易货券 <div class="goShop line_box">兑换</div> </div></ion-col> -->
+            <ion-col size="12"><div class="new_price"><div class="price_num line_box">{{item.reserve_param.reserve_money | defaultNum}}</div>易货券 <div class="goShop line_box">预售</div> </div></ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+  <!-- 上拉加载更多 -->
+  <ion-infinite-scroll threshold="100px" *ngIf="data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

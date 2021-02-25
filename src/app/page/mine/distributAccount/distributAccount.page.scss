@@ -1,0 +1,200 @@
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(255, 61, 51);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+// 内容样式
+ion-content{
+    position: relative;
+    --background:rgb(249, 249, 249);
+    .bg{
+        position: absolute;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 13rem;
+        background: #2b233b;
+        border-radius: 0 0 4rem 4rem;
+    }
+    ion-card{
+        ion-card-content{
+            padding: 0;
+            .card_info{
+                padding: 2rem 1.5rem 0 1.5rem;
+                position: relative;
+                width: 100%;
+                height: 15rem;
+                color: #6f3f2f;
+                img{
+                    position: absolute;
+                    top:0;
+                    right:0;
+                    z-index: 0;
+                }
+                .translate{
+                    width: 2.3rem;
+                    height: 2.3rem;
+                    right:1rem;
+                    top:0.8rem;
+                }
+                div{
+                    position: relative;
+                    z-index: 1;
+                }
+                .account{
+                    margin-bottom: 2.3rem;
+                    .text{
+                        font-size: 1.1rem !important;
+                        line-height: 1.5rem;
+                        margin-bottom: 0.3rem;
+                    }
+                    .money{
+                        font-size: 2.7rem !important;
+                        font-weight: 600;
+                        line-height: 3.5rem;
+                    }
+                }
+                .withdrawal{
+                    display: flex;
+                    div{
+                        width: 50%;
+                        p{
+                            font-size: 0.9rem !important;
+                            line-height: 1.25rem;
+                            margin-bottom: 0.75rem;
+                            opacity: 0.67;
+                        }
+                        .w_money{
+                            font-size: 1.5rem !important;
+                            opacity: 1;
+                        }
+                    }
+                }
+
+            }
+            .card_bottom{
+                display: flex;
+                div{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 50%;
+                    padding-left: 2rem;
+                    padding-right: 1.2rem;
+                    line-height: 4rem;
+                    font-size: 1.2rem !important;
+                    color:#656565;
+                    ion-icon{
+                        color:#e5e5e5;
+                    }
+                }
+                .cb_left{
+                    border-right:1px solid #e7e7e7;
+                }
+            }
+        }
+    }
+    .detail{
+        h4{
+            text-align: center;
+            height: 3rem;
+            color: #333;
+            position: relative;
+            line-height: 3rem;
+            span{
+                padding: 0 0.615rem;
+                position: relative;
+                z-index: 2;
+                background:rgb(249, 249, 249);
+                font-size: 1.5rem !important;
+            }
+        }
+        h4::after{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            width: 50%;
+            height: 0;
+            content: '';
+            border-bottom: 1px solid #ccc;
+            z-index: 1;
+        }
+        .selectDate{
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.3rem !important;
+            align-items: center;
+            margin-bottom: 1rem;
+            ion-dateTime{
+                // border: 1px solid #ccc;
+                padding: 0;
+            }
+        }
+        .noData{
+            width: 92%;
+            background-color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.8rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 40%;
+                height: 80%;
+                margin: 1rem 0;
+            }
+            ion-text{
+                font-size: 1.1rem !important;
+                color:#b2b2b2;
+            }
+        }
+        ion-grid{
+            padding: 0;
+            width: 92%;
+            .d_header{
+                background-color: #f4f5f7;
+                text-align: center;
+                line-height: 3rem;
+                border: 1px solid #ccc;
+                ion-col + ion-col{
+                    border-left: 1px solid #ccc;
+                }  
+            }
+            .d_content{
+                text-align: center;
+                border-radius: 0.8rem;
+                background-color: white;
+                margin-bottom: 1rem;
+                .redText{
+                    color:#fd595b;
+                }
+                .blueText{
+                    color:blue;
+                }
+            }
+            ion-col{
+                padding: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,398 @@
+<ion-content>
+  <!-- 头部 -->
+  <!-- <div class="title">众能<span>&nbsp;产业互联社交电商平台</span> -->
+    <!-- <i class="iconfont icon-xinxi" style="float: right; font-size: 2rem;" (click)="goInfo()"></i> -->
+  <!-- </div> -->
+  <!-- 搜索 -->
+  <div class="header">
+    <img class="logo" src="assets/logo1.png" alt="">
+    <!-- 二维码扫描 -->
+    <div (click)="scanner()" class="saoyisao">
+      <i class="iconfont iconsaoyisao"></i>
+    </div>
+    <!-- 搜索框 -->
+   <ion-searchbar class="ion-no-padding search" animated placeholder="搜索" (click)="goproduct()"></ion-searchbar>
+   <div style="line-height: 0rem;" (click)="goNotice()">
+    <ion-icon size="large" name="chatbubble-ellipses-outline"></ion-icon>
+   </div>
+  </div>
+  <!-- 内容 -->
+  <div class="content">
+    <!-- 1. 顶部 分类 导航栏 -->
+    <div class="fenlei">
+      <ul class="fl_header">
+        <li [ngClass]="{'selected': isJingXuan}" (click)="clickJingXuan(-1)">
+          精选
+        </li>
+        <li *ngFor="let item of categoryList;let myIndex = index"
+          [ngClass]="{'selected':is_checked_category == myIndex }" (click)="changeSegment(myIndex)">
+          {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <!-- 魔法首页 -->
+    <ng-container *ngIf="items.length > 0 && isJingXuan == true">
+      <ng-container *ngFor="let magic of items; let ilb = index">
+        <!-- 1. 轮播图 style_type=33 -->
+        <ng-container *ngIf="magic.mag_type == 33">
+          <ion-slides pager="true" [options]="slideOpts">
+            <ion-slide *ngFor="let item of magic.mag_json.img_list">
+              <!-- 类型 0：没有跳转链接 -->
+              <ng-container *ngIf="item.type_img == 0">
+                <div>
+                  <img [src]="item.img | urlImg" />
+                </div>
+              </ng-container>
+              <!-- 类型 1：跳转商品类别 -->
+              <ng-container *ngIf="item.type_img == 1">
+                <div (click)="gocat($event, item.cate_id)">
+                  <img [src]="item.img | urlImg" />
+                </div>
+              </ng-container>
+              <!-- 类型  2：跳商品详情 -->
+              <ng-container *ngIf="item.type_img == 2">
+                <div (click)="godetail($event, item.goods_id, item.product_type)">
+                  <img [src]="item.img | urlImg" />
+                </div>
+              </ng-container>
+              <!-- 类型  3：跳自定义链接 -->
+              <ng-container *ngIf="item.ad_type == 3">
+                <a href="{{item.model_code}}">
+                  <img [src]="item.img | urlImg" />
+                </a>
+              </ng-container>
+            </ion-slide>
+          </ion-slides>
+        </ng-container>
+
+        <!--style_type=66,一行布局-->
+        <ng-container *ngIf="magic.mag_type == 66">
+          <div class="style_type66">
+            <!-- 一张图片 -->
+            <ng-container *ngIf="magic.mag_json.dh_num == '1'">
+              <div *ngFor="let item of magic.mag_json.img_list; let i66 = index"
+                style="margin-bottom: -3px;width: 100%;">
+                <!-- 类型 0：没有跳转链接 -->
+                <div *ngIf="item.type_img == '0'">
+                  <div (click)="goIframe($event, item.url_img)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img img_size" [src]="item.img | urlImg" [ngStyle]="{'height':magic.height}" />
+                  </div>
+                </div>
+                <!-- 类型 1：跳转商品类别 -->
+                <ng-container *ngIf="item.type_img == '1'">
+                  <div (click)="gocat($event, item.cate_id)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img img_size" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  2：跳商品详情 -->
+                <ng-container *ngIf="item.type_img == '2'">
+                  <div (click)="godetail($event, item.goods_id, '0')" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img img_size" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  4：跳模块 -->
+                <ng-container *ngIf="item.type_img == '4'">
+                  <div (click)="gomodel($event, item.model_code)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img img_size" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- 二张图片 -->
+            <ng-container *ngIf="magic.mag_json.dh_num == '2'">
+              <div *ngFor="let item of magic.mag_json.img_list; let i66 = index"
+                style="margin-bottom: -3px;width: 50%;">
+                <!-- 类型 0：没有跳转链接 -->
+                <div *ngIf="item.type_img == '0'">
+                  <div (click)="goIframe($event, item.url_img)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img " [src]="item.img | urlImg" />
+                  </div>
+                </div>
+                <!-- 类型 1：跳转商品类别 -->
+                <ng-container *ngIf="item.type_img == '1'">
+                  <div (click)="gocat($event, item.cate_id)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  2：跳商品详情 -->
+                <ng-container *ngIf="item.type_img == '2'">
+                  <div (click)="godetail($event, item.goods_id, '0')" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  4：跳模块 -->
+                <ng-container *ngIf="item.type_img == '4'">
+                  <div (click)="gomodel($event, item.model_code)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- 三张图片 -->
+            <ng-container *ngIf="magic.mag_json.dh_num == 3">
+              <div *ngFor="let item of magic.mag_json.img_list; let i66 = index"
+                style="margin-bottom: -3px;width: 33.33%;">
+                <!-- 类型 0：没有跳转链接 -->
+                <div *ngIf="item.type_img == 0">
+                  <div (click)="goIframe($event, item.url_img)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" height="{{magic.height}}" />
+                  </div>
+                </div>
+                <!-- 类型 1：跳转商品类别 -->
+                <ng-container *ngIf="item.type_img == 1">
+                  <div (click)="gocat($event, item.cate_id)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  2：跳商品详情 -->
+                <ng-container *ngIf="item.type_img == 2">
+                  <div (click)="godetail($event, item.goods_id, '0')" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  4：跳模块 -->
+                <ng-container *ngIf="item.type_img == '4'">
+                  <div (click)="gomodel($event, item.model_code)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- 四张图片 -->
+            <ng-container *ngIf="magic.mag_json.dh_num == 4">
+              <div *ngFor="let item of magic.mag_json.img_list; let i66 = index"
+                style="margin-bottom: -3px;width: 25%;">
+                <!-- 类型 0：没有跳转链接 -->
+                <div *ngIf="item.type_img == 0">
+                  <div (click)="goIframe($event, item.url_img)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </div>
+                <!-- 类型 1：跳转商品类别 -->
+                <ng-container *ngIf="item.type_img == 1">
+                  <div (click)="gocat($event, item.cate_id)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  2：跳商品详情 -->
+                <ng-container *ngIf="item.type_img == 2">
+                  <div (click)="godetail($event, item.goods_id, '0')" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  4：跳模块 -->
+                <ng-container *ngIf="item.type_img == '4'">
+                  <div (click)="gomodel($event, item.model_code)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- 五张图片 -->
+            <ng-container *ngIf="magic.mag_json.dh_num == '5'">
+              <div *ngFor="let item of magic.mag_json.img_list; let i66 = index" style="margin-bottom: -3px;width: 20%;">
+                <!-- 类型 0：没有跳转链接 -->
+                <div *ngIf="item.type_img == '0'">
+                  <div (click)="goIframe($event, item.url_img)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" [ngStyle]="{'height':magic.height}" />
+                  </div>
+                </div>
+                <!-- 类型 1：跳转商品类别 -->
+                <ng-container *ngIf="item.type_img == '1'">
+                  <div (click)="gocat($event, item.cate_id)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  2：跳商品详情 -->
+                <ng-container *ngIf="item.type_img == '2'">
+                  <div (click)="godetail($event, item.goods_id, '0')" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+                <!-- 类型  4：跳模块 -->
+                <ng-container *ngIf="item.type_img == '4'">
+                  <div (click)="gomodel($event, item.model_code)" [ngStyle]="{'flex':item.ge_img}">
+                    <img class="magic_list_img" [src]="item.img | urlImg" />
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!--style_type=99,主块多行布局-->
+        <ng-container *ngIf="magic.mag_type == 99">
+          <div class="style_type99">
+            <!--主图布局-->
+            <div [ngStyle]="{'flex': magic.mag_json.proimg_ge,'order': magic.mag_json.lr_type}">
+              <!-- 类型 0：没有跳转链接 -->
+              <ng-container *ngIf="magic.mag_json.proimg_type_img == 0">
+                <a href="{{magic.mag_json.proimg_url}}">
+                  <img class="magic_list_img" [src]="magic.mag_json.proimg | urlImg" />
+                </a>
+              </ng-container>
+              <!-- 类型 1：跳转商品类别 -->
+              <ng-container *ngIf="magic.mag_json.proimg_type_img == 1">
+                <div (click)="gocat($event, magic.mag_json.proimg_cate_id)">
+                  <img class="magic_list_img" [src]="magic.mag_json.proimg | urlImg" />
+                </div>
+              </ng-container>
+              <!-- 类型  2：跳商品详情 -->
+              <ng-container *ngIf="magic.mag_json.proimg_type_img == 2">
+                <div (click)="godetail($event, magic.mag_json.proimg_goods_id, '0')">
+                  <img class="magic_list_img" [src]="magic.mag_json.proimg | urlImg" />
+                </div>
+              </ng-container>
+            </div>
+            <!--多行布局-->
+            <div style="flex: 6;">
+              <div style="display: flex;" *ngFor="let item_list of magic.mag_json.row_list; let i992 = index">
+                <ng-container *ngFor="let item_list_item of item_list; let i998 = index">
+                  <!-- 类型 0：没有跳转链接 -->
+                  <div *ngIf="item_list_item.type_img_img == 0">
+                    <a href="{{item_list_item.url_row_img}}" [ngStyle]="{'flex':item_list_item.ge_row_img}">
+                      <img class="magic_list_img_d" [src]="item_list_item.row_img | urlImg" />
+                    </a>
+                  </div>
+                  <!-- 类型 1：跳转商品类别 -->
+                  <ng-container *ngIf="item_list_item.type_img_img == 1">
+                    <div (click)="gocat($event, item_list_item.cate_id_img)"
+                      [ngStyle]="{'flex':item_list_item.ge_row_img}">
+                      <ion-card>
+                        <img class="magic_list_img_d" [src]="item_list_item.row_img | urlImg" />
+                      </ion-card>
+                    </div>
+                  </ng-container>
+                  <!-- 类型  2：跳商品详情 -->
+                  <ng-container *ngIf="item_list_item.type_img_img == 2">
+                    <div (click)="godetail($event, item_list_item.goods_id_img, '0')"
+                      [ngStyle]="{'flex':item_list_item.ge_row_img}">
+                      <ion-card>
+                        <img class="magic_list_img_d" [src]="item_list_item.row_img | urlImg" />
+                      </ion-card>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- 商品页 style_type=55 -->
+        <ng-container *ngIf="magic.mag_type == 55">
+          <div class="" *ngIf="magic.mag_json.length>0">
+            <div class="new-goods">
+              <div class="new_header" (click)="goproduct()">
+                <span>{{magic.mag_name}}</span>
+                <div class="more">
+                  <span>更多</span>
+                  <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+                </div>
+              </div>
+            </div>
+            <!-- 商品列表 -->
+            <ul class="fl_content" *ngIf="magic.mag_json.length>0">
+              <li class="fl_item" *ngFor="let item of magic.mag_json" (click)="godetail($event, item.goods_id, item.product_type)">
+                <ion-badge class="badge" color="danger">
+                  {{item.product_type_str|defaultVal}}
+                </ion-badge>
+                <div class="img_box"><img class="goods-img" src="{{item.original_img | defaultGoodsImg | formatImg}}" alt="{{item.goods_name | defaultVal}}" /></div>
+                <div class="fl_desc">
+                  <!-- <p class="goods_name">方法和烦烦烦{{item.goods_name | defaultVal}}</p> -->
+                  <p class="goods_name">{{item.goods_name | defaultVal}}</p>
+                  <span class="fl_now_price">￥{{item.shop_price | defaultNum}}</span>
+                  <span class="fl_old_price">￥{{item.market_price | defaultNum}}</span>
+                  <!-- <div class="group">
+                    <span class="seek">2人拼</span>
+                    <span class="seek_total">200人已拼</span>
+                  </div> -->
+                </div>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+
+      </ng-container>
+    </ng-container>
+
+    <!--商品三级分类-->
+    <ng-container *ngIf="isJingXuan == false">
+      <div class="right-aside">
+        <!-- <div *ngIf="categoryListItem.length > 0"> -->
+          <!-- <div *ngFor="let fitem of categoryListItem" class="s-list"> -->
+          <!-- <ion-text class="s-item">{{fitem.name}}</ion-text> -->
+
+          <!-- 图标分类 -->
+          <!-- <div class="t-list">
+            <div class="t-item" *ngFor="let titem of categoryListItem" (click)="goList()">
+              <ion-img class="text-img" src=" assets/icon/favicon.png"></ion-img>
+              <ion-text class="text-item">{{titem.name}}</ion-text>
+            </div>
+          </div> -->
+
+          <!-- </div> -->
+        <!-- </div> -->
+
+        <ul class="products" *ngIf="products.length>0">
+          <li *ngFor="let item of products" (click)="godetail($event,item.goods_id, item.product_type)">
+            <ion-badge class="badge" color="danger">
+              {{item.product_type_str|defaultVal}}
+            </ion-badge>
+            <img src="{{item.original_img | defaultGoodsImg | formatImg}}" alt="{{item.goods_name | defaultVal}}" />
+            <p class="desc">{{item.goods_name | defaultVal}}</p>
+            <p class="product_info">
+              <span class="price">￥{{item.shop_price | defaultNum}}</span>
+              <!-- <span class="sell_num">已售 {{item.sales_sum | defaultNum}}</span> -->
+            </p>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <!-- 上拉加载更多 -->
+    <ion-infinite-scroll threshold="70%" *ngIf="show_loading" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <!-- 上拉加载更多 -->
+    <ion-infinite-scroll threshold="70%" *ngIf="hasMore" (ionInfinite)="loadDataOther($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <!-- 回到顶部 -->
+    <div>
+      <img (click)="gotoTop()" class="gotoTop" src="assets/gotoTop.png">
+    </div>
+    <!-- 下载app -->
+    <div>
+      <a href="{{download.url | defaultDownloadUrl}}">
+        <img  class="download" src="assets/downloadApp.png" alt="">
+      </a>
+    </div>
+
+
+  </div>
+</ion-content>
+
+<!-- 弹框 有新的版本可更新 -->
+<div *ngIf="showModal" class="app-version" >
+<!-- <div *ngIf="true" class="app-version" > -->
+  <div class="card" >
+    <div class="app-title">发现新版本{{app_version}}</div>
+    <div class="card_container">
+      <p class="card_title">已有新版本，是否更新?</p>
+      <p class="card_content">已更新相关功能,优化相关页面。</p>
+    </div>
+    <div class="card_buttons">
+      <div>
+        <button type="button" (click)="cancel()" class="cbut1">以后再说</button>
+      </div>
+      <div>
+        <button type="button" (click)="update()" class="cbut2">立即更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+

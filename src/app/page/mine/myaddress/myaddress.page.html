@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon md="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>地址管理</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="newaddress()">
+        <ion-icon size="large" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding="fasle">
+  <!-- 新版地址 -->
+  <ng-container *ngIf="addresslist.length>0">
+    <ion-card *ngFor="let address of addresslist;let i = index" (click)="selectaddress(address)">
+      <ion-text color="dark">
+        <h1 style="margin: 1rem;">收货信息</h1>
+      </ion-text>
+      <ion-card-content>
+        <div class="content">
+          <div>
+            <p class="c_top">
+              <ion-text>{{address.consignee}}</ion-text>
+              <ion-text>{{address.mobile}}</ion-text>
+            </p>
+            <p class="address">{{address.province_name}} {{address.city_name}} {{address.district_name}}
+              {{address.address}}</p>
+          </div>
+
+          <div (click)="$event.stopPropagation();alteraddress($event, address)">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="bottom">
+          <div>
+            <ion-checkbox color="danger" [checked]="address.is_default==1" (click)="setDefualtAddr($event, address)">
+            </ion-checkbox>
+            <ion-text>设为默认地址</ion-text>
+          </div>
+          <div>
+            <!-- <ion-text (click)="$event.stopPropagation();alteraddress($event, address)">编辑</ion-text>
+            <ion-text (click)="$event.stopPropagation();deleteaddress($event, address.address_id,i)">删除</ion-text> -->
+            <ion-button size="small" color="danger"  (click)="$event.stopPropagation();deleteaddress($event, address.address_id,i)">删除</ion-button>
+          
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <!-- <ion-button class="storage" expand="full" shape="round" [disabled]="ifdisabled" (click)="newaddress()">新增收货地址
+  </ion-button> -->
+
+</ion-content>

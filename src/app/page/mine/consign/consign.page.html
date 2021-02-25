@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>BOSS订单列表</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content style="overscroll:scroll">
+  <!-- 下拉刷新 -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <div class="data">
+    <!-- 头部导航条 -->
+    <ul class="segments">
+      <li *ngFor="let item of segments;let myIndex = index" (click)="changeSegment(myIndex)" [ngClass]="{'selected':item.isChecked}">{{item.text}}</li>
+    </ul>
+    <!-- 内容列表 -->
+    <ul class="content" *ngIf="data">
+      <li *ngFor="let orderItem of consignOrderData;let key = index">
+        <div *ngIf="orderItem.is_valid_order">
+          <div class="c_top">
+            <ion-text> 订单编号：<span class="selectable">{{orderItem.order_sn}}</span></ion-text>
+            <!-- 已完毕 -->
+            <!--<ion-text class="text_green">{{orderItem.status_name}}</ion-text>-->
+          </div>
+
+          <div class="c_center" *ngFor="let good of orderItem.order_goods">
+            <div class="cc_top">
+              <img src="{{good.original_img|defaultGoodsImg|formatImg }}" alt="商品图片" />
+              <div class="cc_content">
+                <p class="desc">{{good.goods_name}}</p>
+                <p class="specifications">
+                  <ion-text>数量：{{good.goods_num}}件</ion-text>
+                  <ion-text class="speccif-text">
+                    <div>
+                      {{orderItem.wholesale_type == '2' ? '兑换易货券' : '提货'}}
+                    </div>
+                  </ion-text>
+                </p>
+                <p class="money">零售价: ￥{{orderItem.sale_price}}</p>
+              </div>
+            </div>
+
+            <div class="cc_top">
+              <img src="{{good.original_img|defaultGoodsImg|formatImg }}" alt="商品图片" />
+              <div class="cc_content">
+                <p class="desc">{{good.goods_name}}</p>
+                <p class="specifications">
+                  <ion-text>数量：{{good.goods_num}}件</ion-text>
+                  <ion-text class="speccif-text">
+                    <div>{{orderItem.status_name1}}</div>
+                  </ion-text>
+                </p>
+                <p class="money">批发价: ￥{{orderItem.wholesale_price}}</p>
+              </div>
+            </div>
+
+            <div class="cc_top">
+              <img src="{{good.original_img|defaultGoodsImg|formatImg }}" alt="商品图片" />
+              <div class="cc_content">
+                <p class="desc">{{good.goods_name}}</p>
+                <p class="specifications">
+                  <!--<ion-text>规格：无</ion-text>-->
+                  <ion-text>数量：{{good.goods_num}}件</ion-text>
+                  <ion-text class="speccif-text">
+                    <div>{{orderItem.status_name2}}</div>
+                  </ion-text>
+                </p>
+                <!--<p class="desc">期数：{{orderItem.period_id}}</p>-->
+                <p class="money">批发价: ￥{{orderItem.wholesale_price}}</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            <p *ngIf="orderItem.warnning" class="tips" style="font-size: 1.2rem !important;padding: 1rem 0 0 0;">
+              提示：
+              <span style="color: red;font-weight: bold;">{{orderItem.warnning}}。请在{{orderItem.cancel_hour}}小时{{orderItem.minute}}分钟内操作！</span>
+            </p>
+          </div>
+
+          <ion-row>
+            <ion-col size="6">共{{orderItem.total_num*3}}件商品</ion-col>
+            <ion-col size="6" style="text-align:right" class="total-amount-money">合计：{{orderItem.total_amount}}</ion-col>
+          </ion-row>
+
+          <div class="check_button">
+            <!--<p class="c_bottom">金额： <span>￥{{}}</span></p>-->
+            <div [ngSwitch]="orderItem.status_id">
+              <div *ngSwitchCase="'1'" style="text-align:right">
+                <ion-button  shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '1')">去支付</ion-button>
+                <ion-button shape="round" appNoDblClick size="small" class="act-button" color="danger" (click)="cancelorder(orderItem.order_id)">取消订单</ion-button>
+                <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '4')">订单明细</ion-button>
+              </div>
+
+              <div *ngSwitchCase="'4'">
+                <!--<ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '4')">账目信息</ion-button>-->
+                <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '4')">订单明细</ion-button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </li>
+
+    </ul>
+  </div>
+  <div class="noData" *ngIf="!data">
+    <img src="assets/my/noData.png" alt="没有商品" />
+    <p>您没有批发订单，赶紧去首页挑选吧~</p>
+  </div>
+  <!-- 上拉刷新+ -->
+  <ion-infinite-scroll threshold="100px" *ngIf="isShowLoading && data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

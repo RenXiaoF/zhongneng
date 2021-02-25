@@ -1,0 +1,30 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+ion-header{
+  ion-toolbar{
+      --background: rgb(255, 65, 66);
+      --border-width:0;
+      ion-title{
+          --color:white;
+          font-size: 1.3rem !important;
+          font-weight: 400;
+      }
+      ion-buttons{
+          ion-button{
+              ion-icon{
+                  color:white;
+              }
+          }
+      }
+  }
+}
+
+.footer{
+    display: flex; 
+    align-items: center;
+}

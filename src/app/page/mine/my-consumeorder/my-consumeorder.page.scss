@@ -1,0 +1,68 @@
+// 头部样式
+ion-header {
+    ion-toolbar {
+      --background: rgb(255, 65, 66);
+      --border-width: 0;
+      ion-title {
+        --color: white;
+        font-size: 1.3rem !important;
+        font-weight: 400;
+      }
+      ion-buttons {
+        ion-button {
+          ion-icon {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  // 搜索
+  .search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ion-searchbar {
+      width: 80%;
+      margin-right: 1rem;
+    }
+    ion-button {
+      width: 20%;
+    }
+  }
+  
+  .bordertop {
+    // border-bottom: 6px solid #ebebeb;
+    // border-top: 8px solid #f6f6f6;
+  }
+  .orderborder {
+    border-bottom: 3px solid rgb(255, 122, 63);
+  }
+  .act-button {
+    // font-size:$font-size;
+    height: 2rem;
+    width: 6rem;
+    margin: 0 0.8rem;
+  }
+  ::ng-deep .modal-wrapper {
+    //--height: 70%;
+    // transform: translateY(30%) !important;
+    border-radius: 0.8rem 0.8rem 0 0 !important;
+    position: absolute;
+    bottom: 0;
+  }
+  
+
+
+
+  .scroll-content { //这个是ion-content 自带的类，需要修改它
+    -webkit-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+  }
+
+  .selectable {
+    -webkit-user-select: auto;//控制网页内容选择范围,恢复选择功能
+
+  }

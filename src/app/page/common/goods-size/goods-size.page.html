@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-grid>
+    <ion-row class="top-header">
+      <ion-col size="8" no-lines>
+        <ion-item lines="none" class="ion-no-margin">
+          <ion-thumbnail item-start>
+            <img [src]="goodsData.original_img | urlImg | formatImg">
+          </ion-thumbnail>
+          <ion-grid>
+            <ion-row>
+              <ion-col class="goods_name">{{goodsData.goods_name}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col style="color: red;">
+                ￥{{wholesale_price}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                总库存{{now_stock}}件
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <!-- <ion-col style="color: red;">￥{{goodsdetail.shop_price}}</ion-col>
+          <ion-col>总库存</ion-col>
+          <ion-col style="color: red;">{{goodsdetail.store_count}}件</ion-col>
+          <h2>￥{{goodsdetail.shop_price}}</h2>
+          <p>总库存{{goodsdetail.store_count}}件</p> -->
+          <!-- <p>选择规格{{keycode}}</p> -->
+        </ion-item>
+      </ion-col>
+      <ion-col class="ion-text-right" size="4">
+        <ion-button fill="clear" (click)="dismiss()">
+          <!-- <i class="iconfont iconclose" style="font-size:2rem;"></i> -->
+          <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+
+<ion-content>
+  <ion-card class="ion-no-padding" *ngIf="spec.length">
+    <ion-card-content class="ion-no-padding">
+      <ion-item lines="none">选择规格: </ion-item>
+      <ng-container *ngFor="let item of spec;let firstIndex = index">
+        <ion-item lines="none" class="ion-no-margin">
+          {{item.name}}
+        </ion-item>
+        <ion-item lines="none" class="ion-no-margin">
+          <ion-row *ngIf="item.spec.length > 0">
+            <ion-col size="auto" *ngFor="let type of item.spec;let secondIndex = index">
+              <ion-button size="small" color="danger" [fill]="isSelected[firstIndex][secondIndex]?'outline':'solid'"
+                          (click)="chooseDesc(firstIndex,secondIndex)">{{type.item}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>  
+  <ion-card class="specification">
+    
+
+    <ion-card-content>
+      <div class="s_header">
+        <!-- <p class="s_header_title">
+          <ion-text>套餐价格</ion-text>
+          <ion-text>剩余数量</ion-text>
+        </p>
+        <ng-container *ngIf="data && data.con_list">
+          <p class="s_header_content" *ngFor="let item of data.con_list">
+              <ion-text>{{item.price}}</ion-text>
+              <ion-text>{{item.store_count-item.buy_count}}</ion-text>
+          </p>
+        </ng-container> -->
+        <!-- <div>每个套餐包含一件零售商品和两件批发商品，零售商品可选择提货或兑换易货券；批发商品可选择提货或寄售。</div> -->
+        <div style="font-weight: 600;">处理方式</div>
+        <div>
+          <ion-radio-group mode="md" [(ngModel)]="checkType">
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="1" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span style="color: #999999;">提货寄售</span>
+                    </div>
+                    <!-- <ion-label style="white-space:normal">全部提货</ion-label> -->
+                  </div>
+                </ion-col>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="3" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span style="color: #999999;">全部提货</span>
+                    </div>
+                    <!-- <ion-label style="white-space:normal">提货寄售</ion-label> -->
+                  </div>
+                </ion-col>
+                <ion-col size="4">
+                  <div style="display: flex;">
+                    <div>
+                      <ion-radio color="danger" slot="start" value="2" style="margin-right: 5px;"></ion-radio>
+                    </div>
+                    <div>
+                      <span style="color: #999999;">易货寄售</span>
+                    </div>
+                    <!-- <ion-label style="white-space:normal">易货寄售</ion-label> -->
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-radio-group>
+        </div>
+      </div>
+      <div class="s_content">
+        <div class="s_buy_num">
+          <div class="buy_label">
+            <ion-row>
+              <ion-col size="12">
+                <ion-text class="numText">购买数量</ion-text>
+              </ion-col>
+              <ion-col size="12">
+                <ion-text class="note">(每人每次交易限额50000)</ion-text>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="ctrNum">
+            <ion-text class="reduceNum" (click)="changenum(-1)">-</ion-text>
+            <!-- <ion-text class="num">{{goods_num}}</ion-text> -->
+            <ion-input (ionChange)="keydown($event)" class="ion-text-center" type="number" [(ngModel)]="goods_num" style="pointer-events: none;">
+            </ion-input>
+            <ion-text class="addNum" (click)="changenum(1)">+</ion-text>
+          </div>
+        </div>
+        <div class="agreement">
+          <ion-checkbox [(ngModel)]="isChecked" ></ion-checkbox> &nbsp;
+          <ion-text class="a_note">我已阅读并同意《<span style="text-decoration:underline;color:red"
+              (click)="goProductAgreement()">商品协议</span>》</ion-text>
+        </div>
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+  <ion-button  color="danger" expand="block" (click)="submit()">确定</ion-button>
+</ion-content>

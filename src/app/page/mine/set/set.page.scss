@@ -1,0 +1,119 @@
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(255, 65, 66);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+// 内容样式
+ion-content{
+    --background:#f8f8f8;
+    ion-list{
+        margin-top: 1rem;
+        ion-item{
+            line-height: 2rem;
+            --border-color:#f5f6f8;
+            ion-label{
+                font-size: 1.153rem !important;
+                color: #303133;
+            }
+            .new-app{
+                color: #ff2b27;
+                text-align:right;
+              }
+            span{
+                font-size: 1.1rem !important;
+                color: #909399;
+            }
+        }
+
+    }
+    .signUp{
+        //margin-top: 1.5rem;
+        //line-height: 4rem;
+        text-align: center;
+        //background-color: white;
+        //color: #fa436a;
+        //font-size: 1.153rem !important;
+    }
+}
+
+
+
+/* 提醒版本更新 的 弹框 */
+.app-version {
+    position: fixed;
+    top: 17vh;
+    width: 100%;
+    z-index: 999;
+  }
+  .card {
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 80%;
+    border-radius: 1rem;
+    margin-left: 10%;
+    margin-top: 3vh;
+    background: #ffffff;
+  }
+  .app-title {
+    font-size: 3vh;
+    height: 6vh;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 2vh;
+    background-color: #e21918;
+    color: white;
+  }
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  .card_container {
+    padding: 60px 70px;
+    height: auto;
+    width: 80%;
+  }
+  .card_title {
+    /* border-bottom: 0.5px solid #c1c1c1; */
+    padding: 1vh 2vh;
+    font-weight: 600;
+    font-size: 2.5vh;
+  }
+  .card_content {
+    height: 8vh;
+    padding: 1vh 2vh;
+    /* font-weight: 600; */
+    font-size: 2vh;
+    /* color: #666; */
+  }
+  .card_buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 2vh;
+  }
+  .cbut1 {
+    font-size: 2vh;
+    color: #666;
+    background: white;
+    border: 0;
+    padding: 10px 30px;
+  }
+  .cbut2 {
+    font-size: 2vh;
+    color: white;
+    background: #e21918;
+    border: 0;
+    padding: 10px 30px;
+  }

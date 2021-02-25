@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>分类</ion-title>
+
+    <!-- <i class="iconfont icon-xinxi" style="float: right; font-size: 2rem; margin-left: 1rem;" (click)="goInfo()"></i> -->
+    <!-- <i class="iconfont icon-fenxiang" style="float: right; font-size: 1.8rem;"></i> -->
+  </ion-toolbar>
+</ion-header>
+
+<div class="search">
+  <ion-searchbar animated placeholder="搜索" (click)="goproduct()"></ion-searchbar>
+</div>
+<ion-content>
+  <div class="content">
+    <div class="left-aside">
+      <div  class="f-item" [ngClass]="{'active': isRecommend}" (click)="selectRecommend(-1)">推荐</div>
+      <div *ngFor="let item of categoryList;let i=index" class="f-item" [ngClass]="{'active': is_checked_category==i}" (click)="selectCategory(i)">
+        {{item.name}}
+      </div>
+    </div>
+
+    <div class="right-aside">
+      <div class="slide" style="padding-top:8px;" *ngIf="isRecommend">
+        <ion-slides>
+          <ion-slide>
+            <img src="../../../assets/img/index/2.jpg" alt="">
+          </ion-slide>
+        </ion-slides>
+      </div>
+      <div *ngIf="categoryListItem.length > 0">
+        <div *ngFor="let fitem of categoryListItem" class="s-list">
+          <ion-text class="s-item">{{fitem.name}}</ion-text>
+          <div class="t-list">
+            <div class="t-item" *ngFor="let titem of fitem.wechat_child_category"  (click)="goList()">
+              <ion-img class="text-img" [src]=" titem.image | urlImg"></ion-img>
+              <ion-text class="text-item">{{titem.name}}</ion-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

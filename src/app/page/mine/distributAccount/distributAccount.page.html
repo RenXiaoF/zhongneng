@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>账户佣金</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 下拉刷新 -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class='bg'></div>
+  <ion-card>
+    <ion-card-content>
+      <div class="card_info">
+        <img src="assets/balanceHeader.png" alt="背景图" />
+        <img class="translate" src="assets/translate.png" alt="互转" />
+        <div class="account">
+          <p class="text">账户佣金</p>
+          <!-- <p class="money">{{monthData.weighted_dividend+monthData.agency_commission}}</p> -->
+          <p class="money">{{total_num}}</p>
+        </div>
+        <div class="withdrawal">
+          <div>
+            <p>加权分红</p>
+            <p class="w_money" style="color:blue">{{monthData.weighted_dividend}}</p>
+          </div>
+          <div class="no_month_fc">
+            <p>代理佣金</p>
+            <p class="w_money" style="color:#fd595b">{{monthData.agency_commission}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card_bottom">
+        <!--<div class="cb_left" (click)="gowithdraw()">-->
+          <!--<ion-text>我要提现</ion-text>-->
+          <!--<ion-icon md="ios" name="arrow-forward"></ion-icon>-->
+        <!--</div>-->
+        <!--<div class="cb_right" (click)="gocashdetail()">-->
+          <!--<ion-text>提现明细</ion-text>-->
+          <!--<ion-icon md="ios" name="arrow-forward"></ion-icon>-->
+        <!--</div>-->
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- 收款明细 -->
+  <div class="detail">
+    <h4><span>佣金明细记录</span></h4>
+    <!-- 时间选择器 -->
+    <div class="selectDate">
+      <ion-text>查询范围：</ion-text>
+      <ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="timeChange()" cancelText="取 消" doneText="确 定"  [(ngModel)]="beginDate"></ion-datetime>
+       至     
+      <ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="timeChange()" cancelText="取 消" doneText="确 定"  [(ngModel)]="endDate"></ion-datetime>
+    </div>
+    <!-- 没有数据显示区域 -->
+    <div class="noData" *ngIf="!data">
+      <img src="assets/noData.png" alt="没有数据" />
+      <ion-text>暂无数据</ion-text>
+    </div>
+    <!-- 有数据显示区域 -->
+    <ion-grid *ngIf="data">
+      <ion-row class="d_header" align-items-center>
+        <ion-col size="6">说明</ion-col>
+        <ion-col size="3">金额</ion-col>
+        <ion-col size="3">时间</ion-col>
+      </ion-row> 
+
+      <ion-row class="d_content" align-items-center *ngFor="let item of affiliateLogData">
+        <ion-col size="6" style="text-align: left">{{item.fromtype}}</ion-col>
+        <ion-col size="3">{{item.money}}</ion-col>
+        <ion-col size="3">{{item.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+    <!-- 上拉加载更多 -->
+  <ion-infinite-scroll threshold="100px" *ngIf="data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

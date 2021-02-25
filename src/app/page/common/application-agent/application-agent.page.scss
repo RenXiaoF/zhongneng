@@ -1,0 +1,52 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+
+ion-content{
+    .form-class{
+        padding: 0 px2rem(30) ;
+    }
+}
+
+
+.up-img {
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    height: 99px;
+  }
+  .up-img-add {
+    width: 100%;
+    height: 100%;
+  }
+  .up-img-del {
+    position: absolute;
+    z-index: 1;
+    top: -1px;
+    right: 0px;
+    // font-size: $font-size-xbig;
+  }
+  .up-img-del::before {
+    border-radius: 50%;
+    background: #fff;
+  }
+  .up-img-item {
+    position: relative;
+    float: left;
+    height: 99px;
+    width: 99px;
+  }
+  .up-img-list {
+    width: 309px;
+    margin: 0rem auto;
+    // border: 1px solid color($colors,borderl);
+  }
+
+  .qr-code{
+    display: flex;
+    justify-content: center;
+  }

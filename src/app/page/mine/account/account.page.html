@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>账户余额</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class='bg'></div>
+  <ion-card>
+    <ion-card-content>
+      <div class="card_info">
+        <img src="assets/my/balanceHeader.png" alt="背景图" />
+        <img class="translate" src="assets/my/translate.png" alt="互转" />
+        <div class="account">
+          <p class="text">账户余额(元)</p>
+          <p class="money">{{totalAmount}}</p>
+        </div>
+        <div class="withdrawal">
+          <div>
+            <p>可提现余额</p>
+            <p class="w_money">{{totalAmount}}</p>
+          </div>
+          <div>
+            <p>冻结余额</p>
+            <p class="w_money">{{frozenMoney}}</p>
+          </div>
+          <div>
+            <p>提现中余额</p>
+            <p class="w_money" (click)="gocashdetail()">{{cashWithdrawal}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="card_bottom">
+        <div class="cb_left" (click)="gowithdraw()">
+          <ion-text>我要提现</ion-text>
+          <ion-icon md="ios" name="arrow-forward"></ion-icon>
+        </div>
+        <div class="cb_right" (click)="gocashdetail()">
+          <ion-text>提现明细</ion-text>
+          <ion-icon md="ios" name="arrow-forward"></ion-icon>
+        </div>
+      </div> -->
+    </ion-card-content>
+  </ion-card>
+  <!-- 收款明细 -->
+  <div class="detail">
+    <h4><span>收入明细记录</span></h4>
+    <!-- 时间选择器 -->
+    <div class="selectDate">
+      <ion-text>查询范围：</ion-text>
+      <ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="timeChange()" cancelText="取 消" doneText="确 定"  [(ngModel)]="beginDate"></ion-datetime>
+       至     
+      <ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="timeChange()" cancelText="取 消" doneText="确 定"  [(ngModel)]="endDate"></ion-datetime>
+    </div>
+    <!-- 没有数据显示区域 -->
+    <div class="noData" *ngIf="!data">
+      <img src="assets/my/noData.png" alt="没有数据" />
+      <ion-text>暂无数据</ion-text>
+    </div>
+    <!-- 有数据显示区域 -->
+    <ion-grid *ngIf="data">
+
+      <ion-row class="d_header" align-items-center>
+        <ion-col size="9">说明</ion-col>
+        <ion-col size="3">金额</ion-col>
+      </ion-row>
+
+      <ion-row class="d_content" align-items-center *ngFor="let item of accountLogData">
+        <ion-col size="9" style="text-align: left">
+          <ion-row>
+            <ion-col size="12">{{item.desc}}({{item.order_sn}})</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" style="font-size: 0.8rem !important;">{{item.change_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3" *ngIf="item.user_money<0" class="redText">{{item.user_money}}</ion-col>
+        <ion-col size="3" *ngIf="!(item.user_money<0)" class="blueText">+{{item.user_money}}</ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+  <!-- 上拉加载更多 -->
+  <!-- <ion-infinite-scroll threshold="100px" *ngIf="isShowLoading && data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+</ion-content>

@@ -1,0 +1,700 @@
+<!-- herder  1 -->
+<ion-header class="detailNavBar" *ngIf="_scrollTop > 5" [ngStyle]="{'opacity': _opacity}">
+  <ion-toolbar class="seachr-panel">
+    <ion-buttons slot="start" (click)="goback()" >
+      <ion-button >
+        <ion-icon  color="danger" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-segment mode="md" (ionChange)="segmentChanged($event)" color="danger" [(ngModel)]="detailtype">
+      <ion-segment-button id="detailgoods" value="detailgoods">
+        商品
+      </ion-segment-button>
+      <ion-segment-button id="detailinfo" value="detailinfo">
+        详情
+      </ion-segment-button>
+      <ion-segment-button id="detailevaluate" value="detailevaluate">
+        评价
+      </ion-segment-button>
+      <ion-segment-button id="detailrecommend" value="detailrecommend">
+        推荐
+      </ion-segment-button>
+    </ion-segment>
+    <!-- 更多 功能 -->
+    <!--<ion-buttons class="endbtn" slot="end">-->
+      <!--<ion-button ion-button (click)="more($event)">-->
+        <!--<ion-icon name="more" mode="ios"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+  </ion-toolbar>
+</ion-header>
+<!-- herder  2 -->
+<ion-header  class="detailNavBar" *ngIf="_scrollTop < 5" style="opacity: 0.4;">
+  <ion-toolbar class="seachr-panel">
+    <ion-buttons slot="start" (click)="goback()" class="back-button">
+      <ion-button class="button-inner">
+        <ion-icon  color="danger" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content scrollEvents="true" (ionScroll)="scrollToTop($event)">
+  <div #goodsdetailContent [ngSwitch]="detailtype">
+
+    <ng-container *ngSwitchCase="'detailgoods'">
+      <ion-slides *ngIf="slideItems.length>0" [options]="slideOpts" style="height:auto;" >
+        <ion-slide *ngFor="let slide of slideItems">
+          <img style="width:100%;height:100%;" [src]="slide | urlImg" app-error-img>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-grid class="ion-padding-horizontal">
+        <ion-row class="ion-no-padding">
+          <ion-col size="8" *ngIf="this.product_type == '0'" class="ion-no-padding ion-no-padding ion-justify-content-center ion-align-items-center">
+            <ion-grid class="ion-no-padding">
+              <ion-row class="ion-no-padding">
+                <!--普通-->
+                <ion-col size="12" class="ion-no-padding bflex" style="color: red;">
+                  <!-- <div class="font-size-xbig price_font">￥{{price_left}}.{{price_right}}</div> -->
+                  <div class="price_font">￥{{price_left}}.{{price_right}}</div>
+                </ion-col>
+                <!--<ion-col size="3" class="ion-no-padding bflex">-->
+                  <!--<ng-container *ngIf="goodsdetail.code_type=='brand'||goodsdetail.code_type=='design'">-->
+                    <!--<ion-button (click)="opentuanding()" size="small" color="danger">团订</ion-button>-->
+                  <!--</ng-container>-->
+                <!--</ion-col>-->
+                <!--<ion-col size="5" class="ion-no-padding bflex">-->
+                  <!--<ng-container *ngIf="goodsdetail.code_type=='brand'||goodsdetail.code_type=='design'">-->
+                    <!--<ion-button (click)="openspec()" size="small" color="danger">生产单</ion-button>-->
+                  <!--</ng-container>-->
+                <!--</ion-col>-->
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">{{tips}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+
+          <ion-col size="8"  *ngIf="this.product_type !== '0'"  class="red_bg ion-no-padding ion-no-padding ion-justify-content-center ion-align-items-center">
+            <ion-grid class="ion-no-padding">
+              <ion-row class="ion-no-padding">
+                <!--零元区商品-->
+                <ion-col *ngIf="product_type == '2'" size="12" class="ion-no-padding bflex" style="color: red;">
+                  <div class="price_font font_color">￥0.00</div>
+                </ion-col>
+                <!--福利区-->
+                <ion-col *ngIf="product_type == '3'" size="12" class="ion-no-padding bflex" style="color: red; padding-left:1rem ;">
+                  <!-- <div class="font-size-xbig price_font">￥{{price_left}}.{{price_right}}</div> -->
+                  <div class="price_font font_color" style="text-align: left;">￥ <span class="price_left">{{price_left}}</span> .{{price_right}} <span class="span_color">兑换福利券{{price_left}}.{{price_right}}</span></div>
+                  <div class="price_font font_color" style="text-align: left;"><span>补贴福利券{{price_left}}.{{price_right}}</span></div>
+                </ion-col>
+                <!--其他-->
+                <ion-col *ngIf="product_type == '4'" size="12" class="ion-no-padding bflex" style="color: red;">
+                  <div *ngIf="is_reserve == 0" class="price_font font_color">￥{{price_left}}.{{price_right}}</div>
+                  <div *ngIf="is_reserve == 1" class="price_font font_color">￥{{goodsdetail.reserve_param ? goodsdetail.reserve_param.reserve_money : ''}}</div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col *ngIf="this.product_type !== '3'" class="font_color" size="12">{{tips}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col size="4" class="ion-no-padding">
+            <ion-grid class="ion-no-padding">
+              <ion-row class="ion-no-padding">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-grid class="ion-no-padding">
+                    <ion-row size="12" class="ion-no-padding">
+                      <!-- 降价通知 -->
+                      <!--<ion-col style="height:2rem;" size="4" class="ion-no-padding ion-text-center">-->
+                      <!--&lt;!&ndash; <ion-col size="6" class="ion-no-padding ion-text-center"> &ndash;&gt;-->
+                        <!--<i class="iconfont iconfont_xsmall icon-xundijia2 list-item-ic ion-no-padding"></i>-->
+                      <!--</ion-col>-->
+                      <!-- 收藏 -->
+                      <ion-col style="height:2rem;" (click)="collect(goods_id);" size="6" class="ion-no-padding ion-text-center">
+                        <!-- <i *ngIf="!iscollect" class="iconfont iconfont_small icon-guanzhu list-item-ic"></i> -->
+                        <!-- <ion-icon *ngIf="!iscollect"  name="heart"></ion-icon>
+                        <ion-icon *ngIf="iscollect"  name="heart" color="danger"></ion-icon> -->
+                        <ion-icon *ngIf="!iscollect"   name="star-outline"></ion-icon>
+                        <ion-icon *ngIf="iscollect"   name="star-outline" color="danger"></ion-icon>
+                      </ion-col>
+                      <!-- 分享 -->
+                      <ion-col style="height:2rem;" (click)="presentActionSheet();" size="6" class="ion-no-padding ion-text-center">
+                        <ion-icon name="share-outline"></ion-icon>
+                        <!-- <ion-icon name="aperture" style="color: darkturquoise;"></ion-icon> -->
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+                <ion-col size="12" class="ion-no-padding" style="margin-top: 10px;">
+                  <ion-grid class="ion-no-padding">
+                    <ion-row class="ion-no-padding black">
+                      <!--<ion-col  size="4" class="ion-no-padding ion-text-center" (click)="contactKF()">-->
+                        <!--降价通知-->
+                      <!--</ion-col>-->
+                      <ion-col  size="6" class="ion-no-padding ion-text-center" (click)="collect(goods_id);">
+                        {{iscollect?'已收藏':'收藏'}}
+                      </ion-col>
+                      <ion-col size="6" class="ion-no-padding ion-text-center " (click)="presentActionSheet()">
+                        分享
+                      </ion-col>
+                    </ion-row>
+                    <!-- <ion-row size="12" class="ion-no-padding">
+                      <ion-col size="6" class="ion-no-padding ion-text-center font-size-small">
+                        降价通知
+                      </ion-col>
+                    </ion-row> -->
+                  </ion-grid>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-row class="ion-padding-horizontal">
+        <ion-col class="font-size-big ion-text-wrap ion-no-padding ion-padding-bottom">
+          <b>
+            {{goodsdetail.goods_name}}
+          </b>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-padding-horizontal">
+        <ion-col class="font-size-big ion-text-wrap ion-no-padding ion-padding-bottom" style="color:#A4A5AD">
+          <b>
+            货号:{{goodsdetail.goods_sn}}
+          </b>
+        </ion-col>
+      </ion-row>
+
+      <!--<ion-row class="ion-padding-horizontal" *ngIf="goodsdetail.unit && goodsdetail.pcs">-->
+        <!--<ion-col class="font-size-big ion-text-wrap ion-no-padding ion-padding-bottom" style="color:#A4A5AD">-->
+          <!--<b>-->
+            <!--包装规格: 1*{{goodsdetail.pcs}}{{goodsdetail.unit}}/{{goodsdetail.c_unit}}-->
+          <!--</b>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+
+      <ion-row class="ion-padding-horizontal">
+        <ion-col style="color: red;" class="ion-text-wrap ion-no-padding padding-bottom">
+          <b>
+            {{goodsdetail.goods_remark}}
+          </b>
+        </ion-col>
+      </ion-row>
+
+
+      <!--<ion-row class="borderbottom" padding-horizontal (click)="addtocart()">-->
+        <!--<ion-col class="font-color-light" size="11" text-left no-padding padding-vertical>-->
+          <!--<span class="paddingright">已选</span>-->
+          <!--<b>满印/RD宝蓝，130cm, 1件</b>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="1" text-center no-padding padding-vertical>-->
+          <!--<ion-icon name="ios-more-outline"></ion-icon>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+
+      <!--<ion-row padding-horizontal>-->
+        <!--<ion-col class="font-color-light" style="display:flex;align-items: flex-start;" size="11" no-padding padding-vertical>-->
+          <!--<p no-margin class="paddingright" style="display:inline-block;">送至</p>-->
+          <!--<p no-margin style="display:inline-block;">-->
+            <!--<i style="color: red;" class="padding-right iconfont icon-dingwei2 list-item-ic"></i>-->
+            <!--<span>{{goodsdetail.address.info}}</span>-->
+            <!--<br>-->
+            <!--<span>-->
+              <!--<b style="color: red;">现货</b>-->
+              <!--23:00前下单，预计({{goodsdetail.address.month}}月{{goodsdetail.address.day}}日)送达-->
+            <!--</span>-->
+          <!--</p>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="1" text-center no-padding padding-vertical>-->
+          <!--<ion-icon name="ios-more-outline"></ion-icon>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
+
+      <ion-row class="paddingleft" *ngIf="this.product_type == '2'">
+        <ion-col class="font-color-light" size="11" text-left no-padding>
+          <span>运费：</span>
+          <span class="ellipsis">不包邮</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="borderbottom" text-left padding-horizontal>
+        <ion-col ion-auto class="font-size-small dflex" no-padding padding-vertical>
+          <ion-icon color="danger" name="md-checkmark-circle-outline"></ion-icon>
+          <span>快速发货</span>
+        </ion-col>
+        <ion-col ion-auto class="font-size-small dflex" no-padding padding-vertical>
+          <ion-icon color="danger" name="md-checkmark-circle-outline"></ion-icon>
+          <span>7天包退</span>
+        </ion-col>
+        <ion-col ion-auto class="font-size-small dflex" no-padding padding-vertical>
+          <ion-icon color="danger" name="md-checkmark-circle-outline"></ion-icon>
+          <span>货到付款</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="borderbottom" *ngIf="product_type !=='0' && product_type !=='2'" (click)="chooseSize()">
+
+        <ion-col size="10">
+           已选：
+          <span >{{choose_spec_values}}</span>&nbsp;
+          <span >{{choose_spec_num + '件'}},</span>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon name="ellipsis-horizontal"></ion-icon>
+        </ion-col> 
+      </ion-row>
+
+      <ion-row *ngIf="evaluate" (click)="gotodetailevaluate()">
+        <ion-row size="12" text-left padding>
+          <ion-col size="6">
+            <span style="padding-left:0.5rem;display:block;height:100%;border-left: 5px solid red;">评价({{evaluate.count}}+)</span>
+          </ion-col>
+          <ion-col size="5" text-right>好评度
+            <span style="color: red;">{{evaluate.commentRateStatistics.rate1}}%</span>
+          </ion-col>
+          <ion-col size="1" text-right class="dflex">
+            <ion-icon name="arrow-forward" class="dflex"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row text-center padding-horizontal class="borderdown">
+          <ion-col size="auto" *ngFor="let type of evaluatetype;">
+            <ion-badge color="fef2f1" style="color: #A4A5AD">
+              {{type.name}}({{type.num}})
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-list *ngIf="evaluate" (click)="gotodetailevaluate()" no-lines no-margin padding-horizontal>
+        <ng-container *ngFor="let item of evaluate.commentlist">
+          <ion-item>
+            <ion-avatar item-start>
+              <img [src]="item.head_pic | urlImg" app-error-img="assets/default.jpg" />
+            </ion-avatar>
+            <h2>q**1</h2>
+            <p item-end>
+              <ion-icon *ngFor="let i of item.goodstar" color="danger" class="font-size-small" name="md-star"></ion-icon>
+              <ion-icon *ngFor="let i of item.badstar" color="bbb" class="font-size-small" name="md-star"></ion-icon>
+            </p>
+          </ion-item>
+          <ion-row class="borderdown">
+            <ion-col size="12" text-wrap>
+              {{item.content}}
+            </ion-col>
+            <ion-row size="12" *ngIf="item.img">
+              <ion-col *ngFor="let img of item.img" size="4">
+                <img [src]="img | defaultGoods | urlImg" app-error-img/>
+              </ion-col>
+            </ion-row>
+            <ion-col class="font-color-light font-size-small">
+              {{item.spec_key_name}}
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ion-list>
+
+      <ng-container *ngIf="!evaluate" (click)="gotodetailevaluate()">
+        <ion-grid>
+          <ion-row size="12" class="ion-text-left ion-padding">
+            <ion-col size="6">
+              <span style="padding-left:0.5rem;display:block;height:100%;border-left: 5px solid red;">暂无评价</span>
+            </ion-col>
+            <ion-col size="5" class="ion-text-right"></ion-col>
+            <ion-col size="1" class="dflex ion-text-right">
+              <ion-icon name="arrow-forward" class="dflex"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row size="12" class="borderbottom ion-padding">
+            <ion-col class="dflex ion-text-center">
+              <ion-icon color="primary" name="ios-help-circle-outline"></ion-icon>
+              <span>没有相应的评价</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
+
+      <!-- <ion-grid>
+        <ion-row class="ion-text-left ion-padding">
+          <ion-col size="6">
+            <span style="padding-left:0.5rem;display:block;height:100%;border-left: 5px solid red;">暂无问答</span>
+          </ion-col>
+          <ion-col size="5" class="ion-text-right"></ion-col>
+          <ion-col size="1" class="ion-text-right dflex">
+            <ion-icon name="arrow-forward" class="dflex"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="borderbottom" class="ion-padding">
+          <ion-col class="ion-text-center dflex">
+            <ion-icon color="primary" name="ios-help-circle-outline"></ion-icon>
+            <span>商品好不好，问问买过的人吧</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+
+
+      <ion-grid class="borderbottom" padding-horizontal>
+
+        <ion-row>
+          <ion-col size="2" (click)="goStore()">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <img [src]="goodsdetail.store.store_logo | urlImg" app-error-img="assets/default.png" />
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+
+          <ion-col size="8" (click)="goStore()">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12"  no-padding>{{goodsdetail.store.store_name}}</ion-col>
+                <ion-col size="12" no-padding class="font-color-light">综合评分 <span style="color: red;">9.7</span></ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+
+          <ion-col size="2" (click)="contact_customer()">
+            <ion-grid>
+              <ion-row>
+                <ion-col no-padding><i class="iconfont iconfont_small icon-kefu list-item-ic"></i></ion-col>
+                <ion-col (click)="contact_customer()" no-padding>客服</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="3" class="ion-text-center">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" no-padding class="font-size-big">{{goodsdetail.store.user_collect}}</ion-col>
+                <ion-col size="12" no-padding class="font-color-light">关注人数</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col size="3" class="ion-text-center" style="border-left:1px solid #eee;border-right:1px solid #eee;">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" no-padding class="font-size-big">{{goodsdetail.store.store_goodsnum}}</ion-col>
+                <ion-col size="12" no-padding class="font-color-light">全部商品</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <ion-grid>
+              <ion-row>
+                <ion-col no-padding>物流
+                  <span style="color:red;">9.6高</span>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col  no-padding>商品
+                  <span style="color:red;">9.5高</span>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col no-padding>服务
+                  <span style="color:red;">9.6高</span>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div [innerHTML]="goodsdetail.goods_content" id="goods_content"></div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'detailinfo'" >
+      <ion-segment class="detailinfo" [(ngModel)]="infotype" style="margin-top: 62px;">
+        <ion-segment-button  style="font-weight: normal;" value="tab1">
+          商品介绍
+        </ion-segment-button>
+        <ion-segment-button  style="font-weight: normal;" value="tab2">
+          规格参数
+        </ion-segment-button>
+        <ion-segment-button  style="font-weight: normal;" value="tab3">
+          包装售后
+        </ion-segment-button>
+      </ion-segment>
+      <div [ngSwitch]="infotype">
+        <ng-container *ngSwitchCase="'tab1'">
+          <ion-row text-center align-items-center>
+            <ion-col size="5">
+              <hr>
+            </ion-col>
+            <ion-col size="2" no-padding></ion-col>
+            <ion-col size="5">
+              <hr>
+            </ion-col>
+          </ion-row>
+          <div [innerHTML]="goods_content" id="goods_content_i"></div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'tab2'">
+          <ion-row text-center align-items-center>
+            <ion-col size="5">
+              <hr>
+            </ion-col>
+            <ion-col size="2" no-padding></ion-col>
+            <ion-col size="5">
+              <hr>
+            </ion-col>
+          </ion-row>
+          <div [innerHTML]="goods_attr"></div>
+
+        </ng-container>
+        <ng-container *ngSwitchCase="'tab3'">
+
+          <ion-grid>
+            <ion-row text-center align-items-center>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+              <ion-col size="2" no-padding></ion-col>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+            </ion-row>
+            <!-- <ion-row [innerHTML]="goods_service.goods_name"></ion-row> -->
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row text-center align-items-center>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+              <ion-col size="2" no-padding>售后服务</ion-col>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+            </ion-row>
+            <!-- <ion-row [innerHTML]="goods_service.service_info"></ion-row> -->
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row text-center align-items-center>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+              <ion-col size="2" no-padding>价格说明</ion-col>
+              <ion-col size="5">
+                <hr>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'detailevaluate'">
+      <ng-container *ngIf="evaluate">
+        <ion-row text-left padding>
+          <ion-col size="6">
+            <span style="padding-left:0.5rem;display:block;height:100%;border-left: 5px solid red;">评价({{evaluate.count}}+)</span>
+          </ion-col>
+          <ion-col size="5" text-right>好评度
+            <span style="color: red;">{{evaluate.commentRateStatistics.rate1}}%</span>
+          </ion-col>
+          <ion-col size="1" text-right class="dflex">
+            <ion-icon name="arrow-forward" class="dflex"></ion-icon>
+          </ion-col>
+        </ion-row>
+
+        <ion-row text-center padding-horizontal class="borderdown">
+          <ion-col size="auto" *ngFor="let type of evaluatetype" (click)="chooseevaluatetype(type.type)">
+            <ion-badge color="fef2f1" [style.color]="type.checked?'red':'#A4A5AD'">
+              {{type.name}}({{type.num}})
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+
+        <ion-list no-lines no-margin padding-horizontal>
+          <ng-container *ngFor="let item of evaluate.commentlist">
+            <ion-item>
+              <ion-avatar item-start>
+                <img [src]="item.head_pic | defaultImg | urlImg" app-error-img="assets/default.jpg" />
+              </ion-avatar>
+              <h2>{{item.nickname}}</h2>
+              <p>
+                <ion-icon *ngFor="let i of item.goodstar" color="danger" class="font-size-small" name="md-star"></ion-icon>
+                <ion-icon *ngFor="let i of item.badstar" color="bbb" class="font-size-small" name="md-star"></ion-icon>
+              </p>
+              <span item-end>
+                {{item.add_time}}
+              </span>
+            </ion-item>
+            <ion-row class="borderdown">
+              <ion-col size="12" text-wrap>
+                {{item.content}}
+              </ion-col>
+              <ion-row size="12" *ngIf="item.img">
+                <ion-col *ngFor="let img of item.img" size="4">
+                  <img [src]="img | defaultGoods | urlImg" app-error-img/>
+                </ion-col>
+              </ion-row>
+              <ion-col class="font-color-light font-size-small">
+                {{item.spec_key_name}}
+              </ion-col>
+            </ion-row>
+          </ng-container>
+
+        </ion-list>
+      </ng-container>
+
+      <ng-container no-padding *ngIf="!evaluate">
+        <div text-center>
+          <img src="assets/zwsp.jpg" />
+          <p class="font-size-big" style="text-align: center;">没有相应的评价</p>
+          <p class="font-color-light" style="text-align: center;">看看其它的~</p>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'detailrecommend'">
+      <ion-grid>
+        <ion-row style="background: #fff; border-radius:0.3rem;" justify-content-between align-items-center>
+          <ion-col size="3" text-left style="display: flex;align-items: center;">
+            <span style="border-left:0.3rem solid red;padding-left:0.5rem;">同店好货</span>
+          </ion-col>
+          <ion-col size="9" text-right>
+            <span>{{store.store_name}}</span>
+            <ion-icon ios="ios-arrow-forward" class="font-size-small" md="md-arrow-forward"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="goodslists.length>0">
+          <ion-col (click)="gotodetail(goods)" size="6" *ngFor="let goods of goodslists">
+            <ion-card no-margin style="width:100%;">
+              <img [src]="goods.original_img | urlImg" app-error-img/>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col no-padding text-wrap>
+                    {{goods.goods_name}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="dflex">
+                  <ion-col size="6" style="padding-left:0;">
+                    <span class="font-size-small">￥</span>
+                    <span>{{goods.shop_price}}</span>
+                  </ion-col>
+                  <ion-col size="6" text-right style="padding-right:0;">
+                    <ion-badge color="bbb" outline class="font-size-xsmall">找相似</ion-badge>
+                  </ion-col>
+                  <ion-col no-padding>
+                    <ion-badge color="bgthree" outline class="font-size-xsmall">促销</ion-badge>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
+  <!--只有是微信而且有返利才有-->
+  <ng-container *ngIf="goodsdetail['share_back_money'] > 0">
+    <ion-fab *ngIf="isShowCoupon" vertical="center" horizontal="end" slot="fixed" style="box-shadow: 0 2px 5px 0 rgba(222,222,222,.5)">
+      <div style="width: 6rem;height: 8rem;border-radius:5px;background: wheat;position: relative;">
+        <ion-icon  (click)="closeCoupon()" md="ios" name="close-circle-outline" style="position: absolute;top:-2.5rem;right: 0;font-size: 1.5rem;color:#888;"></ion-icon>
+        <div style="text-align: center;margin: 0 auto;background: #fd4857;color: white;border-top-left-radius:5px;border-top-right-radius: 5px">
+          会员分享
+        </div>
+        <div style="color: #ca6d69;text-align: center;margin: 0 auto;margin-top: 0.5rem;border-bottom: 1px dashed #ca6d69;padding-bottom:0.2rem;">
+          返￥{{goodsdetail.share_back_money}}
+        </div>
+        <div style="font-size: 5px !important;text-align: center;margin: 0 auto;margin-top: 0.3rem;">
+          下单即得佣金
+        </div>
+        <div style="text-align:center">
+          <ion-button (click)="openMask()" style="width: 80%;" shape="round" size="small" strong="true" color="danger">立即分享</ion-button>
+        </div>
+      </div>
+    </ion-fab>
+  </ng-container>
+</ion-content>
+
+<ion-footer class="spaceFooter">
+  <div  class="ion-footer-div">
+  <!--普通购买流程-->
+  <ion-row text-center style="background: #fff;" *ngIf="product_type == '0'">
+    <ion-col size="6" class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-no-padding">
+          <ion-col size="4" class="ion-no-padding ion-text-center dflex black" (click)="contact_customer()">
+            <i class="iconfont iconfont_small icon-kefu list-item-ic"></i>
+          </ion-col>
+          <ion-col size="4" class="ion-no-padding ion-text-center dflex black" (click)="goStore()">
+            <i class="iconfont iconfont_big  icondianpu list-item-ic"></i>
+          </ion-col>
+          <ion-col  *ngIf="product_type == '0'" (click)="gotocart()" size="4" class="ion-no-padding ion-text-center dflex black">
+            <i class="iconfont iconfont_small  icon-gouwuche list-item-ic"></i>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-padding black">
+          <ion-col size="4" class="ion-no-padding ion-text-center" (click)="contact_customer()">
+            客服
+          </ion-col>
+          <ion-col size="4" class="ion-no-padding ion-text-center" (click)="goStore()">
+            店铺
+          </ion-col>
+          <ion-col (click)="gotocart()" size="4" class="ion-no-padding ion-text-center" *ngIf="product_type == '0'">
+            购物车
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+
+    <ion-col (click)="throttle(addtocart)" size="3" class="font-size-defalt dflex paddingbtn" style="background:#FE9402;color:white;">
+      加入购物车
+    </ion-col>
+    <ion-col (click)="throttle(buynow)" [size]="col_size" class="font-size-default dflex paddingbtn" color="light" style="background:#ff4142 !important;color:white;">
+
+      立即购买
+    </ion-col>
+  </ion-row>
+  <!--零元，福利，易货，boss区购买买流程，直接跳结算页面-->
+  <ion-row text-center style="background: #fff;" *ngIf="product_type != '0'">
+      <ion-col size="4" class="ion-no-padding">
+        <ion-grid>
+          <ion-row class="ion-no-padding">
+            <ion-col size="6" class="ion-no-padding ion-text-center dflex black" (click)="contact_customer()">
+              <i class="iconfont iconfont_small icon-kefu list-item-ic"></i>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-text-center dflex black" (click)="goStore()">
+              <i class="iconfont iconfont_big  icondianpu list-item-ic"></i>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding black">
+            <ion-col size="6" class="ion-no-padding ion-text-center" (click)="contact_customer()">
+              客服
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-text-center" (click)="goStore()">
+              店铺
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col (click)="throttle(immediatelyBuy)" size="8" class="font-size-default dflex paddingbtn" color="light" style="background:#ff443a;color:white;">
+        {{ is_reserve ? "支付定金" : "立即购买"}}
+      </ion-col>
+  </ion-row>
+  </div>
+</ion-footer>
+
+<div *ngIf="isShowMask" class="mask" (click)="closeMask()">
+  <img src="assets/tishi.png" alt="分享" />
+</div>
+
+<!-- 回到顶部 -->
+<div>
+  <img (click)="gotoTop()" class="gotoTop" src="assets/gotoTop.png">
+</div>

@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon md="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>支付订单</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-list>
+      <ion-row>
+        <ion-col size="6">订单号</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{orderinfo.order_sn}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">订单金额</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{orderinfo.total_amount}}</ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="order_use_money && order_use_money.order_type == '3'">
+        <ion-col size="6">已用福利券</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{order_use_money.a_coin}}</ion-col>
+      </ion-row>
+      <ion-row *ngIf="order_use_money && order_use_money.order_type == '4'">
+        <ion-col size="6">已用易货券</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{order_use_money.b_coin}}</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">应付金额</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{should_pay}}</ion-col>
+      </ion-row>
+      <ion-row
+        *ngIf="orderinfo.is_reserve == 1 && orderinfo.reserve_param.reserve_money > 0 && orderinfo.reserve_param.is_pay == 1">
+        <ion-col size="6">已付定金</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{orderinfo.reserve_param.reserve_money}}</ion-col>
+      </ion-row>
+      <ion-row
+        *ngIf="orderinfo.is_reserve == 1 && orderinfo.reserve_param.reserve_money > 0 && orderinfo.reserve_param.is_pay != 1">
+        <ion-col size="6">应付定金</ion-col>
+        <ion-col size="6" text-right style="color: red;">{{orderinfo.reserve_param.reserve_money}}</ion-col>
+      </ion-row>
+
+      <ion-item style="--padding-start:0.5rem;">
+        <ion-label>使用余额：</ion-label>
+        <ion-input inputmode="numeric" [disabled]='reserve_dis' style="border-bottom: 1px solid #ccc;"
+          placeholder="当前账户余额{{show_money}}" [(ngModel)]="user_money"></ion-input>
+        <ion-button item-end color="danger" (click)="updateprice()">使用</ion-button>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-list *ngIf="paymentList.length>0">
+      <ion-radio-group [(ngModel)]="orderinfo.pay_code">
+        <ion-list-header>
+          支付方式
+        </ion-list-header>
+  
+        <ion-item *ngFor="let payment of paymentList;let i=index;" (click)="clickRadio(i)">
+          <!-- <ion-thumbnail item-start>
+              <img [src]="payment.icon2">
+            </ion-thumbnail> -->
+          <ion-label style="display: flex;align-items: center;">
+            <img [src]="payment.icon2" style="height: 2rem;margin-right: 1rem;">
+            <ion-text>{{payment.name}}</ion-text>
+          </ion-label>
+          <ion-radio [value]="payment.code"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </ion-card>
+  <div style="width:100%;height:1rem"></div>
+
+  <ion-button color="danger" (click)="pay()" expand="block">立即支付</ion-button>
+  <!-- 测试 -->
+  <!-- <button ion-button full (click)="checkInstalled()" color="light">验证微信是否安装</button>
+  <button ion-button full (click)="auth()" color="light">微信登录</button>
+  <button ion-button full (click)="pay1()" color="light">支付0.01元</button> -->
+</ion-content>

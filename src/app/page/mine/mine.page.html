@@ -1,0 +1,306 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>mine</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+<ion-content style="overscroll:scroll">
+  <div class="header">
+    <div class="setting_img"></div>
+
+    <div class="h_flex" *ngIf="!has_user">
+      <div class="head_img">
+        <img src="assets/img/mine/user_img.png" alt="">
+      </div>
+      <div class="tips"> 
+        <div class="tip_text">请登录/注册你的账号</div>
+        <div class="login_btn" (click)="goLogin()">点击登录</div>
+      </div>
+    </div>
+
+    <div class="h_flex" *ngIf="has_user">
+      <div (click)="goPerson()" class="head_img">
+        <img src="{{user.head_pic | defaultImg | urlImg}}" alt="" style="max-width: 100%;height: 100%;">
+      </div>
+      <div class="tips">
+        <div class="tip_user">电话：{{user.mobile | defaultVal}}</div>
+        <!-- <div class="tip_user">用户：{{(user.realname ? user.realname : user.nickname) | defaultVal}}</div> -->
+        <div class="tip_user">ID：{{ user.user_id | defaultVal}}</div>
+        <div class="tip_user">昵称：{{ user.nickname | defaultVal}}</div>
+        <!-- <div class="tip_user selectable">企业：{{user.store_name | defaultVal}}</div> -->
+        <div class="tip_user">等级：{{level | defaultVal}}</div>
+      </div>
+      <ion-text class="goidentity" *ngIf="globalData.user.mobile_validated == '0'" (click)="goidentity()">实名认证</ion-text>
+      <ion-text class="goidentity" *ngIf="globalData.user.mobile_validated == '1'" (click)="goidentity()">已认证</ion-text>
+    </div>
+
+    <!-- <div style="color:#ffffff; padding: .5rem .5rem 0 0 ;" class="clearfix">
+      <i class="iconfont icon-xinxi"  style="font-size: 1.5rem;float: right; margin-left: .5rem;" (click)="goInfo()"></i>
+      <i class="iconfont icon-shezhi"  style="font-size: 1.5rem;float: right;"></i>
+    </div> -->
+
+    <img class="arc_bg" src="assets/arc.png" alt="圆底透明图片" />
+  </div>
+  <!-- 订单 -->
+  <!-- <div class="my_order">
+    <div class="order_title">
+      <div class="title_left">我的订单</div>
+      <div class="all_order">查看所有订单</div>
+    </div>
+
+    <div class="order_icon">
+      <ul class="order_ul">
+        <li>
+          <img src=" assets/img/mine/order_01.png" alt="" />
+          <span>待付款</span>
+        </li>
+  
+        <li>
+          <img src=" assets/img/mine/order_02.png" alt="" />
+          <span>待成团</span>
+        </li>
+  
+        <li>
+          <img src=" assets/img/mine/order_03.png" alt="" />
+          <span>待收货</span>
+        </li>
+  
+        <li>
+          <img src=" assets/img/mine/order_04.png" alt="" />
+          <span>待评价</span>
+        </li>
+        <li>
+          <img src=" assets/img/mine/order_05.png" alt="" />
+          <span>退换/售后</span>
+        </li>
+      </ul>
+    </div>
+  </div> -->
+
+
+  <!-- 订单 -->
+  <!--<ion-card class="list_info" style="display: none;">-->
+    <!--<h3 class="order_header"  (click)="goallorder(0)">-->
+      <!--<span>-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-quanbudingdan"></i>-->
+        <!--<span style="color: black;">商城订单</span>-->
+      <!--</span>-->
+      <!--<span>-->
+        <!--<span style="color: #ccc;">全部订单</span>-->
+        <!--<ion-icon name="chevron-forward-outline"></ion-icon>-->
+      <!--</span>-->
+    <!--</h3>-->
+    <!--<ul class="order">-->
+      <!--<li (click)="goallorder(1)">-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-daifukuan"></i>-->
+        <!--<ion-badge color="danger">0</ion-badge>  -->
+        <!--<span>待付款</span>-->
+      <!--</li>-->
+      <!---->
+      <!--<li (click)="goallorder(2)">-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-fahuo-l"></i>        -->
+        <!--<ion-badge color="danger">0</ion-badge>        -->
+        <!--<span>待发货</span>-->
+      <!--</li>-->
+    <!---->
+      <!--<li (click)="goallorder(3)">-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-daishouhuo"></i>-->
+        <!--<ion-badge color="danger" >0</ion-badge>  -->
+        <!--<span>待收货</span>-->
+      <!--</li>-->
+    <!---->
+      <!--<li (click)="goallorder(4)">-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-daipingjia"></i>-->
+        <!--<ion-badge color="danger">0</ion-badge>  -->
+        <!--<span>待评价</span>-->
+      <!--</li>-->
+  <!---->
+      <!--<li (click)="goallorder(5)">-->
+        <!--<i style="color: rgba(255, 122, 63, 1);" class="iconfont icon-finish"></i>-->
+        <!--<ion-badge color="danger" >0</ion-badge>  -->
+        <!--<span>已完成</span>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</ion-card>-->
+
+  <!-- 账户 -->
+  <ion-card>
+    <div class="wallet">
+      <ul class="wealth">
+        <li (click)="goaccount(1)">
+          <span>{{user.user_money | defaultNum}}</span>
+          <span>余额</span>
+        </li>
+        <li (click)="goaccount(2)">
+          <!-- <img src=" assets/img/mine/heng.png" alt="" /> -->
+          <span>{{user.b_coin | defaultNum}}</span>
+          <span>易货券</span>
+        </li>
+  
+        <li (click)="goaccount(5)">
+          <!-- <img src=" assets/img/mine/heng.png" alt="" /> -->
+          <span>{{user.a_coin | defaultNum}}</span>
+          <span>福利券</span>
+        </li>
+  
+        <!--<li (click)="goaccount(4)">-->
+          <!--&lt;!&ndash; <img src=" assets/img/mine/heng.png" alt="" /> &ndash;&gt;-->
+          <!--<span>{{user.pay_points | defaultNum}}</span>-->
+          <!--<span>积分</span>-->
+        <!--</li>-->
+  
+      </ul>
+    </div>
+    
+  </ion-card>
+
+  <!-- 订单、寄售、佣金 -->
+  <ion-card>
+    <ul class="tj_sction order" >
+      <li (click)="goallorder(0)">
+        <!-- <i class="iconfont icon-dingdan" style="color:#fa436a"></i> -->
+        <i class="iconfont icondingdan" style="color:#fa436a"></i>
+        <span>我的购买</span>
+      </li>
+      
+      <li (click)="goconsignorder()">
+        <!-- <i class="iconfont icon-ji" style="color:#fa436a"></i>  -->
+        <i class="iconfont icongouwuche" style="color:#fa436a"></i>        
+        <span>寄售商品</span>
+      </li>
+
+      <li (click)="getCommission()">
+        <!-- <i class="iconfont icon-yongjin" style="color:#fa436a"></i> -->
+        <i class="iconfont iconyongjin" style="color:#fa436a;"></i>
+        <span>寄售佣金</span>
+      </li>
+
+      <li (click)="goaccount(3)" *ngIf="isShowCommission">
+        <!-- <i class="iconfont icon-dailiyongjin" style="color:#fa436a"></i> -->
+        <i class="iconfont icondailiyongjin1" style="color:#fa436a"></i>
+        <span>代理佣金</span>
+      </li>
+    </ul>
+  </ion-card>
+
+  <!-- 我的服务 -->
+  <ion-card class="content">
+    <h3 class="order_header">
+      <span>
+        <span style=" font-size:.8rem;color: black;padding-left: 2vh;">我的服务</span>
+      </span>
+    </h3>
+    <!-- 佣金分成 价格磋商  地址管理-->
+    <!-- <ul class="tj_sction order" >
+      <li (click)="setPerson()">
+        <ion-icon class="iconfont" name="calendar" mode="ios" style="color:#ff563f"></ion-icon>
+        <span>个人设置</span>
+      </li>
+      <li (click)="goconsignorder()">
+        <ion-icon class="iconfont" name="document-attach-outline" style="color:#fa436a"></ion-icon>
+        <span>批发磋商订单</span>
+      </li>
+      <li (click)="gomyaddress()">
+        <i class="iconfont icon-dizhiguanli" style="color:#5FCDA2"></i>
+        <span>收货地址</span>
+      </li>
+    </ul> -->
+      <!-- 我的分享码  我的粉丝 银行卡管理-->
+      
+    <ul class="tj_sction order" >
+      <li (click)="gomyaddress()">
+        <i class="iconfont iconshouhuo" style="color:#707070"></i>
+        <span>收货地址</span>
+      </li>
+     
+      <li (click)="gotoSalesReturn()">
+        <i class="iconfont icontuihuo" style="color:#9789F7"></i>
+          <span>退货/售后</span>
+      </li>
+
+      <li (click)="gobankcard()">
+        <i class="iconfont iconyinhangqia" style="color:#54B4EF"></i>
+        <span>银行卡管理</span>
+      </li>
+    </ul>
+    <!-- 密码设置 工作台申请 系统设置-->
+    <ul class="tj_sction order">
+      <li (click)="gopswsetting()">
+        <i class="iconfont iconmima" style="color:#d3200b"></i>
+          <span>密码设置</span>
+      </li>
+
+      <li (click)="gosharecode()">
+        <i class="iconfont iconchanpinfenxiangma" style="color:#9789F7"></i>
+        <span>我的分享码</span>
+      </li>
+
+      <li (click)="goset()">
+        <i class="iconfont icon-" style="color:#010101"></i>
+          <span>系统设置</span>
+      </li>
+
+      <!-- 下载app -->
+      <!-- <li (click)="downloadApp()" *ngIf="entryType !== 'app'">
+        <i class="iconfont iconxiazai" style="color:#4c8dff"></i>
+        <div class="right">
+          <span>app下载</span>
+          <div class="nav">
+            <span> </span>
+            <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </div>
+        </div>
+      </li> -->
+    </ul>
+
+    <!-- 我的消息  去认证 已认证 -->
+    <ul class="tj_sction order" >
+    
+     <li (click)="gowithdraw()">
+      <i class="iconfont iconti2" style="color:#3b89de"></i>
+
+      <!-- <ion-icon name="wallet-outline" style="color:#76c3f2 ;font-size: 2.5rem !important;"></ion-icon> -->
+       <span>提现</span>
+     </li>
+     <li (click)="goAgent()">
+      <ion-icon class="iconfont icondaili" style="color:#0c98d6"></ion-icon>
+      <span>申请代理商</span>
+    </li>
+     <li (click)="gomyfans()">
+      <i class="iconfont iconfensi" style="color: #E12345;"></i>
+      <!-- <ion-icon name="star" style="color: #E12345;"></ion-icon> -->
+       <span>我的粉丝</span>
+     </li>
+     <!-- <li *ngIf="globalData.user.mobile_validated == '0'" (click)="goidentity()">
+      <ion-icon name="finger-print" style="color:#EE883B"></ion-icon>
+       <span>去认证</span>
+     </li>
+     <li *ngIf="globalData.user.mobile_validated == '1'" (click)="goidentity()">
+      <ion-icon name="hand" style="color:#54B4EF"></ion-icon>
+       <span>已认证</span>
+     </li> -->
+      <!-- <li (click)="gomyaddress()">
+        <i class="iconfont icon-dizhiguanli" style="color:#5FCDA2"></i>
+        <span>收货地址</span>
+      </li> -->
+    
+    </ul>
+
+    <ul class="tj_sction order flex_start">
+      <!-- <li (click)="downloadApp()">
+        <ion-icon name="download-outline" style="color:#54B4EF;font-size: 2.5rem !important;"></ion-icon>
+        <span>app下载</span>
+      </li> -->
+      <li (click)="goBusiness()">
+        <ion-icon class="iconfont iconshangxueyuan" style="color:#6e472a"></ion-icon>
+        <!-- <ion-icon name="library-outline" style="color:#54B4EF;font-size: 2.5rem !important;"></ion-icon> -->
+        <span>商学院</span>
+      </li>
+      <li></li>
+      <li></li>
+     
+    
+
+    </ul>
+
+  </ion-card>
+</ion-content>

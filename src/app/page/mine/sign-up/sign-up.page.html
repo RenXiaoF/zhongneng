@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{type == "edit"?"完善信息":"用户注册"}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content style="overflow-y: scroll;">
+  <div class="img">
+    <img src="assets/login-logo1.png" alt="">
+  </div>
+  <ion-item lines="none">
+    <input class="input-style" type="tel" [(ngModel)]="account.mobile" name="mobile" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()" placeholder="请输入手机号">
+  </ion-item>
+  <ion-item lines="none">
+    <input class="input-style" [(ngModel)]="checkCode" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()" placeholder="请输入图形验证码">
+    <ion-text class="verification" (click)="createCode()">{{picCode}}</ion-text>
+  </ion-item>
+  <ion-item lines="none">
+    <input class="input-style" type="number" [(ngModel)]="account.code" name="code" placeholder="请输入手机验证码" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()">
+    <ion-button fill="outline" class="getPhoneCode"  [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode(account.mobile)">{{Msgcode.verifycode.codetips}}</ion-button>
+
+  </ion-item>
+  <ion-item lines="none">
+    <input class="input-style" type="{{confirmPwdType}}" [(ngModel)]="account.password" placeholder="请输入登录密码"  (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()">
+    <!-- <ion-text class="text" (click)="changeConfirmPwshow()">显示</ion-text> -->
+    <div class="see-pwd"  (click)="changeConfirmPwshow()"><img [src]="pwdImg" alt=""></div>
+
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label *ngIf="referrer" position="stacked">推荐人手机号：<ion-text>{{referrer}}</ion-text></ion-label>
+    <input class="input-style"*ngIf="!referrer" [(ngModel)]="account.referrer" placeholder="请输入推荐人手机号（选填）" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()">
+  </ion-item>
+
+
+
+
+
+    <!-- <ion-item *ngIf="type != 'edit'">
+      <ion-label position="stacked">用户昵称：</ion-label>
+      <ion-input type="text" [(ngModel)]="account.nickname" name="nickName" placeholder="请输入用户昵称" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">手机号：</ion-label>
+      <ion-input type="tel" [(ngModel)]="account.mobile" name="mobile" placeholder="请输入手机号码" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">验证码</ion-label>
+      <ion-input type="text" placeholder="请输入图形验证码" [(ngModel)]="checkCode" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+      <ion-text class="verification" (click)="createCode()">{{picCode}}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">手机验证码</ion-label>
+      <ion-input type="text" [(ngModel)]="account.code" name="code" placeholder="请输入手机验证码" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+      <ion-button fill="outline" class="getPhoneCode"  [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode(account.mobile)">{{Msgcode.verifycode.codetips}}</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">登录密码：</ion-label>
+      <ion-input type="{{pwType}}" [(ngModel)]="account.password" placeholder="请输入登录密码"  (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+      <ion-text class="text" (click)="changePwshow()">显示</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">确认登录密码：</ion-label>
+      <ion-input type="{{confirmPwdType}}" [(ngModel)]="account.confirm_password" placeholder="请确认登录密码" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+      <ion-text class="text" (click)="changeConfirmPwshow()">显示</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">支付密码：</ion-label>
+      <ion-input type="{{payPwdType}}" [(ngModel)]="account.payPwd" placeholder="请输入支付密码" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+      <ion-text class="text" (click)="changePaypwd()">显示</ion-text>
+    </ion-item>
+    <ion-item >
+      <ion-label position="stacked">推荐人手机号：<ion-text *ngIf="referrer">{{referrer}}</ion-text></ion-label>
+      <ion-input  *ngIf="!referrer" [(ngModel)]="account.referrer" placeholder="请输入推荐人手机号" (ionFocus)="docmentScollResize($event)" (ionBlur)="hideKeyboard()"></ion-input>
+    </ion-item> -->
+
+  <p class="agreement">
+    <input type="checkbox" [(ngModel)]="checkbox"/>
+    <ion-text>我已阅读并同意《<span style="text-decoration:underline;color:red" (click)="goAgreement()">注册协议</span>》</ion-text>
+  </p>
+  <ion-button expand="full" shape="round" [disabled]="is_button == 0" class="bottom_btn" (click)="doSignup()">完成注册</ion-button>
+  <ion-button expand="full" shape="round" class="down_btn" (click)="goDownload()">APP下载</ion-button>
+  <div *ngIf="keyboard" style="height: 150px;width:100%;background: transparent"></div>
+</ion-content>

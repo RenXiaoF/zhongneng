@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>实名认证</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>真实姓名：<ion-text *ngIf="realname">{{realname}}</ion-text></ion-label>
+      <ion-input *ngIf="!realname" placeholder="请填写真实姓名" [(ngModel)]="user.real_name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>身份证号：</ion-label>
+      <ion-input placeholder="请填写身份证号" [(ngModel)]="user.identity_card"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!leader">
+      <ion-label>上级手机：<ion-text></ion-text></ion-label>
+      <ion-input placeholder="请填写上级手机" [(ngModel)]="user.first_leader"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>认证手机：<ion-text *ngIf="mobile">{{user.mobile}}</ion-text></ion-label>
+      <ion-input *ngIf="!mobile" placeholder="请填写认证手机" [(ngModel)]="user.mobile"></ion-input>
+    </ion-item>
+
+    <!-- <ion-item>
+      <ion-label>请选择银行</ion-label>
+      <ion-select okText="确定" cancelText="取消" [(ngModel)]="user.bank_name">
+        <ion-select-option *ngFor="let item of bankList" value= {{item.text}}>{{item.text}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>银行卡号</ion-label>
+      <ion-input placeholder="请填写银行卡号" [(ngModel)]="user.bank_card"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>提现密码</ion-label>
+      <ion-input placeholder="请填写提现密码" [(ngModel)]="user.cash_password"></ion-input>
+    </ion-item> -->
+      <ion-item *ngIf="mobile_validated == '0'">
+        <ion-label>手机验证：</ion-label>
+        <ion-input placeholder="请输入手机验证码" [(ngModel)]="user.code"></ion-input>
+        <ion-button slot="end" [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode(user.mobile)">{{Msgcode.verifycode.codetips}}</ion-button>
+      </ion-item>
+
+  </ion-list>
+  <ion-button expand="fill" *ngIf="mobile_validated == '0'"  class="bottom_btn" (click)="updateUser()">立刻认证</ion-button>
+</ion-content>

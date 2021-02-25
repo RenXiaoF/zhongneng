@@ -1,0 +1,371 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+
+/*自定义的全局css样式*/
+body,
+div,
+ul,
+li,
+ol,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+textarea,
+select,
+p,
+dl,
+dt,
+dd,
+a,
+img,
+button,
+form,
+table,
+th,
+tr,
+td,
+tbody,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+}
+
+// html {
+//   color: red;
+//   font-size: 18px; // 浏览器的默认字体大小是16px          16*62.5%=10px
+// }
+
+body {
+
+  // font-size: 1.4rem;
+}
+
+.clearfix {
+  &::after {
+    display: block;
+    content: "";
+    height: 0px;
+    clear: both;
+  }
+}
+
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+
+html {
+  font-size: 20px;
+}
+
+//@media only screen and (min-width: 401px) {
+//  html {
+//    font-size: 25px !important;
+//  }
+//}
+//
+//@media only screen and (min-width: 428px) {
+//  html {
+//    font-size: 26.75px !important;
+//  }
+//}
+//
+//@media only screen and (min-width: 481px) {
+//  html {
+//    font-size: 30px !important;
+//  }
+//}
+//
+//@media only screen and (min-width: 569px) {
+//  html {
+//    font-size: 35px !important;
+//  }
+//}
+//
+//@media only screen and (min-width: 641px) {
+//  html {
+//    font-size: 40px !important;
+//  }
+//}
+
+/*20190122后字体 和‘罗斯智能’大小一样*/
+@media screen and (min-width: 0px){
+  html,body,ion-app,ion-content,
+  .font-size-xsmall,.font-size-small,.font-size-xbig,.font-size-big,.font-size-default,
+  .button-ios,.select-text,.font-style,.title-style,
+  .item-ios,.item-inner,
+  .tabs-ios .tab-button,.tab-button-text,
+  .searchbar-ios .searchbar-input,
+  .toolbar,.toolbar-title,
+  h1,h2,h3,h4,h5,h6,
+  p,
+  .card-content-ios,
+  .waves-button,
+  ion-badge,
+  .card-header-ios,
+  .button-inner,
+  .picker-ios .picker-opt,
+  .segment-ios .segment-button,
+  .toast-ios .toast-message,
+  .label-ios,
+  .message,
+  slot,
+  style,
+  span,
+  ion-col,
+  ion-button,
+  ion-title,
+  ion-input,
+  ion-select-option,
+  ion-select,
+  textarea,
+  ion-item,
+  ion-label,
+  ion-toolbar,
+  .title-ios,.toolbar-container
+  {
+    font-size:10px !important;
+  }
+  .back-button-icon-ios,.bar-button-ios{
+    font-size:17px !important;
+  }
+
+  .iconfont_big,.iconfont_middle,.iconfont_small,.iconfont_xsmall,.iconfont_xxsmall,.iconfont_xxxsmall,
+  ion-icon {
+    font-size: 20px !important;
+  }
+
+}
+@media screen and (min-width: 340px){
+  html,body,ion-app,ion-content,
+  .font-size-xsmall,.font-size-small,.font-size-xbig,.font-size-big,.font-size-default,
+  .button-ios,.select-text,.font-style,.title-style,
+  .item-ios,.item-inner,
+  .tabs-ios .tab-button,.tab-button-text,
+  .searchbar-ios .searchbar-input,
+  .toolbar,.toolbar-title,
+  h1,h2,h3,h4,h5,h6,
+  p,
+  .card-content-ios,
+  .waves-button,
+  ion-badge,
+  .card-header-ios,
+  .button-inner,
+  .picker-ios .picker-opt,
+  .segment-ios .segment-button,
+  .toast-ios .toast-message,
+  .label-ios,
+  .message,
+  ion-title,
+  ion-input,
+  ion-select-option,
+  ion-select,
+  textarea,
+  slot,
+  style,
+  ion-col,
+  span,
+  .title-ios,
+  ion-label,
+  ion-button
+  {
+    font-size:11px !important;
+  }
+
+  .back-button-icon-ios,.bar-button-ios{
+    font-size:18px !important;
+  }
+
+  .iconfont_big,.iconfont_middle,.iconfont_small,.iconfont_xsmall,.iconfont_xxsmall,.iconfont_xxxsmall,
+  ion-icon {
+    font-size: 22px !important;
+  }
+}
+@media screen and (min-width: 360px){
+  html,body,ion-app,ion-content,
+  .font-size-xsmall,.font-size-small,.font-size-xbig,.font-size-big,.font-size-default,
+  .button-ios,.select-text,.font-style,.title-style,
+  .item-ios,.item-inner,
+  .tabs-ios .tab-button,.tab-button-text,
+  .searchbar-ios .searchbar-input,
+  .toolbar,.toolbar-title,
+  h1,h2,h3,h4,h5,h6,
+  p,
+  .card-content-ios,
+  .waves-button,
+  ion-badge,
+  .card-header-ios,
+  .button-inner,
+  .picker-ios .picker-opt,
+  .segment-ios .segment-button,
+  .toast-ios .toast-message,
+  .label-ios,
+  .message,
+  ion-title,
+  ion-input,
+  ion-select-option,
+  ion-select,
+  textarea,
+  slot,
+  style,
+  ion-col,
+  span,
+  .title-ios,
+  ion-label,
+  ion-button
+  {
+    font-size:12px !important;
+  }
+
+  .back-button-icon-ios,.bar-button-ios{
+    font-size:19px !important;
+  }
+
+  .iconfont_big,.iconfont_middle,.iconfont_small,.iconfont_xsmall,.iconfont_xxsmall,.iconfont_xxxsmall,
+  ion-icon {
+    font-size: 23px !important;
+  }
+}
+
+@media screen and (min-width: 375px){
+  html,body,ion-app,ion-content,
+  .font-size-xsmall,.font-size-small,.font-size-xbig,.font-size-big,.font-size-default,
+  .button-ios,.select-text,.font-style,.title-style,
+  .item-ios,.item-inner,
+  .tabs-ios .tab-button,.tab-button-text,
+  .searchbar-ios .searchbar-input,
+  .toolbar,.toolbar-title,
+    // h1,h2,h3,h4,h5,h6,
+  p,
+  .card-content-ios,
+  .waves-button,
+  ion-badge,
+  .card-header-ios,
+  .button-inner,
+  .picker-ios .picker-opt,
+  .segment-ios .segment-button,
+  .toast-ios .toast-message,
+  .label-ios,
+  .message,
+  ion-title,
+  ion-input,
+  ion-select-option,
+  ion-select,
+  textarea,
+  slot,
+  style,
+  ion-col,
+  span,
+  .title-ios,
+  ion-label,
+  ion-button
+  {
+    font-size:13px !important;
+  }
+
+  .back-button-icon-ios,.bar-button-ios{
+    font-size:20px !important;
+  }
+
+  ion-icon,
+  .iconfont_big,.iconfont_middle,.iconfont_small,.iconfont_xsmall,.iconfont_xxsmall,.iconfont_xxxsmall{
+    font-size: 25px !important;
+  }
+}
+@media screen and (min-width: 414px){
+  html,body,ion-app,ion-content,
+  .font-size-xsmall,.font-size-small,.font-size-xbig,.font-size-big,.font-size-default,
+  .button-ios,.select-text,.font-style,.title-style,
+  .item-ios,.item-inner,
+  .tabs-ios .tab-button,.tab-button-text,
+  .searchbar-ios .searchbar-input,
+  .toolbar,.toolbar-title,
+    // h1,h2,h3,h4,h5,h6,
+  p,
+  .card-content-ios,
+  .waves-button,
+  ion-badge,
+  .card-header-ios,
+  .button-inner,
+  .picker-ios .picker-opt,
+  .segment-ios .segment-button,
+  .toast-ios .toast-message,
+  .label-ios,
+  .message,
+  ion-title,
+  ion-input,
+  ion-select-option,
+  ion-select,
+  textarea,
+  slot,
+  span,
+  style,
+  ion-col,
+  .title-ios,
+  ion-label,
+  ion-button
+  {
+    font-size:14px !important;
+  }
+
+  .back-button-icon-ios,.bar-button-ios{
+    font-size:22px !important;
+  }
+
+  ion-icon,
+  .iconfont_big,.iconfont_middle,.iconfont_small,.iconfont_xsmall,.iconfont_xxsmall,.iconfont_xxxsmall{
+    font-size: 27px !important;
+  }
+}
+
+.my-custom-class .modal-wrapper{
+  height: 70vh;
+  position: fixed;
+  bottom: 0;
+}
+
+input{
+  outline: none;
+}

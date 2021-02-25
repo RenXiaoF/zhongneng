@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>个人信息</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>头像</ion-label>
+      <!-- <ion-input></ion-input> -->
+      <ion-grid>
+        <ion-row class="up-img-list">
+          <ion-col>
+            <ng-container *ngFor="let img of imgList; let i=index;">
+              <div class="up-img-item">
+                <ion-icon class="up-img-del" name="close-circle-outline" color="danger" (click)="deleteImg(img.id)">
+                </ion-icon>
+                <!-- <img class="up-img" [src]="img.value" *ngIf="type == 'edit'"> -->
+                <img class="up-img" [src]="img.value | urlImg">
+              </div>
+            </ng-container>
+            <div class="up-img-item" *ngIf="!imgList.length">
+              <img class="up-img-add" src="assets/add.png" (click)="addImg()">
+            </div>
+            <input #imgFile type="file" accept="image/*" style="display:none;" (change)="changeImg($event)">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-label>昵称</ion-label>
+      <ion-input placeholder="请填写昵称" [(ngModel)]="user.nickname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>手机号</ion-label>
+      <ion-input [disabled]="true">{{userInit.mobile}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <div class="selectItem">
+        <ion-label>性别</ion-label>
+        <!-- <ion-input placeholder="请填写性别" [(ngModel)]="user.sex"></ion-input> -->
+        <ion-select interface="popover" [(ngModel)]="user.sex"  [value]="user.sex">
+          <ion-select-option value="0">保密</ion-select-option>
+          <ion-select-option value="1">男</ion-select-option>
+          <ion-select-option value="2">女</ion-select-option>
+        </ion-select>
+
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>地区</ion-label>
+      <!-- <ion-input placeholder="请填写地区" [(ngModel)]="user.area"></ion-input> -->
+      <ion-input placeholder="请填写地区" [(ngModel)]="chooseAdd" ></ion-input>
+      <ion-button (click)="chooseAddress()">选择地址</ion-button>
+    </ion-item>
+    <ion-item>
+      <div class="selectDate">
+        <ion-label>出生年月&nbsp;</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="timeChange()" cancelText="取 消" doneText="确 定"
+          [(ngModel)]="user.birthday"></ion-datetime>
+      </div>
+      <!-- <ion-input placeholder="请填写出生年月 格式：YY-MM-DD" [(ngModel)]="user.birthday"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label>我的推荐人ID</ion-label>
+      <ion-input [disabled]="true">{{userInit.first_leader}}</ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="fill" class="bottom_btn" (click)="submit()">确定</ion-button>
+
+</ion-content>

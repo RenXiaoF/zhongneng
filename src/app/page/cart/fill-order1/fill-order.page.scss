@@ -1,0 +1,70 @@
+// 头部样式
+// ion-header{
+//     ion-toolbar{
+//         --background: rgb(255, 122, 63);
+//         --border-width:0;
+//         ion-title{
+//             --color:white;
+//             font-size: 1.3rem !important;
+//             font-weight: 400;
+//         }
+//         ion-buttons{
+//             ion-button{
+//                 ion-icon{
+//                     color:white;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+
+.icon-inline-block{
+    div{
+        svg {
+            display: inline-block;
+            fill: currentColor;
+            stroke: currentColor;
+            height: 100%;
+            width: 100%;
+    }
+} 
+}
+.abutton {
+    padding-top: 15px;padding-bottom: 15px;
+}
+.ion-grid-width{
+    --ion-grid-width: 100%;
+}
+.ion-col-padding{
+    --ion-grid-column-padding: 0;
+}
+.borderbottom {
+    border-bottom: 8px solid #f8f8f8;
+
+}
+.useBalance{
+    ion-input{
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+ion-content{
+    font-size: px2rem(10);
+   .grid_box{
+
+       ion-grid{
+           ion-row{
+               line-height: px2rem(30);
+           }
+       }
+   }
+
+}

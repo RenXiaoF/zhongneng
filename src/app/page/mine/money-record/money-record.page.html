@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>账户记录</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 下拉刷新 -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- 账户记录 -->
+  <div class="detail">
+      <!-- 没有数据显示区域 -->
+      <div class="noData" *ngIf="!data">
+        <img src="assets/my/noData.png" alt="没有数据" />
+        <ion-text>暂无数据</ion-text>
+      </div>
+      <!-- 有数据显示区域 -->
+      <ion-grid *ngIf="data">
+  
+        <ion-row class="d_header" align-items-center>
+          <ion-col size="5">说明</ion-col>
+          <ion-col *ngIf="field == 'user_money'" size="3">金额</ion-col>
+          <ion-col *ngIf="field == 'b_coin'" size="3">易货券</ion-col>
+          <ion-col *ngIf="field == 'a_coin'" size="3">福利券</ion-col>
+          <ion-col *ngIf="field == 'pay_points'" size="3">积分</ion-col>
+          <ion-col size="4">日期</ion-col>
+        </ion-row>
+
+        <ion-row class="d_content" align-items-center *ngFor="let item of pageData;">
+          <ion-col size="5" style="text-align: left">
+            <ion-row>
+              <ion-col size="12">{{item.desc}}</ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col *ngIf="field == 'user_money'" size="3">{{item.user_money}}</ion-col>
+          <ion-col *ngIf="field == 'b_coin'" size="3">{{item.b_coin}}</ion-col>
+          <ion-col *ngIf="field == 'a_coin'" size="3">{{item.a_coin}}</ion-col>
+          <ion-col *ngIf="field == 'pay_points'" size="3">{{item.pay_points}}</ion-col>
+          <ion-col size="4">{{item.change_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</ion-col>
+        </ion-row>
+  
+      </ion-grid>
+    </div>
+    <!-- 上拉加载更多 -->
+  <ion-infinite-scroll threshold="100px" *ngIf="data" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

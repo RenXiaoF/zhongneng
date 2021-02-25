@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>订单详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ng-container>
+    <ion-card>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-col size="1" class="iconfont iconfont_big icon-shangjia list-item-ic"></ion-col>
+          <ion-col size="9">订单号ZN202009142021007</ion-col>
+          <ion-col size="2">
+            已完成
+          </ion-col>
+        </ion-item>
+
+
+        <ion-item lines="none">
+          <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+            <ion-row>
+              <ion-col size="3">
+                <img src="assets/icon/favicon.png" app-error-img="assets/default_goods_image_240.png">
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="12">金能植饮</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">￥111</ion-col>
+                </ion-row>
+              </ion-col>
+
+
+              <ion-col size="3" item-end text-end>
+                <ion-row>
+                  <ion-col size="12">*1</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">提货</ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+            <ion-row>
+              <ion-col size="3">
+                <img src="assets/icon/favicon.png" app-error-img="assets/default_goods_image_240.png">
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="12">金能植饮</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">￥111</ion-col>
+                </ion-row>
+              </ion-col>
+
+
+              <ion-col size="3" item-end text-end>
+                <ion-row>
+                  <ion-col size="12">*1</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">寄售成功</ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-grid no-padding class="ion-justify-content-center ion-align-items-center">
+            <ion-row>
+              <ion-col size="3">
+                <img src="assets/icon/favicon.png" app-error-img="assets/default_goods_image_240.png">
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="12">金能植饮</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">￥111</ion-col>
+                </ion-row>
+              </ion-col>
+
+
+              <ion-col size="3" item-end text-end>
+                <ion-row>
+                  <ion-col size="12">*1</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">寄售成功</ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+      <ion-item>
+        <div class="goods_num">
+          <div>共3件商品</div>  
+          <div>合计：￥1900</div> 
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="btn">
+          <ion-button color="danger">查看物流</ion-button>
+        </div>
+      </ion-item>
+    </ion-card>
+  </ng-container> -->
+   <!-- 内容列表 -->
+   <ul class="content">
+    <li *ngFor="let orderItem of consignOrderData;let key = index">
+      <div>
+        <div class="c_top">
+          <ion-text>订单编号：{{orderItem.order_sn}}</ion-text>
+          <!-- 已完毕 -->
+          <ion-text class="text_green">{{orderItem.status_name}}</ion-text>
+        </div>
+        <!-- <div class="c_center" *ngFor="let good of orderItem.order_goods"> -->
+        <div class="c_center">
+          <div class="cc_top">
+            <img src="{{orderItem.original_img|defaultGoodsImg|formatImg }}" alt="商品图片" />
+            <div class="cc_content">
+              <p class="desc">{{orderItem.goods_name}}</p>
+              <p class="specifications">
+                <ion-text>规格：无</ion-text>
+                <!--<ion-text>数量：{{orderItem.goods_num}}</ion-text>-->
+                <ion-text>数量：1</ion-text>
+              </p>
+              <p class="desc">期数：{{orderItem.period_id}}</p>
+              <!-- <p class="money">套餐价: ￥{{good.goods_price}}</p> -->
+            </div>
+          </div>
+          <p *ngIf="orderItem.consign_time && orderItem.status_name != '提货中'" class="tips" style="font-size: 1.2rem !important;padding: 1rem 0 0 0;">
+            提示：
+            <span style="color: red;font-weight: bold;">寄售剩余时间：{{orderItem.consign_time}}</span>
+          </p>
+          <p class="c_bottom">应付： <span>￥{{orderItem.boss_price.toFixed(2)}}</span></p>
+        </div>
+        <div class="check_button">
+          <div [ngSwitch]="orderItem.click_button_id">
+            <div *ngSwitchCase="'1'" class="check-div">
+              <ion-button  shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '4')">去支付</ion-button>
+            </div>
+            <div *ngSwitchCase="'2'" class="check-div">
+              <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '5')">查看物流</ion-button>
+            </div>
+            <div *ngSwitchCase="'3'" class="check-div">
+              <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '1')">再寄售</ion-button>
+              <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '2')">提货</ion-button>
+              <ion-button shape="round" appNoDblClick size="small" class="act-button" color="secondary" (click)="handleConsignOrder(orderItem, '3')">退钱</ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+
+
+
+
+</ion-content>

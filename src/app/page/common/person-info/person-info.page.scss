@@ -1,0 +1,126 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+
+// 头部样式
+ion-header {
+    ion-toolbar {
+        --background: rgb(255, 61, 51);
+        --border-width: 0;
+
+        ion-title {
+            --color: white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+
+        ion-buttons {
+            ion-button {
+                ion-icon {
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+// 内容样式
+ion-content {
+    ion-list {
+        margin-top: 2rem;
+
+        ion-item {
+            line-height: 3rem;
+            --border-color: #f5f6f8;
+            color: #5e5e5e;
+
+            ion-button {
+                height: 3rem;
+                --background: rgb(255, 61, 51);
+                --background-activated: rgb(226, 110, 61);
+            }
+        }
+    }
+
+    .bottom_btn {
+        width: 95%;
+        margin: 1rem 2.5%;
+        border-radius: 0.3rem;
+        font-size: 1.308rem !important;
+        --background: rgb(255, 61, 51);
+        --background-activated: rgb(226, 110, 61);
+    }
+}
+
+.up-img {
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    height: 99px;
+    border-radius: 50%;
+}
+
+.up-img-add {
+    width: 100%;
+    height: 100%;
+}
+
+.up-img-del {
+    position: absolute;
+    z-index: 1;
+    top: -1px;
+    right: 0px;
+    // font-size: $font-size-xbig;
+}
+
+.up-img-del::before {
+    border-radius: 50%;
+    background: #fff;
+}
+
+.up-img-item {
+    position: relative;
+    float: left;
+    height: 99px;
+    width: 99px;
+}
+
+.up-img-list {
+    width: 250px;
+    margin: 0rem auto;
+    // border: 1px solid color($colors,borderl);
+}
+
+
+
+.selectDate {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1rem !important;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    ion-dateTime {
+        // border: 1px solid #ccc;
+        // display: none;
+        padding: 0;
+    }
+
+}
+
+.selectItem{
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1rem !important;
+    align-items: center;
+    margin-bottom: 1rem;
+    
+    ion-select {
+        width: px2rem(150);
+    }
+
+}

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>粉丝消费明细</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 粉丝明细 -->
+  <div class="detail">
+    <!-- 没有数据显示区域 -->
+    <div class="noData" *ngIf="data">
+      <img src="assets/my/noData.png" alt="没有数据" />
+      <ion-text>暂无数据</ion-text>
+    </div>
+    <!-- 有数据显示区域 -->
+    <ion-grid *ngIf="!data">
+      <ion-row class="d_header" align-items-center>
+        <ion-col size="2.5">订单时间</ion-col>
+        <ion-col size="2.5">订单号</ion-col>
+        <ion-col size="2">订单类型</ion-col>
+        <ion-col size="2.5">订单金额</ion-col>
+        <ion-col size="2.5">分润额</ion-col>
+      </ion-row>
+
+      <!-- <ion-row class="d_content" align-items-center>
+        <ion-col size="2.5">2020.10.23</ion-col>
+        <ion-col size="2.5" class="ion-text-left">2020102312313</ion-col>
+        <ion-col size="2">boss订单</ion-col>
+        <ion-col size="2.5">￥1900</ion-col>
+        <ion-col size="2.5">￥30</ion-col>
+      </ion-row> -->
+    </ion-grid>
+  </div>
+</ion-content>

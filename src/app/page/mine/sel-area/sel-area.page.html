@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="danger" (click)="close()">关闭</ion-button>
+    <ion-title>选择地址</ion-title>
+    <ion-button color="danger" style="float: right;" (click)="subBtn()">保存</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-label>省份</ion-label>
+      <ion-select [(ngModel)]='provinceValue' placeholder="请选择" (ionChange)="changeProvince(default_city)" cancelText="取消" okText="确定">
+        <ng-container *ngIf="addressList.length>0">
+          <ion-select-option *ngFor="let item of addressList;let ind1=index" value='{{item.value}}_{{ind1}}_{{item.label}}'>{{item.label}}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>城市</ion-label>
+      <ion-select [(ngModel)]='cityValue' placeholder="请选择" (ionChange)="changeCity(default_district)" cancelText="取消" okText="确定">
+        <ng-container *ngIf="cityArr.length>0">
+        <ion-select-option *ngFor="let item of cityArr;let ind2=index" value='{{item.value}}_{{ind2}}_{{item.label}}'>{{item.label}}
+        </ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>县区</ion-label>
+      <ion-select [(ngModel)]='districtValue' placeholder="请选择" cancelText="取消" okText="确定">
+        <ng-container *ngIf="districtArr.length>0">
+        <ion-select-option *ngFor="let item of districtArr;let ind3=index" value='{{item.value}}_{{ind3}}_{{item.label}}'>{{item.label}}
+        </ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+
+  </ion-card>
+</ion-content>

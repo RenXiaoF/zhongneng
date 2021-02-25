@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>设置</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item detail class="myborder" (click)="clearData()">
+      <ion-label>清除缓存</ion-label>
+    </ion-item>
+    <ion-item detail (click)="aboutUs()">
+      <ion-label>关于众能</ion-label>
+    </ion-item>
+    <ion-item detail (click)="checkVersion()">
+      <ion-label>检查更新app</ion-label>
+      <ion-label *ngIf="can_show" class="new-app">有新版</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="signUp" (click)="logout()">
+    <ion-button class="button button-positive" color="danger">退出登录</ion-button>
+  </div>
+</ion-content>

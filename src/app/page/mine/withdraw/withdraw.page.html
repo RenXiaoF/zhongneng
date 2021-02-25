@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>提现</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 头部 -->
+  <div class="header">
+    <p class="h_money">{{totalAmount}}</p>
+    <p class="h_text">可提现余额(元)</p>
+    <div class="h_detail" (click)="gocashdetail()">
+      <ion-text>提现明细</ion-text>
+      <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+    </div>
+  </div>
+  <!-- 输入金额 -->
+  <ion-card class="card">
+    <ion-card-content>
+      <ion-input type='number' inputmode="text" placeholder="请输入提现金额" [(ngModel)]="money"  (ionChange)="checkInput($event)"></ion-input>
+      <!-- <input onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="请输入提现金额" [(ngModel)]="money"> -->
+      <ion-text>提现手续费 &nbsp;<span>{{cashOutData.cash_out_rate}}%</span>&nbsp;</ion-text>
+    </ion-card-content>
+  </ion-card>
+  <!-- 选择银行 -->
+  <ion-list class="bank">
+
+    <ion-item>
+      <ion-label>请选择账号</ion-label>
+      <ion-select okText="确定" cancelText="取消" [(ngModel)]="id">
+        <ion-select-option *ngFor="let item of banks" value= {{item.id}}>{{item.bank_name}} : {{item.card}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-text>支付密码</ion-text>
+      </ion-label>
+      <ion-input class="password" type="{{pwshow?'text':'password'}}" placeholder="输入密码" [(ngModel)]="cash_password"></ion-input>
+      <ion-text class="showpwd" (click)="changePwd()">{{pwshow?'隐藏':'显示'}}</ion-text>
+    </ion-item>
+  </ion-list>
+  <!-- 底部按钮 -->
+  <ion-button color="danger" appNoDblClick expand="full" shape="round" (click)="getCash()">提交申请</ion-button>
+</ion-content>

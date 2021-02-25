@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>我的粉丝</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <div class="head-box">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="1">
+            
+          </ion-col>
+          <ion-col size="3" class="head-img-box">
+            <img class="head-img" [src]="selfInfo.head_pic | urlImg | defaultImg" alt="">
+          </ion-col>
+          <ion-col size="8">
+            <ion-row>
+              <ion-col size="12">I&nbsp;&nbsp;&nbsp;&nbsp;D：{{selfInfo.id}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">昵称：{{selfInfo.nickname}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">电话：{{selfInfo.tel}}</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4.5">直推人数：{{selfData.first_leader_count | defaultNum}}</ion-col>
+          <ion-col size="7.5">团队销售业绩：{{selfData.sub_order_total | defaultNum}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div class="select-box">
+      <ion-item>
+        <ion-label></ion-label>
+        <ion-select interface="popover" [(ngModel)]="sortIndex" (ionChange)='selectSort($event)'>
+          <ion-select-option value="1">按直推人数</ion-select-option>
+          <ion-select-option value="2">按注册时间</ion-select-option>
+          <ion-select-option value="3">按业绩</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <ion-card-content *ngFor="let item of listData">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="2">
+            <img class="head-img" [src]="item.head_pic | defaultImg" alt="">
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <ion-col size="12">{{item.mobile}}</ion-col>
+            </ion-row>
+            <ion-row class="huise">
+              <ion-col size="4">ID:{{item.user_id}}</ion-col>
+              <ion-col size="8">注册时间：{{item.reg_time}}</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="flex-box huise">
+        <div>
+          <div>{{item.first_leader_count | defaultNum}}</div>
+          <div>直推人数</div>
+        </div>
+        <div>
+          <div>{{item.order_total | defaultNum}}</div>
+          <div>累计个人消费</div>
+        </div>
+        <div>
+          <div>{{item.sub_order_total | defaultNum}}</div>
+          <div>当月销售业绩</div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- <ion-card>
+    <div class="head-box">
+      <img src="../../../../assets/balanceHeader.png" />
+    </div>
+  </ion-card> -->
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

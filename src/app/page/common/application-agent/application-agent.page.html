@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon color="dark" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>申请代理商</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-class">
+    <ion-list lines="full" class="ion-no-margin">
+      <!-- <ion-item>
+        <ion-label>公司名称：</ion-label>
+        <ion-input [(ngModel)]="agentInfo.content"></ion-input>
+      </ion-item> -->
+      <ion-item>
+        <ion-label>联系手机：</ion-label>
+        <ion-input [(ngModel)]="agentInfo.mobile"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>微信联系方式：</ion-label>
+        <ion-input [(ngModel)]="agentInfo.wechat"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>备注：</ion-label>
+        <ion-textarea [(ngModel)]="agentInfo.content"></ion-textarea>
+      </ion-item>
+      <div>
+        <ion-text color="primary">
+          截屏微信扫码转账
+        </ion-text>
+        <div class="qr-code">
+          <img src="assets/pay_code.png" alt="">
+        </div>
+      </div>
+
+      <ion-text color="primary">
+        <span style="color:#c80000;">*</span> 请准确填写资料供我司审核
+      </ion-text>
+    </ion-list>
+    <ion-button expand="block" (click)="submit()">提交申请</ion-button>
+  </div>
+
+
+
+
+
+</ion-content>

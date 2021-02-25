@@ -1,0 +1,171 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon color="light" (click)="goback()" name="chevron-back-outline" style="margin-top: 10px;font-size: 1.5rem;">
+    </ion-icon>
+    <ion-title>商学院</ion-title>
+  </ion-toolbar>
+  <!-- 众能圈 / 众能课堂 / 地堆物料  切换-->
+  <div>
+    <!-- <ion-segment mode="md" color="danger" (ionChange)="segmentChanged($event)" value="1">
+      <ion-segment-button *ngFor="let item of selectList" [value]="item.commercial_cat_id">
+        <ion-label>{{item.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment> -->
+    <ul>
+      <li *ngFor="let item of selectList; let i = index" [ngClass]="{'selected':isCheck == i }" (click)="segmentChanged(item.commercial_cat_id , i)">{{item.name}}</li>
+    </ul>
+  </div>
+</ion-header>
+<ion-content>
+  <!--  获取banner图 -->
+  <!-- <ion-card *ngIf="showValue !== '3'"> -->
+  <ion-card>
+    <ion-card-content class="ion-no-padding">
+      <div class="img_box">
+        <img [src]="imgUrl | urlImg" alt="">
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="zhongnengquan" *ngIf="showValue !== '2'">
+    <!-- 爆款秒杀 -->
+    <div class="hot_nav">
+      <ul class="nav_ul">
+        <li>
+          <div>
+            <ion-icon color="danger" name="flame-outline"></ion-icon>
+          </div>
+          <div>爆款推荐</div>
+        </li>
+        <li>
+          <div>
+            <ion-icon color="warning" name="alarm-outline"></ion-icon>
+          </div>
+          <div>大牌秒杀</div>
+        </li>
+        <li>
+          <div>
+            <ion-icon color="primary" name="time-outline"></ion-icon>
+          </div>
+          <div>限时活动</div>
+        </li>
+        <li>
+          <div>
+            <ion-icon color="danger" name="pricetags-outline"></ion-icon>
+          </div>
+          <div>特价优惠</div>
+        </li>
+        <li>
+          <div>
+            <ion-icon color="primary" name="gift-outline"></ion-icon>
+          </div>
+          <div>福利赠送</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 素材圈 -->
+    <div class="sucai" >
+      <div class="title">素材圈</div>
+      <div class="course_name">入门必听系列课</div>
+      <div class="grid_box"  >
+        <ion-card *ngFor="let item of listData"  (click)="goDetail(item.id)">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="4">
+                <!-- <div [innerHTML]="item.content"></div> -->
+                <div  class="img-col"><img [src]="item.logo | urlImg " alt=""></div> 
+              </ion-col>
+              <ion-col size="8">
+                <ion-row>
+                  <ion-col size="12">{{item.title}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12"></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12" class="total"><span>{{item.hits}}人已学习</span></ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="zhongneng_course" *ngIf="showValue == '2'">
+    <ion-card>
+      <div class="news">
+        <span>众能资讯</span>
+        <ion-icon namep="chevron-forward-outline"></ion-icon>
+      </div>
+    </ion-card>
+
+    <ion-card>
+      <div class="news">
+        <div>
+          <p>推荐课程</p>
+          <p>三分钟带你了解众能优选，开始赚钱</p>
+        </div>
+        <ion-button color="danger" (click)="goRecommended()">查看更多</ion-button>
+      </div>
+      <div class="course_box">
+        <ul>
+          <li *ngFor="let item of listData"  (click)="goDetail(item.id)">
+            <div class="img_course">
+              <img [src]="item.logo  | urlImg " alt="">
+            </div>
+            <p>{{item.title}}</p>
+          </li>
+          <!-- <li  (click)="goDetail()">
+            <div class="img_course">
+              <img src="" alt="">
+            </div>
+            <p>众能优选商城boss专区操作教程</p>
+          </li>
+          <li>
+            <div class="img_course">
+              <img src="" alt="">
+            </div>
+            <p>众能优选商城注册小教程</p>
+          </li>
+          <li>
+            <div class="img_course">
+              <img src="" alt="">
+            </div>
+            <p>众能优选商城二维码分享操作教程</p>
+          </li>
+          <li>
+            <div class="img_course">
+              <img src="" alt="">
+            </div>
+            <p>梦想的搬运工</p>
+          </li> -->
+        </ul>
+      </div>
+    </ion-card>
+
+    <ion-card>
+      <div class="news">
+        <div>
+          <p>众能课堂</p>
+          <p>入门必听系列课</p>
+        </div>
+        <ion-button color="danger" (click)="goClass()">查看更多</ion-button>
+      </div>
+    </ion-card>
+  </div>
+
+  <!-- <div *ngIf="showValue == '3'"> -->
+    <!-- 注册会员可下载地推物料资料 -->
+    <!-- 正在开发中... -->
+  <!-- </div> -->
+</ion-content>

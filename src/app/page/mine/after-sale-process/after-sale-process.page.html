@@ -1,0 +1,182 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <i class="iconfont icon-arrow_left"></i>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>审核进度</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="return_goods_data">
+  <ion-list>
+    <ion-item lines="none">
+      <ion-col size="3">订单编号</ion-col>
+      <ion-col size="9" class="status-desc">{{return_goods_data.order_sn}}</ion-col>
+    </ion-item>
+
+    <ion-item lines="none" >
+      <ion-col size="3">申请时间</ion-col>
+      <ion-col  size="9" class="status-desc">{{return_goods_data.addtime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+    </ion-item>
+
+    <ion-card *ngIf="return_goods_data.canceltime > 0 && return_goods_data.status == -2">
+      <ion-item lines="none">
+        <div style="font-size:1rem">.</div>
+        <ion-col size="12">亲爱的客户，您的服务单已经您本人取消</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">{{return_goods_data.canceltime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">经办人：本人</ion-col>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="return_goods_data.refundtime > 0 && return_goods_data.status >= 4">
+      <ion-item lines="none">
+        <div style="font-size:1rem">.</div>
+        <ion-col size="12">亲爱的客户，您的服务单卖家已退款完成。</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">{{return_goods_data.refundtime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">经办人：管理员</ion-col>
+      </ion-item>
+    </ion-card>
+
+    <div *ngIf="return_goods_data.goods_is_send == 1">
+      <ion-card *ngIf="return_goods_data.goods_is_send >= 3">
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">亲爱的客户，卖家已收到您寄回的物品</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">{{return_goods_data.receivetime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">经办人：卖家</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">商家备注：{{return_goods_data.remark_second}}</ion-col>
+        </ion-item>
+      </ion-card>
+
+      <ion-card *ngIf="return_goods_data.goods_is_send == -3">
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">亲爱的客户，卖家未收到货或有损坏</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">{{return_goods_data.receivetime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">经办人：卖家</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">商家备注：{{return_goods_data.remark_second}}</ion-col>
+        </ion-item>
+      </ion-card>
+
+      <ion-card *ngIf="return_goods_data.goods_is_send == 2">
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">亲爱的客户，您已经退货给卖家</ion-col>
+
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">{{return_goods_data.return_time*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">经办人：本人</ion-col>
+        </ion-item>
+      </ion-card>
+
+    </div>
+
+    <div *ngIf="return_goods_data.checktime > 0">
+
+      <div *ngIf="return_goods_data.status >= 1 && return_goods_data.goods_is_send == 1">
+
+        <ion-card *ngIf="return_goods_data.status == 2 || return_goods_data.status == 3">
+          <ion-item lines="none">
+            <ion-col *ngIf="return_goods_data.status == 2" size="12">您已经退货给卖家。</ion-col>
+            <ion-col *ngIf="return_goods_data.status == 3" size="12">卖家已经确认收货。</ion-col>
+
+          </ion-item>
+          <ion-item lines="none">
+            <ion-col size="12">退货地址:{{return_goods_data.store_address}}</ion-col>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-col size="12">运单号:{{return_goods_data.invoice_no}}</ion-col>
+          </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="return_goods_data.status == 1">
+          <ion-item lines="none">
+            <ion-col size="12">请您根据以下地址发货给卖家并填写运单号:</ion-col>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-col size="12">退货地址：{{return_goods_data.store_address}}</ion-col>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-col size="3">运单号:</ion-col>
+            <ion-col size="6"><ion-input [(ngModel)]="code" placeholder="请输入运单号"></ion-input></ion-col>
+            <ion-col size="3"><ion-button (click)="sendCode()" color="primary">提交</ion-button></ion-col>
+
+          </ion-item>
+        </ion-card>
+
+      </div>
+
+      <ion-card>
+        <ion-item lines="none">
+          <div style="font-size:1rem">.</div>
+          <ion-col size="12">亲爱的客户，您的服务单第三方卖家已审核</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col size="12">{{return_goods_data.checktime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col size="12">经办人：卖家</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col *ngIf="return_goods_data.status >= 1" size="12">审核状态：审核通过</ion-col>
+          <ion-col *ngIf="return_goods_data.status < 0" size="12">审核状态：审核不通过</ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col size="12">商家备注：{{return_goods_data.remark}}</ion-col>
+        </ion-item>
+      </ion-card>
+
+    </div>
+
+
+
+
+    <ion-card>
+      <ion-item lines="none">
+        <div style="font-size:1rem">.</div>
+        <ion-col size="12">您的服务单已申请成功，待售后审核中</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">{{return_goods_data.addtime*1000 | date:'yyyy-MM-dd HH:mm'}}</ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="12">经办人：系统</ion-col>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+</ion-content>

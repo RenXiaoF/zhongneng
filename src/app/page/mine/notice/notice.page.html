@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>通知</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ul class="notices" *ngIf="data">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="" refreshingSpinner="circles"
+                             refreshingText="刷新中...">
+      </ion-refresher-content>
+    </ion-refresher>
+    <li class="notices_item" *ngFor="let item of articleData;let myIndex = index">
+      <p class="time">{{item.add_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+      <div class="notices_content">
+        <h3>{{item.title}}</h3>
+        <div class="note">
+          <p [innerHTML]="item.content"></p>
+        </div>
+        <div class="company">
+          <p>众能优选</p>
+          <p>{{item.add_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+        </div>
+      </div>
+    </li>
+ 
+    <!--<li class="notices_item">-->
+      <!--<p class="time">22-08 15:18:36</p>-->
+      <!--<div class="notices_content">-->
+        <!--<h3>关于尚品漓乡商场提现相关事宜通知</h3>-->
+        <!--<div class="note">-->
+          <!--<p>相应市场需求，目前提现端口对接支付宝支付，请各位消费商进入“尚品漓乡”公众号进行APP更新，提现时输入支付宝实名认证账号。</p>-->
+          <!--<p>一、账户余额提现时间：</p>-->
+          <!--<p>提现申请时间为工作日10:00-17:00，到账时间为工作日T+1到账。</p>-->
+          <!--<br />-->
+          <!--<p>二、产品寄售利益提现时间：</p>-->
+          <!--<p>需购买产品的客户确认收货后，寄售利益秒到用户系统，提现申请时间为工作日10:00-17:00，到账时间为工作日T+1到账。</p>-->
+          <!--<br />-->
+          <!--<p>三、直接推荐利益提现时间：</p>-->
+          <!--<p>需购买产品的客户确认收货后，分享利益秒到用户系统，提现申请时间为工作日10:00-17:00，到账时间为工作日T+1到账。</p>-->
+          <!--<br />-->
+          <!--<p>四、代理商服务费申请时间：为每个月1日及15日申请，需按照财务要求准备相关资料，具体资料请参照公司财务公告。</p>-->
+          <!--<br />-->
+        <!--</div>-->
+        <!--<div class="company">-->
+          <!--<p>尚品漓乡</p>-->
+          <!--<p>2019年8月22日</p>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</li>-->
+  </ul>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="加载数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div class="noData" *ngIf="!data">
+    <img src="assets/my/noData.png" alt="没有消息" />
+    <p>暂时没有通知消息</p>
+  </div>
+</ion-content>

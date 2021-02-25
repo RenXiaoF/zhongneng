@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>订单详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="overscroll:scroll">
+  <!-- 头部 -->
+  <div class="order_header">
+    <!-- 预定订单 -->
+    <!-- <h2 *ngIf="order_info.is_reserve == 1 && order_info.reserve_pay_status == 0">等待付款</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.reserve_pay_status != 0 && order_info.pay_status == 0">等待付余款</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.reserve_pay_status != 0 && order_info.pay_status != 0">{{order_info.order_status_desc}}</h2> -->
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.order_status == 0 && !order_info.reserve_param.is_pay">等待付款</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.order_status == 0 && order_info.reserve_param.is_pay">等待付尾款</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && (order_info.order_status == 1 || order_info.order_status == 2)">已付款</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.order_status == 3">{{order_info.order_status_desc}}</h2>
+    <h2 *ngIf="order_info.is_reserve == 1 && order_info.order_status == 4">已完成</h2>
+    <!-- 非预定订单 -->
+    <h2 *ngIf="order_info.is_reserve != 1 && order_info.order_status_code == 'WAITPAY'">等待付款</h2>
+    <h2 *ngIf="order_info.is_reserve != 1 && order_info.order_status_code != 'WAITPAY'">{{order_info.order_status_desc}}</h2>
+    <p>订单金额(含运费):￥ {{order_info.order_amount | number:'1.2-2'}}</p>
+  </div>
+  <!-- 地址 -->
+  <div class="address">
+    <ion-icon name="pin" mode="md"></ion-icon>
+    <div>
+      <p style="margin-bottom: 0.5rem;">{{order_info.consignee}}</p>
+      <p style="color: #555;">{{address_info.address}}</p>
+    </div>
+  </div>
+  <!-- 中间商品 -->
+  <div class="goodslist" *ngIf="order_info.goods_list.length > 0">
+    <div class="sotre">
+      <i class="iconfont icon-shangjia" style="margin-right: 0.5rem;"></i>
+      <h3>{{store.store_name}}</h3>
+      <div style="margin-left: 10px; color: #ff4142; font-weight: 600;">
+        <span *ngIf="end_time">{{end_time}}后可支付尾款</span>
+      </div>
+    </div>
+    <ul class="goodsInfo">
+      <li class="good" *ngFor="let good of order_info.goods_list">
+       
+        <img  [src]="good.original_img  | defaultGoodsImg | urlImg" alt="商品图片" />
+        <div class="good_desc">
+          <p style="margin-bottom: 0.5rem;">{{good.goods_name}}</p>
+          <p style="color: #888;">{{good.spec_key_name}}</p>
+        </div>
+        <div class="good_spec">
+          <p>￥ {{good.goods_price | number:'1.2-2'}}</p>
+          <p>x {{good.goods_num}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- 中间金额合计 -->
+  <ul class="statistics">
+    <!-- <li *ngIf="order_info.is_reserve == 1">
+      <span>首付款</span>
+      <span>￥ {{order_info.reserve_price | number:'1.2-2'}}</span>
+    </li> -->
+    <li *ngIf="order_info.is_reserve == 1">
+      <span>定金</span>
+      <span>￥ {{order_info.reserve_param.reserve_money | number:'1.2-2'}}</span>
+    </li>
+    <li>
+      <span>商品小计</span>
+      <span>￥ {{order_info.goods_price | number:'1.2-2'}}</span>
+    </li>
+    <li>
+      <span>运费</span>
+      <span>￥ {{order_info.shipping_price | number:'1.2-2'}}</span>
+    </li>
+    <li style="padding-bottom: 0;border-width: 0;">
+      <span>总金额</span>
+      <span style="font-size: 1.3rem !important; color: #fa436a;">￥ {{order_info.order_amount | number:'1.2-2'}}</span>
+    </li>
+  </ul>
+  <!-- 底部订单信息 -->
+  <ul class="bottom_orderInfo">
+    <li style="margin-bottom:0.5rem;">订单编号：<span class="selectable">{{order_info.order_sn}}</span></li>
+    <li>创建时间：{{order_info.create_time}}</li>
+  </ul>
+</ion-content>
+
+<ion-footer *ngIf="!user_id && order_info.order_status_code == 'WAITPAY'">
+  <ion-toolbar>
+    <ion-button *ngIf="order_info.is_reserve != 1" color="danger" (click)="cancelorder()">取消订单</ion-button>
+    <ion-button color="danger" [disabled]='is_click' (click)="gotofacbuy()">支付订单</ion-button>
+  </ion-toolbar>
+</ion-footer>

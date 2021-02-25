@@ -1,0 +1,55 @@
+// 头部样式
+ion-header {
+    ion-toolbar {
+        --background: rgb(253,58,59);
+        --border-width: 0;
+        ion-title {
+            --color: white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons {
+            span{
+                color:#ffffff;
+                font-size: px2rem(16);
+
+            }
+
+            ion-button {
+                color: white;
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+.icon-inline-block{
+    div{
+        svg {
+            display: inline-block;
+            fill: currentColor;
+            stroke: currentColor;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+.abutton {
+    padding-top: 15px;padding-bottom: 15px;
+}
+.ion-grid-width{
+    --ion-grid-width: 100%;
+}
+.ion-col-padding{
+    --ion-grid-column-padding: 0;
+}
+.borderbottom {
+    border-bottom: 8px solid #f8f8f8;
+}
+.total-money-num{
+    text-align: right;
+    font-size: 0.8rem;
+}
+.submit-but{
+    text-align: center;
+}

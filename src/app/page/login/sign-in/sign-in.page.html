@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>用户登录</ion-title>
+    <ion-icon name="chevron-back-outline" style="font-size: 1.5rem; color:#ffffff" (click)="goMine()"></ion-icon>
+    <!-- <ion-buttons slot="end">
+      <ion-button (click)="goSignUp()">
+        <ion-text>注册账号</ion-text>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="head_img">
+    <div class="img">
+      <!-- <img src="assets/img/login/user.png" alt=""> -->
+      <img src="assets/login-logo1.png" alt="">
+    </div>
+  </div>
+
+  <div class="login_nav">
+    <ul class="nav-ul">
+      <li class="nav-li" [ngClass]="{'corner':account.typeAction == 'password' }" (click)="changeType('password')">账号密码登录</li>
+      <li class="nav-li" [ngClass]="{'corner':account.typeAction == 'mobile'}" (click)="changeType('mobile')">手机快捷登录</li>
+    </ul>
+  </div>
+
+  <div *ngIf="account.typeAction == 'password'">
+    <div class="user_name">
+      <ion-item lines="none">
+        <!-- <ion-label position="floating">请输入手机号</ion-label> -->
+        <input class="input-style" type="tel" [(ngModel)]="account.username" name="mobile" placeholder="请输入手机号">
+      </ion-item>
+    </div>
+    <div class="user_pwd">
+      <ion-item lines="none">
+        <!-- <ion-input [type]="passwordType" [(ngModel)]="account.password"  placeholder="请输入登录密码"></ion-input> -->
+        <input class="input-style" [type]="passwordType" [(ngModel)]="account.password" name="password" placeholder="请输入登录密码">
+        <!-- <ion-text class="text showPwd"  (click)="seePass()">{{showOrHide}}</ion-text> -->
+        <div class="see-pwd" (click)="seePass()"><img [src]="pwdImg" alt=""></div>
+        <!-- <ion-text class="text">找回密码</ion-text> -->
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="account.typeAction == 'mobile'">
+    <div class="user_name">
+      <ion-item  lines="none">
+        <!-- <ion-label position="floating">请输入手机号</ion-label>
+        <ion-input type="tel" [(ngModel)]="account.username" name="mobile"></ion-input> -->
+        <input class="input-style" type="tel" [(ngModel)]="account.username" name="mobile" placeholder="请输入手机号">
+      </ion-item>
+    </div>
+    <div class="user_pwd">
+      <ion-item  lines="none">
+        <!-- <ion-input type="text" [(ngModel)]="account.code" placeholder="请输入验证码"></ion-input> -->
+        <input class="input-style" type="text" [(ngModel)]="account.code" placeholder="请输入验证码">
+
+        <!-- <ion-buttons slot="end" style="position: absolute; right: 0;">
+          <ion-button color="dark" expand="full" fill="clear" shape="round" [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode(account.username)">
+            {{Msgcode.verifycode.codetips}}
+          </ion-button>
+        </ion-buttons> -->
+  
+        <ion-button style="position: absolute; right: 2rem;" [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode(account.username)" color="danger">{{Msgcode.verifycode.codetips}}</ion-button>
+      </ion-item>
+    </div>
+  </div>
+
+
+  <div class="submit">
+    <ion-button color="danger" (click)="doLogin()" expand="block" [disabled]="canClick">登 录</ion-button>
+  </div>
+
+  <!-- <div class="quick_sign" (click)="goSign()">快速注册</div> -->
+  <!-- <div class="tips"><i></i><p>其他方式登录</p> </div> -->
+  <!-- <div class="other">
+    <div class="wechat_auto" *ngIf="is_app" (click)="getAuth()">
+      <div class="other_img"><img src="assets/img/login/wechat.png" alt=""></div>
+      <div class="other_text">微信登录</div>
+    </div>
+    <div class="wechat_auto" (click)="changeType()">
+      <div class="other_img"><img src={{phoneImg}} alt=""></div>
+      <div class="other_text">{{phoneText}}</div>
+    </div>
+  </div> -->
+
+  <div class="other_nav">
+    <ul class="other_ul">
+      <li (click)="goSignUp()">账号注册</li>
+      <li class="other_li">|</li>
+      <li>忘了密码</li>
+    </ul>
+  </div>
+
+  <div class="agree">
+    <span>登录即代表你已同意</span><span class="clause">《隐私政策》《用户授权须知》</span>
+  </div>
+
+</ion-content>

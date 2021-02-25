@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>修改{{type == 0?'登录':'支付'}}密码</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="head_img">
+    <div class="img">
+      <img src="assets/login-logo1.png" alt="">
+    </div>
+  </div>
+  <ion-list class="pswList">
+    <div class="user_name">
+      <ion-item lines="none">
+        <input class="input-style" type="tel" [(ngModel)]="phoneNum" readonly  placeholder="请输入手机号">
+      </ion-item>
+    </div>
+    <div class="user_name">
+      <ion-item lines="none">
+        <input class="input-style" type="text" [(ngModel)]="params.oldPwd"  placeholder="请输入登录密码">
+      </ion-item>
+    </div>
+
+    <div class="user_pwd">
+      <ion-item  lines="none">
+        <input class="input-style" (ngModelChange)="checkVal()" [(ngModel)]="params.code" type="text" placeholder="请输入手机验证码">
+        <ion-button style="position: absolute; right: 2rem;" [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode()" color="danger">{{Msgcode.verifycode.codetips}}</ion-button>
+      </ion-item>
+    </div>
+
+    <div class="user_pwd">
+      <ion-item lines="none">
+        <input class="input-style" (ngModelChange)="checkVal()" [type]="firstPasswordType" [(ngModel)]="params.newPwd" placeholder="请输入新{{type == 0 ?'登录':'支付'}}密码">
+        <div class="see-pwd" (click)="firstSeePass()"><img [src]="firstPwdImg" alt=""></div>
+      </ion-item>
+    </div>
+
+    <div class="user_pwd">
+      <ion-item lines="none">
+        <input class="input-style" (ngModelChange)="checkVal()" [type]="secondPasswordType" [(ngModel)]="params.newConfirmPwd"  placeholder="请重新输入新{{type == 0 ?'登录':'支付'}}密码">
+        <div class="see-pwd" (click)="secondSeePass()"><img [src]="secondPwdImg" alt=""></div>
+      </ion-item>
+    </div>
+
+
+
+
+
+
+    <!-- <ion-item *ngIf="type == 1">
+      <ion-input (ionChange)="checkVal()" [(ngModel)]="inputText.oldPwd" type="{{oldPwd_status?'password':'text'}}" placeholder="请输入登录密码"></ion-input>
+      <ion-text (click)="changeOldPwdStatus()">{{oldPwd_status?'显示':'隐藏'}}</ion-text>
+    </ion-item>
+    <ion-item *ngIf="type == 0">
+      <ion-input (ionChange)="checkVal()" type="text" [(ngModel)]="inputText.code" name="code" placeholder="请输入手机验证码"></ion-input>
+      <ion-button fill="outline" class="getPhoneCode"  [disabled]="Msgcode.verifycode.ifdisabled" (click)="getPhoneCode()">{{Msgcode.verifycode.codetips}}</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-input (ionChange)="checkVal()" [(ngModel)]="inputText.newPwd" type="{{newPwd_status?'password':'text'}}" placeholder="请输入新{{type == 0?'登录':'支付'}}密码"></ion-input>
+      <ion-text (click)="changeNewPwdStatus()">{{newPwd_status?'显示':'隐藏'}}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-input (ionChange)="checkVal()" [(ngModel)]="inputText.newConfirmPwd" type="{{newConfirmPwd_status?'password':'text'}}" placeholder="请重新输入新{{type == 0?'登录':'支付'}}密码"></ion-input>
+      <ion-text (click)="changeNewConfirmPwdStatus()">{{newConfirmPwd_status?'显示':'隐藏'}}</ion-text>
+    </ion-item> -->
+  </ion-list>
+  <ion-button class="btn" expand="full" shape="round" [disabled]="btn_disable" (click)="submit()">确定完成</ion-button>
+</ion-content>

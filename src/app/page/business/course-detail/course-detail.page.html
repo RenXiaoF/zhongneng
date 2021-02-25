@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon color="light" (click)="goback()" name="chevron-back-outline" style="margin-top: 10px;font-size: 1.5rem;">
+    </ion-icon>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [innerHTML]="content"></div>
+  <!-- 1. 图片 -->
+  <img *ngIf="type == 1 && fileUrl" style="width:100%;height:100%;z-index:99" src="{{url | urlImg}}">
+  <!-- 2. 视频 -->
+  <video *ngIf="type == 2  && fileUrl" id="infomedia" width='100%' autoplay="autoplay" controls loop="loop">
+      <source src="{{video}}">
+  </video>
+  <!-- 3. 音频 -->
+  <video *ngIf="type == 3  && fileUrl" width='100%' height="50%" controls autoplay>
+    <source src="{{audio}}" type="audio/mpeg">
+  </video>
+  <!-- 4.pdf -->
+  <div *ngIf="type == 4  && fileUrl"  style="width: 100%; height: 100%;">
+    <iframe style="height: 100vh; width: 100%;" [src]="pdf"></iframe>
+  </div>
+</ion-content>
+<!-- <ion-footer> 
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <div class="footer" style="justify-content: flex_start;" (click)="downloadFile(qiniuUrl + fileUrl,filename)">
+        <div class="footer" style="justify-content: flex_start;" (click)="download(qiniuUrl + fileUrl)">
+          <ion-icon name="download-outline"></ion-icon>
+          <span>下载资料</span>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="footer ion-justify-content-end" (click)="copyText()">
+          <ion-icon name="share-outline"></ion-icon>
+          <span>分享</span>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> 
+</ion-footer> -->

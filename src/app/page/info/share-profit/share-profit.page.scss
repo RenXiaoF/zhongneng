@@ -1,0 +1,12 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+
+
+ion-content{
+    --background:#f5f5f5;
+}

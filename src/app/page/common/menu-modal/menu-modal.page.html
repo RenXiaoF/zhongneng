@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>选择规格</ion-title>
+    <ion-button fill="clear" (click)="dismiss()">
+      <i class="iconfont iconclose" style="font-size:1.5rem;"></i>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="img_price">
+  </div>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="8">
+        <img src="assets/img/index/gongchang_01.jpg" alt="" width="100px" height="80px">
+        <span class="font_price">￥{{goodsDetail.shop_price}}</span>
+      </ion-col>
+      <!-- <ion-col size="6" style="vertical-align: bottom;">
+      </ion-col> -->
+    </ion-row>
+    <div *ngFor="let item of size">
+      <ion-row>
+        <ion-col size="3">
+          <div class="border_width">{{item.name}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" *ngFor="let size of item.spec; let i = index " (click)="onClick(i)">
+          <div class="box_bg">{{size.item}}</div>
+        </ion-col>
+        <!-- <ion-col size="3">
+          <div class="box_bg">灰色</div>
+        </ion-col>
+        <ion-col size="3">
+          <div class="box_bg">白色</div>
+        </ion-col>
+        <ion-col size="3">
+          <div class="box_bg">红色</div>
+        </ion-col> -->
+      </ion-row>
+    </div>
+
+  </ion-grid>
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="3">
+        <div class="border_width">数量</div>
+      </ion-col>
+      <ion-col size="5">
+        <ion-row>
+          <ion-col size="2" class="ion-no-padding">
+            <ion-button style="height: 1rem;width: 1rem;" class="font-size-small ion-no-margin"  color="light" (click)="onSub()">-</ion-button>
+          </ion-col>
+          <ion-col size="2" class="ion-no-padding" class="ion-justify-content-center">
+            <ion-input class="ion-no-margin ion-no-padding ion-text-center font_type" [(ngModel)]="goods_num"  type="number" min="" style="height: 1rem;width: 1rem;"></ion-input>
+          </ion-col>
+          <ion-col size="2" class="ion-no-padding">
+            <ion-button style="height: 1rem;width: 1rem;" class="font-size-small ion-no-margin" color="light" (click)="onAdd()">+</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4">
+        <div style="text-align: center;"><i class="iconfont icon-jiarugouwuche" style=" color:#ff443a;font-size: 1.5rem;"></i></div>
+        <div style="text-align: center; font-size: .5rem;">加入购物车</div>
+      </ion-col>
+      <ion-col size="8">
+        <div>
+          <ion-button  expand="block" color="danger">
+            立即购买
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

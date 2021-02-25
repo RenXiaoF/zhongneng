@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-text>关闭</ion-text>
+        <ion-icon name="close-circle-outline" solt="end" style="font-size: 1.5rem !important;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <iframe style="height:100%;width:100%;border:0 none;overflow-x: hidden;" [src]="jumpLink"></iframe>
+</ion-content>
+

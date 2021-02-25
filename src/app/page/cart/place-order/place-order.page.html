@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <!-- <i class="iconfont icon-arrow_left"></i> -->
+        <ion-icon md="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>支付订单</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list no-lines class="borderbottom" no-padding>
+    <ion-item lines="none" style="padding-left: 2em;" class="underline">
+      <span item-start>
+        订单号:
+      </span>
+      <span style="color: red;" item-end>
+        {{master_order_sn}}
+      </span>
+    </ion-item>
+    <ion-item lines="none" style="padding-left: 2em;" class="underline">
+      <span item-start>订单金额:</span>
+      <span style="color: red;" item-end>{{orderinfo.total_amount}}</span>
+    </ion-item>
+
+    <ion-item lines="none" style="padding-left: 2em;" class="underline" *ngIf="orderinfo.order_type == '3'">
+      <span>已用福利券：</span>
+      <span style="color: red;" item-end>{{orderinfo.a_coin}}</span>
+    </ion-item>
+
+    <ion-item lines="none" style="padding-left: 2em;" class="underline"  *ngIf="orderinfo.order_type == '4'">
+      <span>已用易货券：</span>
+      <span style="color: red;" item-end>{{orderinfo.b_coin}}</span>
+    </ion-item>
+
+    <ion-item lines="none" style="padding-left: 2em;" class="underline">
+      <span item-start>应付金额:</span>
+      <span style="color: red;" item-end>{{orderinfo.sum_order_amount}}</span>
+    </ion-item>
+
+    <ion-item lines="none" style="padding-left: 2em;" class="underline" *ngIf="orderinfo.is_reserve == 1 && orderinfo.reserve_param.reserve_money > 0">
+      <span item-start>应付定金:</span>
+      <span style="color: red;" item-end>{{orderinfo.reserve_param.reserve_money}}</span>
+    </ion-item>
+
+    <ion-item style="--padding-start:0;--inner-border-width:0;margin-left: 3rem;">
+      <ion-label>使用余额：</ion-label>
+      <ion-input inputmode="numeric" [disabled]='reserve_dis' style="border-bottom: 1px solid #ccc;" placeholder="当前账户余额{{show_money}}" [(ngModel)]="user_money"></ion-input>
+      <ion-button item-end color="danger" (click)="updateprice()">使用</ion-button>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list *ngIf="paymentList.length>0">
+    <ion-radio-group [(ngModel)]="orderinfo.pay_code">
+      <ion-list-header>
+        支付方式
+      </ion-list-header>
+
+      <ion-item *ngFor="let payment of paymentList;let i=index;" (click)="clickRadio(i)">
+        <ion-label style="display: flex;align-items: center;">
+          <img [src]="payment.icon2" style="height: 2rem;margin-right: 1rem;">
+          <ion-text>{{payment.name}}</ion-text>
+        </ion-label>
+        <ion-radio [value]="payment.code"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+
+  </ion-list>
+  <br>
+  <br>
+  <ion-button color="danger" appNoDblClick (click)="pay()" expand="block">{{status == 1?'立即支付':'支付完成'}}</ion-button>
+
+  <ng-container *ngIf="tips_status">
+    <div class="weixin-tip">
+      <p>
+        <img src="assets/live_weixin.png" alt="微信打开"/>
+      </p>
+    </div>
+  </ng-container>
+
+</ion-content>

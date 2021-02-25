@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-grid>
+    <ion-row class="top-header">
+      <ion-col size="8" no-lines>
+        <ion-item lines="none" class="ion-no-margin">
+          <ion-thumbnail item-start>
+            <img [src]="goodimg | urlImg | formatImg">
+          </ion-thumbnail>
+          <ion-grid>
+            <ion-row>
+              <ion-col style="color: red;">
+                ￥{{goodsdetail.shop_price}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                总库存{{goodsdetail.store_count}}件
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <!-- <ion-col style="color: red;">￥{{goodsdetail.shop_price}}</ion-col>
+          <ion-col>总库存</ion-col>
+          <ion-col style="color: red;">{{goodsdetail.store_count}}件</ion-col> -->
+          <!-- <h2>￥{{goodsdetail.shop_price}}</h2>
+          <p>总库存{{goodsdetail.store_count}}件</p>
+          <p>选择规格{{keycode}}</p> -->
+        </ion-item>
+      </ion-col>
+      <ion-col class="ion-text-right" size="4">
+        <ion-button fill="clear" (click)="dismiss()">
+          <!-- <i class="iconfont iconclose" style="font-size:2rem;"></i> -->
+          <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content (ionScroll)="scrollToTop($event)" padding>
+  <!-- <ion-button fill="outline"></ion-button>
+  <ion-button fill="solid"></ion-button> -->
+  <ion-list no-lines class="ion-no-margin">
+    <ng-container *ngIf="hasspec">
+      <ion-item lines="none">选择规格: </ion-item>
+      <ng-container *ngFor="let item of this.goodsdetail.spec;let firstIndex = index">
+        <ion-item lines="none" class="ion-no-margin">
+          {{item.name}}
+        </ion-item>
+        <ion-item lines="none" class="ion-no-margin">
+          <ion-row *ngIf="item.spec.length>0">
+            <ion-col size="auto" *ngFor="let type of item.spec;let secondIndex = index">
+              <ion-button size="small" color="danger" [fill]="isSelected[firstIndex][secondIndex]?'outline':'solid'"
+                          (click)="chooseDesc(firstIndex,secondIndex)">{{type.item}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ng-container>
+
+      <!-- <ion-item lines="none" nclass="ion-no-margin">
+        {{specsizename}}
+      </ion-item>
+      <ion-item lines="none" class="ion-no-margin">
+        <ion-row *ngIf="specsize">
+          <ion-col size="auto" *ngFor="let size of specsize">
+            <ion-button size="small" color="danger" [fill]="size.outline?'outline':'solid'" (click)="choosesize(size)">{{size.item}}</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-item> -->
+    </ng-container>
+
+  </ion-list>
+
+  <!-- {{speccolor | json}} -->
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="5">购买数量</ion-col>
+      <ion-col size="7">
+        <ion-grid>
+          <ion-row class="ion-text-center">
+            <ion-col size="4">
+              <ion-button size="small" color="light" (click)="changenum(-1)">-</ion-button>
+            </ion-col>
+            <ion-col size="4" class="ion-text-center">
+              <ion-input (ionChange)="keydown($event)" class="ion-text-center" type="number" [(ngModel)]="num"></ion-input>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button size="small" color="light" (click)="changenum(1)">+</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-button *ngIf="product_type == '0'" color="danger" expand="block" (click)="submit()">确定</ion-button>
+      <ion-button *ngIf="product_type !== '0'" color="danger" expand="block" (click)="chooseSize()">确定</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row style="height: 2rem">
+    <br>
+    <br>
+  </ion-row>
+</ion-content>
+
+<!--<ion-footer class="spaceFooter">-->
+  <!--<div class="ion-footer-div">-->
+  <!--<ion-button color="danger" expand="block" (click)="submit()">确定</ion-button>-->
+  <!--</div>-->
+<!--</ion-footer>-->

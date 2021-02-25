@@ -1,0 +1,149 @@
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start" (click)="goback()">
+        <ion-button>
+          <ion-icon style="color: #ffffff;" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        购物车
+      </ion-title>
+      <ng-container *ngIf="storelist.length>0">
+        <ion-buttons slot="end">
+          <span  (click)="managecart()">
+            {{ifmanage?'完成':'编辑'}}
+          </span>
+        </ion-buttons>
+      </ng-container>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="data">
+      <ul>
+        <!-- <li>拼购商品</li>
+        <li>普通商品</li> -->
+        <!--<li *ngFor="let item of segments;let myIndex = index" (click)="changeSegment(myIndex)" [ngClass]="{'selected':item.isChecked}">{{item.text}}</li>-->
+      </ul>
+    </div>
+
+    <!--购物车没商品的提示-->
+    <ion-card *ngIf="storelist.length<=0" style="background-color: #ffffff;">
+      <ion-row style="margin-top: 30%;">
+        <ion-col size="12" offset="5">
+          <img src="./assets/shaping-car.png" style="height:5vh;width:5vh;">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" style="padding-top: 2vh;text-align:center">
+          <span >购物车是空的，请到首页下单购买</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img src="./assets/zwsp.jpg" style="max-width:100%;">
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+    <ng-container *ngIf="storelist.length>0">
+      <ion-grid *ngFor="let store of storelist; let i = index;" class="ion-no-padding">
+        <!--<ion-row class="align-self-center">-->
+          <!--<ion-col size="2" style="display: flex;align-self: center;" align-self-center>-->
+            <!--<ion-checkbox style="zoom: 1;" class="font-size-default align-self-center" color="danger" checked="{{store.select_all}}" [(ngModel)]="store.select_all"-->
+                          <!--(click)="clickcgstorecheck(store.select_all, store)"></ion-checkbox>-->
+          <!--</ion-col>-->
+          <!--<ion-col size="5" class="font-size-default" (click)="gotostore(store.store_id)">-->
+            <!--<i class="iconfont icon_big icon-dianpu list-item-ic"></i>-->
+            <!--<b>{{store.store_name}}</b>-->
+          <!--</ion-col>-->
+          <!--<ion-col size="5" class="" text-right>-->
+            <!--<i class="iconfont icon-xiangqing list-item-ic"></i>-->
+            <!--<b>已免运费｜优惠券</b>-->
+          <!--</ion-col>-->
+        <!--</ion-row>-->
+
+        <ion-row *ngFor="let cart of store.cartList;let myIndex = index" class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="2" style="display: flex;align-self: center;" align-self-center>
+            <ion-checkbox color="danger" checked="{{cart.selected }}"  [(ngModel)]="cart.selected" (ionChange)="cgcartcheck($event,cart.id,myIndex)"></ion-checkbox>
+          </ion-col>
+          <ion-col size="10" style="box-shadow: 0 0 14px #eee;" align-self-center>
+            <ion-row>
+              <ion-col size="4" style="display: flex;align-self: center;" align-self-center>
+                <ion-row class="ion-align-items-center ion-justify-content-center">
+                  <ion-col size="12" class="ion-text-center">
+                    <!--<img style="width:6rem;height:8rem;margin: 0 auto;" [src]="cart.original_img  | defaultGoodsImg">-->
+                    <img style="width:6rem;margin: 0 auto;" src="{{cart.original_img | defaultGoodsImg | formatImg}}"  />
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <ion-col>
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="12" class="ion-no-padding">
+                      {{cart.goods_name}}
+                    </ion-col>
+                    <ion-col size="12" class="font-size-small ion-no-padding">
+                      <ion-row>
+                        <ion-col size="12" class="ion-text-left ion-no-padding">
+                          {{cart.spec_key_name?cart.spec_key_name:'无'}}
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="ion-justify-content-between ion-align-items-center">
+                        <ion-col size="6" class="font-size-big ion-no-padding" style="color:red;">
+                          <span class="font-size-default">￥</span>
+                          {{cart.goods_price}}
+                        </ion-col>
+                        <ion-col size="2" class="ion-no-padding">
+                          <ion-button style="height: 2rem;width: 2rem;" class="font-size-small ion-no-margin"  color="light" (click)="changenum($event,-1,cart.id)">-</ion-button>
+                        </ion-col>
+                        <ion-col size="2" class="ion-no-padding">
+                          <ion-input class="ion-no-margin ion-no-padding ion-text-center" type="number" value="{{cart.goods_num}}" (ionChange)="modifycartgoods($event, cart.id)"></ion-input>
+                        </ion-col>
+                        <ion-col size="2" class="ion-no-padding">
+                          <ion-button style="height: 2rem;width: 2rem;" class="font-size-small ion-no-margin" color="light" (click)="changenum($event,1,cart.id)">+</ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </ng-container>
+
+
+  </ion-content>
+
+  <ion-footer *ngIf="storelist.length>0">
+    <ion-toolbar *ngIf="!ifmanage">
+      <ion-buttons slot="start" class="checkout_info" >
+        <ion-checkbox  color="danger" checked="{{ifall}}" [(ngModel)]="ifall" (click)="clickchangeall(ifall)" ></ion-checkbox >
+        <span class="paddingleft paddingright" >全选</span>
+        <span style="color: red;">合计：<span class="price">¥{{totalprice}}</span></span>
+        <!-- <ion-input value="{{totalprice}}" (ionChange)="changeTotlePrice($event)"></ion-input> -->
+      </ion-buttons>
+
+      <ion-buttons slot="end" class="checkout_btn">
+        <!-- <span fill="solid" class="btnbg button_size"> 去结算({{this.num}}) </span> -->
+        <ion-button class="btnbg button_size"  [disabled]="btn_status" color="light"  (click)="submit()">去结算({{this.num}})</ion-button>
+
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-toolbar *ngIf="ifmanage">
+      <ion-buttons slot="start" class="checkout_info" >
+        <ion-checkbox  color="danger" checked="{{ifall}}" [(ngModel)]="ifall" (click)="clickchangeall(ifall)" ></ion-checkbox >
+        <span class="paddingleft paddingright" style="color: red;">全选</span>
+      </ion-buttons>
+
+      <ion-buttons slot="end" class="checkout_btn">
+        <span fill="solid" (click)="deletecart()" class="btnbg button_size1">删除</span>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+

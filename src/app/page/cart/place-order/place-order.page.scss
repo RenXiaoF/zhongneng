@@ -1,0 +1,38 @@
+.item-ios ion-thumbnail{
+    min-width: 70px;
+    min-height: 35px;
+}
+.item-ios ion-thumbnail ion-img, .item-ios ion-thumbnail img{
+    height: 35px;
+    width: 70px;
+}
+.borderbottom{
+    border-bottom: 8px solid #f8f8f8;
+}
+.underline{
+    border-bottom: 2px solid #f7f7f7;
+}
+// 头部样式
+ion-header{
+    ion-toolbar{
+        --background: rgb(253,58,59);
+        --border-width:0;
+        ion-title{
+            --color:white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+        ion-buttons{
+            ion-button{
+                ion-icon{
+                    color:white;
+                }
+            }
+        }
+    }
+}
+
+
+.tip-img{max-width: 100%; height: auto;}
+.weixin-tip{display: block; position: fixed; left:0; top:0; bottom:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80);  height: 100%; width: 100%; z-index: 100;}
+.weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}

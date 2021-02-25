@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{title}}银行卡/支付宝</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ul class="payType" *ngIf="segments.length>0 && type!=='edit'">
+    <li *ngFor="let item of segments;let myIndex = index" (click)="changeSegment(myIndex)">
+      <ion-checkbox [(ngModel)]="item.isChecked"></ion-checkbox>
+      {{item.type_name}}
+    </li>
+  </ul>
+  <div class="inputBox" *ngIf="index == 0">
+    <ion-item>
+      <ion-label>请选择银行</ion-label>
+      <ion-select okText="确定" cancelText="取消" [(ngModel)]="bank.bank_name" (ionChange)="checkVal()">
+        <ion-select-option *ngFor="let item of bankList" value= {{item.text}}>{{item.text}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-input [(ngModel)]="bank.bank_addr" (ionChange)="checkVal()" placeholder="请输入XX省XX市XX支行"></ion-input>
+    <ion-input [(ngModel)]="bank.user_name" (ionChange)="checkVal()" placeholder="请输入开户名"></ion-input>
+    <ion-input [(ngModel)]="bank.account" (ionChange)="checkVal()" placeholder="请输入收款账号"></ion-input>
+  </div>
+  <div class="inputBox" *ngIf="index == 1">
+    <!--<ion-text *ngIf="userName">名称：{{userName}}</ion-text>
+    <ion-input *ngIf="!userName" [(ngModel)]="alipay.user_name" (ionChange)="checkVal()" placeholder="请输入姓名"></ion-input>-->
+    <ion-input [(ngModel)]="alipay.user_name" (ionChange)="checkVal()" placeholder="请输入姓名"></ion-input>
+    <ion-input [(ngModel)]="alipay.account" (ionChange)="checkVal()" placeholder="请输入支付宝账号"></ion-input>
+  </div>
+  <div class="inputBox" *ngIf="index == 2">
+    <ion-text *ngIf="userName">名称：{{userName}}</ion-text>
+    <ion-input *ngIf="!userName" [(ngModel)]="weixin.user_name" (ionChange)="checkVal()" placeholder="请输入姓名"></ion-input>
+    <ion-input [(ngModel)]="weixin.account" (ionChange)="checkVal()" placeholder="请输入微信账号"></ion-input>
+  </div>
+
+  <!-- 上传收款码 -->
+
+  <ion-grid *ngIf="index !== 0">
+    <ion-row><ion-col>上传收款码</ion-col></ion-row>
+    <ion-row class="up-img-list">
+
+      <ion-col>
+        <ng-container *ngFor="let img of imgList; let i=index;">
+          <div class="up-img-item">
+            <ion-icon class="up-img-del" name="close-circle-outline" color="danger" (click)="deleteImg(img.id)"></ion-icon>
+            <img class="up-img" [src]="img.value" *ngIf="type == 'edit'">
+            <img class="up-img" [src]="img.value | urlImg" *ngIf="type !== 'edit'">
+          </div>
+        </ng-container>
+        <div class="up-img-item" *ngIf="!imgList.length">
+          <img class="up-img-add" src="assets/add.png" (click)="addImg()">
+        </div>
+        <input #imgFile type="file" accept="image/*" style="display:none;" (change)="changeImg($event)">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <!-- <ion-button class="bottom_btn" expand="full" shape="round" [disabled]="btn_disable" (click)="uploadImg()">确认</ion-button> -->
+  <ion-button class="bottom_btn" expand="full" shape="round" [disabled]="btn_disable" (click)="confirm()">确认</ion-button>
+</ion-content>

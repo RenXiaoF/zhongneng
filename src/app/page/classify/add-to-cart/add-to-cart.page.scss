@@ -1,0 +1,20 @@
+    .toolbar-background-ios {
+        background: transparent;
+    }
+    ion-footer {
+        padding:0 1rem;
+    }
+    .borderdown {
+        border-width: 1px;
+        border-bottom: 1px solid #f6f6f6;
+    }
+    .top-header{
+        border-bottom: .55px solid #f6f6f6;
+    }
+    ion-thumbnail{
+        margin: 0 16px 0 0 !important;
+    }
+    ion-thumbnail img{
+        object-fit: cover;
+        height: 70px !important;
+    }

@@ -1,0 +1,169 @@
+// 定义px转rem的基数
+$baseFontSize: 13; //默认值为13
+
+// 实现px转rem
+@function px2rem($px) {
+    @return $px / $baseFontSize * 1rem;
+}
+
+// 头部样式
+ion-header {
+    ion-toolbar {
+        --background: rgb(255, 61, 51);
+        --border-width: 0;
+
+        ion-title {
+            --color: white;
+            font-size: 1.3rem !important;
+            font-weight: 400;
+        }
+
+        ion-buttons {
+            ion-button {
+                ion-icon {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .header {
+        display: flex;
+        border-bottom: 1px solid #ededed;
+        ion-searchbar {
+            //   --background: rgb(255, 255, 255);
+            --color: #999999;
+            --icon-color: #999999;
+            --border-radius: 2rem;
+        }
+    }
+
+    // 分类
+    .fenlei {
+        // padding-top: px2rem(35);
+        background-color: #ffffff;
+        width: 100%;
+        padding: px2rem(10) 0;
+        //margin-bottom: 1rem;
+
+        .fl_header {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            // overflow-x: scroll;
+
+            li {
+                font-size: px2rem(16);
+                font-weight: 400;
+                color: #666666;
+                margin: 0 px2rem(10);
+                height: px2rem(25);
+                // line-height: px2rem(25);
+                flex-shrink: 0;
+            }
+
+            .icon-button {
+                font-size: px2rem(12);
+                font-weight: 400;
+                color: #666666;
+                margin: 0 px2rem(10);
+                height: px2rem(13);
+                // line-height: px2rem(25);
+                flex-shrink: 0;
+            }
+
+            .selected {
+                font-size: px2rem(16) !important;
+                // font-weight: 700;
+                color: #f0c78e;
+                position: relative;
+            }
+
+            .selected::after {
+                content: "";
+                width: 35px;
+                height: 2px;
+                background: #ffffff;
+                border-radius: 2px;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                -webkit-transform: translateX(-50%);
+                -ms-transform: translateX(-50%);
+                transform: translateX(-50%)
+            }
+        }
+    }
+}
+
+// 头部样式
+ion-content {
+    --background: #f5f5f5;
+
+    // 商品列表
+    // 一行两个
+    .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        background-color: #f5f5f5;
+        // margin-top: 1rem;
+        padding: px2rem(20) px2rem(15) 0;
+
+        li {
+            width: 48%;
+            border-radius: px2rem(10);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            // margin-right: 2%;
+            padding: px2rem(10);
+            position: relative;
+            background-color: #ffffff;
+            margin-bottom: 1rem;
+
+
+            .badge {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+
+            }
+
+            img {
+                // width: 150px;
+                // height: 150px;
+                height: px2rem(150);
+                display: block;
+                margin: 0 auto;
+            }
+
+            .desc {
+                font-size: px2rem(10);
+                color: #303133;
+                line-height: px2rem(25);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+            }
+
+            .product_info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .price {
+                    font-size: px2rem(10);
+                    color: #fa436a;
+                }
+
+                .sell_num {
+                    font-size: px2rem(10);
+                    color: #909399;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>账户管理</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ul class="type" *ngIf="segments.length>0">
+    <li *ngFor="let item of segments;let myIndex = index" (click)="changeSegment(myIndex)" [ngClass]="{'selected':item.isChecked}">{{item.type_name}}</li>
+  </ul>
+  <!-- 有数据时显示 -->
+  <!-- 显示银行卡数据 -->
+  <ng-container *ngIf="segments.length>0 && segments[index].type_id == 1">
+    <ion-card class="bankCard" *ngFor="let item of showData;let myIndex = index">
+      <ion-card-content>
+        <p class="bank">{{item.bank_name | defaultVal}}</p>
+        <p>
+          <span>{{item.bank_address | defaultVal}}</span>
+          <span class="userName">{{item.name | defaultVal}}</span>
+        </p>
+        <p class="cardNo">{{item.card | formatCardNo}}</p>
+        <ion-icon mode="md" name="trash-outline" (click)="showAlert(myIndex)"></ion-icon>
+        <ion-icon mode="md" name="create-outline" class="icon" (click)="goaddcard('edit',item)"></ion-icon>
+
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <!-- 显示支付宝数据 -->
+  <ng-container *ngIf="segments.length>0 && segments[index].type_id == 2">
+    <ion-card class="alipay" *ngFor="let item of showData;let myIndex = index"  >
+      <ion-card-content>
+        <i class="iconfont iconzhifubao1"></i>
+        <div>
+          <p class="name">{{item.name | defaultVal}}</p>
+          <p class="account">{{item.card | defaultVal}}</p>
+        </div>
+        <ion-icon mode="md" name="trash-outline" (click)="showAlert(myIndex)"></ion-icon>
+        <ion-icon mode="md" name="create-outline" class="icon" (click)="goaddcard('edit',item)"></ion-icon>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <!-- 显示微信数据 -->
+  <ng-container *ngIf="segments.length>0 && segments[index].type_id == 3">
+    <ion-card class="weixinpay" *ngFor="let item of showData;let myIndex = index">
+      <ion-card-content>
+        <i class="iconfont iconweixinzhifu"></i>
+        <div>
+          <p class="name">{{item.name | defaultVal}}</p>
+          <p class="account">{{item.card | defaultVal}}</p>
+        </div>
+        <ion-icon mode="md" name="trash-outline" (click)="showAlert(myIndex)"></ion-icon>
+        <ion-icon mode="md" name="create-outline" class="icon" (click)="goaddcard('edit',item)"></ion-icon>
+
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- 没有数据时显示 -->
+  <div class="noData" *ngIf="!data">
+    <img src="assets/my/noData.png" alt="没有数据" />
+    <ion-text>暂无数据</ion-text>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title (click)="goaddcard()">添加银行卡/支付宝/微信</ion-title>
+    <!--<ion-title (click)="goaddcard()">添加支付宝</ion-title>-->
+  </ion-toolbar>
+</ion-footer>

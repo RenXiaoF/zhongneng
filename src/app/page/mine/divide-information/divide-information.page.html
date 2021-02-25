@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goback()">
+      <ion-button>
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>订单账户信息</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 收款明细 -->
+  <div class="detail">
+    <!-- 没有数据显示区域 -->
+    <div class="noData" *ngIf="!data">
+      <img src="assets/my/noData.png" alt="没有数据" />
+      <ion-text>暂无数据</ion-text>
+    </div>
+    <!-- 有数据显示区域 -->
+    <ion-grid *ngIf="data">
+
+      <ion-row class="d_header" align-items-center>
+        <ion-col size="9">说明</ion-col>
+        <ion-col size="3">金额</ion-col>
+      </ion-row>
+
+      <ion-row class="d_content" align-items-center *ngFor="let item of pageData">
+        <ion-col size="9" style="text-align: left">
+          <ion-row>
+            <ion-col size="12" [ngStyle]="{'color':item.change_type == '60' ? 'red' : 'black' }">{{item.desc}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" style="font-size: 0.8rem !important;">{{item.change_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="3" *ngIf="!(item.user_money<0)" class="blueText">
+          <ion-row>
+            <ion-col size="12" style="text-align: left">+{{item.user_money}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" style="text-align: left">
+              <!--<ion-text *ngIf="item.pay_points">+{{item.pay_points}}购物券</ion-text>-->
+              <ion-text *ngIf="!item.pay_points && item.b_coin!=0">+{{item.b_coin}}易货券</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+</ion-content>

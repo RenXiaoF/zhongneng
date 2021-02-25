@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon name="arrow-back" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>申请售后</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item lines="none">
+      <ion-col size="3">申请类型</ion-col>
+      <ion-col *ngIf="status_desc == '待发货'" size="9" class="status-desc">我要退款(无需退货)</ion-col>
+      <ion-col *ngIf="status_desc != '待发货'" size="9" class="status-desc">我要退货退款</ion-col>
+
+    </ion-item>
+
+    <ion-item lines="none" >
+      <ion-col size="3">申请数量</ion-col>
+      <ion-col size="9" class="status-desc">
+        <ion-input type="number" [(ngModel)]="apply_data.goods_num"></ion-input>
+      </ion-col>
+
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-col size="3">申请原因</ion-col>
+      <ion-col  size="9" class="status-desc">
+        <ion-input [(ngModel)]="apply_data.reason"></ion-input>
+      </ion-col>
+
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-col size="3">申请说明</ion-col>
+      <ion-col  size="9" class="status-desc">
+        <ion-textarea style="border:1px solid gray" rows="3" cols="10" placeholder="详细的退款退货原因" [(ngModel)]="apply_data.describe"></ion-textarea>
+      </ion-col>
+
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-col size="3">联系电话</ion-col>
+      <ion-col  size="9" class="status-desc">
+        <ion-input [(ngModel)]="apply_data.mobile"></ion-input>
+      </ion-col>
+
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row><ion-col>上传照片</ion-col></ion-row>
+    <ion-row class="up-img-list">
+
+      <ion-col>
+        <ng-container *ngFor="let img of imgList; let i=index;">
+          <div class="up-img-item">
+            <ion-icon class="up-img-del" ios="ios-close-circle-outline" color="danger" (click)="deleteImg(img.id)"></ion-icon>
+            <img class="up-img" [src]="img.value | urlImg">
+          </div>
+        </ng-container>
+        <div class="up-img-item">
+          <img class="up-img-add" src="assets/add.png" (click)="addImg()">
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <input #imgFile type="file" accept="image/*" style="display:none;" (change)="changeImg($event)">
+  <div class="ion-padding" style="margin-top:3em">
+    <ion-button color="danger" (click)="uploadImg()" expand="block">提交</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,26 @@
+// 头部样式
+ion-header{
+  ion-toolbar{
+    --background: rgb(255, 61, 51);
+    --border-width:0;
+    ion-title{
+      --color:white;
+      font-size: 1.3rem !important;
+      font-weight: 400;
+    }
+    ion-buttons{
+      ion-button{
+        color:white;
+      }
+    }
+  }
+}
+// 内容样式
+ion-content{
+  .storage{
+    margin-top: 2rem;
+    --background: #fc4e29;
+    --background-activated:#e64824;
+    font-size: 1.3rem !important;
+  }
+}

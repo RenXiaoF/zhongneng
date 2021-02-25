@@ -1,0 +1,135 @@
+{
+  "id": "2224990",
+  "name": "新版矢量图",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2276746",
+      "name": "店铺",
+      "font_class": "dianpu",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "16635976",
+      "name": "扫一扫",
+      "font_class": "saoyisao",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "13389945",
+      "name": "提",
+      "font_class": "ti2",
+      "unicode": "e782",
+      "unicode_decimal": 59266
+    },
+    {
+      "icon_id": "6254791",
+      "name": "提",
+      "font_class": "ti1",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "878512",
+      "name": "佣金",
+      "font_class": "yongjin",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "1998304",
+      "name": "系统设置",
+      "font_class": "-",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "3026872",
+      "name": "购物车",
+      "font_class": "gouwuche",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "5378504",
+      "name": "银行卡",
+      "font_class": "yinhangqia",
+      "unicode": "ea2a",
+      "unicode_decimal": 59946
+    },
+    {
+      "icon_id": "6745942",
+      "name": "收货",
+      "font_class": "shouhuo",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "9390097",
+      "name": "粉丝",
+      "font_class": "fensi",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "9487782",
+      "name": "退货 (1)",
+      "font_class": "tuihuo",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "9689198",
+      "name": "提现",
+      "font_class": "ti",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "10223842",
+      "name": "订 单",
+      "font_class": "dingdan",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "12139453",
+      "name": "代理",
+      "font_class": "daili",
+      "unicode": "e740",
+      "unicode_decimal": 59200
+    },
+    {
+      "icon_id": "13985273",
+      "name": "商学院",
+      "font_class": "shangxueyuan",
+      "unicode": "e6c1",
+      "unicode_decimal": 59073
+    },
+    {
+      "icon_id": "14120451",
+      "name": "产品分享码",
+      "font_class": "chanpinfenxiangma",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "15705350",
+      "name": "代理佣金 (1)",
+      "font_class": "dailiyongjin1",
+      "unicode": "e693",
+      "unicode_decimal": 59027
+    },
+    {
+      "icon_id": "17512864",
+      "name": "密 码",
+      "font_class": "mima",
+      "unicode": "e6fd",
+      "unicode_decimal": 59133
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "/mallapi":{
+    "target":"https://zhongneng.me",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin":true
+  }
+}
